@@ -100,6 +100,30 @@ class FinancialsContextImpl extends CucumberStepBase implements FinancialsContex
     _reserveWrapper.set(reserve)
   }
 
+  override function createExistingClaimReserves(table : DataTable) {
+
+    var reservesMap = table.asMaps(String, String)
+    for (row in reservesMap) {
+      var costType = _costTypeTypelistTransformer.transform(row.get(DK_COST_TYPE))
+      var costCategory = _costCategoryTypelistTransformer.transform(row.get(DK_COST_CATEGORY))
+      var amount = row.get(DK_AMOUNT)
+
+      _costTypeWrapper.set(costType)
+      _costCategoryWrapper.set(costCategory)
+      var reserve : Reserve
+      gw.transaction.Transaction.runWithNewBundle(\bundle -> {
+        reserve = ReserveBuilder.uiReadyClaimLevelReserve(_claimWrapper.get(), _currencyAmountTransformer.transform(amount))
+            .onClaim(_claimWrapper.get())
+            .withCostType(costType)
+            .withCostCategory(costCategory)
+            .withCurrency(_currencyAmountTransformer.transform(amount).Currency)
+            .withReservingCurrency(_currencyAmountTransformer.transform(amount).Currency)
+            .create(bundle)
+      }, CurrentUser)
+      _reserveWrapper.set(reserve)
+
+    }
+  }
   override function createExistingReserves(table : DataTable) {
     var reservesMap = table.asMaps(String, String)
     for (row in reservesMap) {
@@ -369,8 +393,10 @@ class FinancialsContextImpl extends CucumberStepBase implements FinancialsContex
     var exposure = _exposureWrapper.get() ?: _claimWrapper.get().Exposures.single()
     assertThat(exposure).isNotNull()
 
-    var newReserve = new Navigation<NewReserveSet>(_proxy).ensureOnPage(\tabBar ->
-        tabBar.goToClaim(_claimWrapper.get()).goToNewReserveSet(), CurrentUser)
+//    var newReserve = _proxy.TabBar.goToClaim(_claimWrapper.get()).goToNewReserveSet()
+    var claimSummary = new Navigation<ClaimSummary>(_proxy).ensureOnPage(\tabBar ->
+        tabBar.goToClaim(_claimWrapper.get()), CurrentUser)
+    var newReserve = claimSummary.goToNewReserveSet()
     var entry = newReserve.NewReserveSetScreen.ReservesSummaryDV.EditableReservesLV._Entries
         .firstWhere(\entry -> entry.Exposure_Readonly.Text == exposure.DisplayName
             && entry.CostType.Text == costTypeString
@@ -548,13 +574,14 @@ class FinancialsContextImpl extends CucumberStepBase implements FinancialsContex
     gw.transaction.Transaction.runWithNewBundle(\bundle -> {
       claim.refresh()
       claim = bundle.add(claim)
+
       var cc = claim.newCheckCreator()
           .withPrimaryPayee(new CheckPayeeInfo()
               .withPayee(claim.Contacts.first().Contact)
               .withPayeeRole(ContactRole.TC_CHECKPAYEE)
           )
-          .withCostType(CostType.TC_CLAIMCOST)
-          .withCostCategory(CostCategory.TC_CLAIM_LEVEL_EXP_EXT) // not taking the value from the gherkin?
+          .withCostType(_costTypeWrapper.get())
+          .withCostCategory(_costCategoryWrapper.get()) // not taking the value from the gherkin?
           .withPaymentMethod(PaymentMethod.TC_CHECK)
           .withPaymentType(PaymentType.TC_FINAL)
           .withCheckAmount(currencyAmount)

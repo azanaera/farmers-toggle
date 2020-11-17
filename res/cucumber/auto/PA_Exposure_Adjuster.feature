@@ -6,8 +6,9 @@ Feature: Exposure - Adjuster (PA_Exposure_Adjuster)
 
   Background:
     Given I am a user with the "Adjuster" role
+    And I have the "Create exposures" permission
 
-  # TODO ignoring S1: Could not find widget with id Claim-ClaimMenuActions-ClaimMenuActions_NewExposure-NewExposureMenuItemSet-NewExposureMenuItemSet_ByCoverage-0-item-0-item
+  # TODO --OK-- ignoring S1: Could not find widget with id Claim-ClaimMenuActions-ClaimMenuActions_NewExposure-NewExposureMenuItemSet-NewExposureMenuItemSet_ByCoverage-0-item-0-item
   @ignore
   Scenario: 1. Creating a collision exposure on an existing Personal Auto claim that has no vehicle incident
     Given a Personal Auto claim

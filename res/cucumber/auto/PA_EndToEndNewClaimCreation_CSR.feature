@@ -6,6 +6,7 @@ Feature: End to End New Claim Creation - CSR (PA_EndToEndNewClaimCreation_CSR)
 
   Background:
     Given I am a user with the "Customer Service Associate" role
+#    And I have the "Create claims" permission
     # And exposure business rule: EC01000 - Personal Auto Collision is enabled
     # And gosu rules to automatically assign the claim: GCAA00010 - If the claim loss type is Auto, this rule uses the loss type and claim segment to get the top two matching group type choices for assigning this claim.
     # And gosu rules to automatically assign the exposure: GEA03000 - If the exposure is still not assigned, this rule assigns the exposure to the assigned owner and group for the claim.
@@ -37,12 +38,13 @@ Feature: End to End New Claim Creation - CSR (PA_EndToEndNewClaimCreation_CSR)
     And the "Uninsured Motorist Bodily Injury" exposure should be assigned to group "Toggle Auto East Zone Generalist Group 1"
     And the "Uninsured Motorist Bodily Injury" exposure should be assigned to user "Andy Applegate"
 
-  # TODO ignoring S2: First and Final is broken
+  # TODO --OK-- ignoring S2: First and Final is broken
   @ignore
   Scenario: 2. Auto - Auto First and Final claim
     Given a Personal Auto policy
     When I start filing a claim in Auto First and Final Wizard
     And the claim was reported by the Insured
+    And I set claim loss cause to "Hail"
     And I select the "1st" covered vehicle
     And the insured is the claimant
     And I add an autobody repair shop "Advanced Auto Repair Center"

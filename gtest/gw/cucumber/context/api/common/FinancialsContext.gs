@@ -48,6 +48,7 @@ interface FinancialsContext {
    */
   function createExistingReserves(amountString : String, costTypeString : String, costCategoryString : String)
 
+  function createExistingClaimReserves(table : DataTable) : void
   /**
    * Create reserves on the exposure using builders
    *

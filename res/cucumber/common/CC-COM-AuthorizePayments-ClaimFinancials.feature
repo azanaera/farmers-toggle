@@ -11,17 +11,18 @@ Feature: Transaction approvals (CC-COM-AuthorizePayments-ClaimFinancials)
     And I have the following authority limits
       | Limit Type                | Amount |
       | Exposure payments to date | 5000   |
+      | Claim payments to date    | 5000   |
     And I have the "Approve any approval activity" permission
 
   # TODO CC-COM-AuthorizePayments-ClaimFinancials has inconsistent results: sometimes pass, other times fail.
-  # TODO ignoring SO1: Reserve line seems to be there - but not really
+  # TODO  --OK-- ignoring SO1: Reserve line seems to be there - but not really
   @ignore @23290.7-GW
   Scenario Outline: 1. Creating a check requires appropriate authority
     Given a Personal Auto claim
-    And the claim has a bodily injury exposure
+    And the claim has a "Collision" exposure
     And the exposure has available reserves for
       | Cost Type  | Cost Category | Amount |
-      | Claim Cost | Bodily Injury | 11000  |
+      | Claim Cost | Material Damage | 11000  |
     When I create a check for "<Amount>" on the exposure
       | Payment Type | Eroding? |
       | Partial      | Yes      |
@@ -33,6 +34,7 @@ Feature: Transaction approvals (CC-COM-AuthorizePayments-ClaimFinancials)
       | 1000   | Awaiting submission   | Awaiting submission     |
       | 10000  | Pending approval      | Pending approval        |
 
+  # TODO
   @ignore @23290.7-GW
   Scenario Outline: 2. Actioning a check
     Given a Personal Auto claim
@@ -55,11 +57,14 @@ Feature: Transaction approvals (CC-COM-AuthorizePayments-ClaimFinancials)
   @ignore @23290.7-GW
   Scenario: 3. Actioning a check - Pending Approval
     Given a Personal Auto claim
-    And the claim has a bodily injury exposure
+    And the claim is assigned to group "Toggle Auto East Zone APD Handlers Group 1" and user "Justin Silvers"
+    And the claim has a "Comprehensive" exposure
+#    And the claim has a "Collision" exposure
+#    And the claim has available reserves for
     And the exposure has available reserves for
-      | Cost Type  | Cost Category   | Amount |
-      | Claim Cost | Material Damage | 11000  |
-    And a check for "1000" on the exposure requires approval
+    | Cost Type  | Cost Category       | Amount |
+    | Expense | Comprehensive | 11000  |
+    And a check for "6000" on the exposure requires approval
     When I "Approve" the payment
     Then the check's approval status should be "Pending approval"
     And the payment's approval status should be "Pending approval"

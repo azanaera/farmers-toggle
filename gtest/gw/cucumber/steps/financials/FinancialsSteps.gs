@@ -2,6 +2,7 @@ package gw.cucumber.steps.financials
 
 uses com.google.inject.Inject
 uses cucumber.api.DataTable
+uses cucumber.api.java.en.And
 uses cucumber.api.java.en.Given
 uses cucumber.api.java.en.Then
 uses cucumber.api.java.en.When
@@ -28,6 +29,10 @@ class FinancialsSteps {
     _contextFactory.getFinancialsContext().createExistingReserves(table)
   }
 
+  @Given("^the claim has available reserves for$")
+  function theClaimHasAvailableReservesFor(table : DataTable) : void {
+    _contextFactory.getFinancialsContext().createExistingClaimReserves(table)
+  }
   @Given("^the exposure has a check with a \"([^\"]*)\" \"([^\"]*)\" payment on the reserve line$")
   public function theExposureHasACheckWithAPaymentOnTheReserveLine(amountString : String, paymentTypeString : String) {
     _contextFactory.getFinancialsContext().createExistingPayment(amountString, paymentTypeString)

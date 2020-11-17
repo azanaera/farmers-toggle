@@ -56,6 +56,7 @@ Feature: Note (CC-COM-SysFuncClaims-Notes)
       | Salvage                       |
       | Litigation                    |
 
+  # TODO --OK--
   @23160-GW, @ignore
   Scenario: 4. Delete a note to an existing Personal Auto claim
     Given I am a user with the "Manager" role

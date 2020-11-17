@@ -15,7 +15,7 @@ Feature: Manage subrogation opportunities (Common-RSS-03-Subrogation)
     When I specify another party is at fault
     Then a subrogation opportunity exists
 
-  # TODO ignoring S2: Toggle Doesn't Allow Claim-Level transactions see TXV23000 in TransactionSetValidationRules.grs
+  # TODO --OK-- ignoring S2: Toggle Doesn't Allow Claim-Level transactions see TXV23000 in TransactionSetValidationRules.grs
   @23540-GW @ignore
   Scenario: 2. Splitting Subrogation Liability Between Responsible Parties
     Given a Personal Auto claim
