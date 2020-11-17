@@ -1,0 +1,21 @@
+apis:
+- name: gw.pl.framework.api_list-1.0
+- name: gw.pl.system.cluster_tools-1.0
+- name: gw.pl.system.db_tools-0.1
+- name: gw.pl.system.maintenance_tools-1.0
+- name: gw.pl.system.messaging_tools-0.1
+- name: gw.pl.system.server_profiler-1.0
+- name: gw.pl.system.server_tools-1.0
+- name: gw.pl.system.workflow-1.0
+- name: ext.admin.v1.admin_ext-1.0
+  template: gw.core.cc.framework.v1.dev_template-1.0
+- name: ext.claim.v1.claim_combined_ext-1.0
+  template: gw.core.cc.framework.v1.dev_template-1.0
+- name: ext.common.v1.common_ext-1.0
+  template: gw.core.cc.framework.v1.dev_template-1.0
+- name: gw.testsupport.v1.testsupport-1.0
+  template: gw.core.cc.framework.v1.dev_template-1.0
+  env: ci-test
+- name: server_tools-1.0
+defaultTemplate:
+- name: gw.pl.framework.dev_template-1.0

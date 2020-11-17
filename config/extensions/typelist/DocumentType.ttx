@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  desc=""
+  name="DocumentType">
+  <typecode
+    code="diagram"
+    desc="Diagram"
+    name="Diagram"
+    retired="true"/>
+  <typecode
+    code="email"
+    desc="Email"
+    name="Email"
+    retired="true"/>
+  <typecode
+    code="policereport"
+    desc="Police report"
+    name="Police report"
+    retired="true"/>
+  <typecode
+    code="repairestimate"
+    desc="Repair estimate"
+    name="Repair estimate"
+    retired="true"/>
+  <typecode
+    code="fnol"
+    desc="First notice of loss (original report)"
+    name="First notice of loss"
+    retired="true"/>
+  <typecode
+    code="statement"
+    desc="Statement"
+    name="Statement"
+    retired="true"/>
+  <typecode
+    code="letter_received"
+    desc="Letter received"
+    name="Letter received"
+    retired="true"/>
+  <typecode
+    code="letter_sent"
+    desc="Letter sent"
+    name="Letter sent"
+    retired="true"/>
+  <typecode
+    code="email_sent"
+    desc="Email Sent by CreateEmail"
+    name="Email Sent"
+    retired="true"/>
+  <typecode
+    code="sla"
+    desc="Service Level Agreement"
+    name="Service Level Agreement"
+    retired="true"/>
+  <typecode
+    code="w9"
+    desc="W-9"
+    name="W-9"
+    retired="true"/>
+  <typecode
+    code="other"
+    desc="Other"
+    name="Other"
+    retired="true"/>
+  <typecode
+    code="agreements_releases_ext"
+    desc="Agreements/Releases"
+    name="Agreements/Releases"
+    priority="10"/>
+  <typecode
+    code="authorization_application_ext"
+    desc="Authorization/Application"
+    name="Authorization/Application"
+    priority="20"/>
+  <typecode
+    code="correspondence_ext"
+    desc="Correspondence"
+    name="Correspondence"
+    priority="30"/>
+  <typecode
+    code="demand_ext"
+    desc="Demand"
+    name="Demand"
+    priority="40"/>
+  <typecode
+    code="estimate_invoice_ext"
+    desc="Estimate/Invoice"
+    name="Estimate/Invoice"
+    priority="50"/>
+  <typecode
+    code="supporting_docs_ext"
+    desc="General Supporting Documents"
+    name="General Supporting Documents"
+    priority="60"/>
+  <typecode
+    code="glass_tow_ext"
+    desc="Glass/Tow"
+    name="Glass/Tow"
+    priority="70"/>
+  <typecode
+    code="law_enforcement_docs_ext"
+    desc="Law Enforcement Document"
+    name="Law Enforcement Document"
+    priority="80"/>
+  <typecode
+    code="legal_ext"
+    desc="Legal"
+    name="Legal"
+    priority="90"/>
+  <typecode
+    code="medical_ext"
+    desc="Medical"
+    name="Medical"
+    priority="100"/>
+  <typecode
+    code="photographs_ext"
+    desc="Photographs"
+    name="Photographs"
+    priority="110"/>
+  <typecode
+    code="policy_ext"
+    desc="Policy"
+    name="Policy"
+    priority="120"/>
+  <typecode
+    code="receipt_ext"
+    desc="Receipt"
+    name="Receipt"
+    priority="130"/>
+  <typecode
+    code="statement_ext"
+    desc="Statement"
+    name="Statement"
+    priority="140"/>
+  <typecode
+    code="subrogation_ext"
+    desc="Subrogation"
+    name="Subrogation"
+    priority="150"/>
+  <typecode
+    code="text_message_ext"
+    desc="Text Message"
+    name="Text Message"
+    priority="160"/>
+  <typecode
+    code="loss_salvage_ext"
+    desc="Total loss/Salvage"
+    name="Total loss/Salvage"
+    priority="170"/>
+</typelistextension>

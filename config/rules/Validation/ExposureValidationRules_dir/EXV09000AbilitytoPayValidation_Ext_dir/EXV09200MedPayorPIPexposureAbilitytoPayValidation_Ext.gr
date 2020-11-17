@@ -1,0 +1,25 @@
+package rules.Validation.ExposureValidationRules_dir.EXV09000AbilitytoPayValidation_Ext_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("EXV09200 - MedPay or PIP exposure Ability to Pay Validation_Ext")
+internal class EXV09200MedPayorPIPexposureAbilitytoPayValidation_Ext {
+  static function doCondition(exposure    :    entity.Exposure) : boolean {
+/*start00rule*/
+return
+        (exposure.ExposureType == ExposureType.TC_MEDPAY or
+            exposure.ExposureType == ExposureType.TC_PIPDAMAGES) and
+        (exposure.Incident as InjuryIncident).injured.MedicareBeneficiary_Ext and
+        ((exposure.ORM_Ext == null or exposure.NoFaultLimit_Ext == null  or
+            (exposure.Incident as InjuryIncident).InjuryDiagnoses.IsEmpty  )
+        )
+/*end00rule*/
+}
+
+  static function doAction(exposure    :    entity.Exposure, actions : gw.rules.Action) {
+/*start00rule*/
+exposure.reject(ValidationLevel.TC_PAYMENT,
+        DisplayKey.get("Toggle.Rules.Validation.Exposure.MedPipExpAbilityToPay_Ext")
+        , null, null) 
+/*end00rule*/
+  }
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  desc="Topic to which this note belongs"
+  name="NoteTopicType">
+  <typecode
+    code="fnol"
+    desc="First notice of loss"
+    name="First notice of loss"
+    priority="2"
+    retired="true"/>
+  <typecode
+    code="coverage"
+    desc="Coverage"
+    name="Coverage"
+    priority="20"/>
+  <typecode
+    code="investigation"
+    desc="Investigation"
+    name="Investigation"
+    priority="50"/>
+  <typecode
+    code="medical"
+    desc="Medical"
+    name="Medical"
+    priority="100"/>
+  <typecode
+    code="evaluation"
+    desc="Evaluation"
+    name="Evaluation"
+    priority="80"/>
+  <typecode
+    code="settlement"
+    desc="Settlement"
+    name="Settlement"
+    priority="7"
+    retired="true"/>
+  <typecode
+    code="subrogation"
+    desc="Subrogation"
+    name="Subrogation"
+    priority="110"/>
+  <typecode
+    code="salvage"
+    desc="Salvage"
+    name="Salvage"
+    priority="120"/>
+  <typecode
+    code="litigation"
+    desc="Litigation"
+    name="Litigation"
+    priority="130"/>
+  <typecode
+    code="denial"
+    desc="Denial"
+    name="Denial"
+    priority="11"
+    retired="true"/>
+  <typecode
+    code="reinsurance"
+    desc="Reinsurance"
+    name="Reinsurance"
+    priority="12"
+    retired="true"/>
+  <typecode
+    code="contact_with_claimant_ext"
+    desc="Initial Contact w/CImt or Rep"
+    name="Initial Contact w/CImt or Rep"
+    priority="30"/>
+  <typecode
+    code="contact_with_insured_ext"
+    desc="Initial Contact w/Insd or Rep"
+    name="Initial Contact w/Insd or Rep"
+    priority="40"/>
+  <typecode
+    code="liability_ext"
+    desc="Liability"
+    name="Liability"
+    priority="60"/>
+  <typecode
+    code="case_review_ext"
+    desc="Case Review"
+    name="Case Review"
+    priority="70"/>
+  <typecode
+    code="negotiation_ext"
+    desc="Negotiation"
+    name="Negotiation"
+    priority="90"/>
+</typelistextension>

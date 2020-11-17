@@ -1,0 +1,34 @@
+package rules.Validation.TransactionSetValidationRules_dir.TXV24000ExposurePaymentRules_Ext_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("TXV24100 -BI Exposure Claim Cost Payment Rule")
+internal class TXV24100BIExposureClaimCostPaymentRule {
+  static function doCondition(transactionSet      :        entity.TransactionSet) : boolean {
+/*start00rule*/
+    var status =  (transactionSet as CheckSet).Checks.first().Status
+    return (transactionSet.New or
+        status == TransactionStatus.TC_PENDINGAPPROVAL or
+        status == TransactionStatus.TC_DENIED or
+        status == TransactionStatus.TC_AWAITINGSUBMISSION  )
+    and
+    transactionSet.AllTransactions.hasMatch(\trn -> trn.CostType == CostType.TC_CLAIMCOST
+        and
+    trn.Exposure.ExposureType == ExposureType.TC_BODILYINJURYDAMAGE and
+    (trn.Exposure.Incident as InjuryIncident).injured.MedicareBeneficiary_Ext != false  and
+    ((trn.Exposure.Incident as InjuryIncident).InjuryDiagnoses.IsEmpty or
+        trn.Exposure.Settlements.IsEmpty or
+        !trn.Exposure.Settlements*.SettleDate.where(\elt -> elt == null ).IsEmpty  or
+        !trn.Exposure.Settlements*.SettleAmount.where(\elt -> elt == null ).IsEmpty )
+        )
+/*end00rule*/
+}
+
+  static function doAction(transactionSet      :        entity.TransactionSet, actions : gw.rules.Action) {
+/*start00rule*/
+transactionSet.reject(ValidationLevel.TC_PAYMENT,
+        DisplayKey.get("Toggle.Web.NewCheckWizard.NewPaymentDetail.BIPayment_Ext"),
+        null,
+        null) 
+/*end00rule*/
+  }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<plugin
+  name="IClaimNumGenAdapter">
+  <plugin-java
+    javaclass="com.guidewire.cc.plugin.claimnumbergen.internal.ClaimNumGenDemoAdapter"/>  
+  <plugin-gosu
+    env="cloud-dev,local"
+    gosuclass="gw.surepath.cc.integration.numgen.NumberGenerationPlugin"/>
+</plugin>

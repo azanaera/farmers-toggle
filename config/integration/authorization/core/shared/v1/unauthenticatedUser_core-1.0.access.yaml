@@ -1,0 +1,10 @@
+resources:
+  AdminOpenApiSchema:
+    permissions:
+      view: true
+  ClaimApiOpenApiSchema:
+    permissions:
+      view: true
+  CommonOpenApiSchema:
+    permissions:
+      view: true

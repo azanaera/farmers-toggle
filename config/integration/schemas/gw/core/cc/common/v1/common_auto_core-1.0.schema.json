@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "gw.core.cc.common.v1.common_core-1.0"
+  ],
+  "definitions": {
+    "Contact": {
+      "properties": {
+        "licenseNumber": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "licenseState": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person",
+            "typelist": "Jurisdiction"
+          }
+        }
+      }
+    }
+  }
+}

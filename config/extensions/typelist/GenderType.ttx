@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<typelistextension xmlns="http://guidewire.com/typelists" name="GenderType" desc="Gender">
+  <typecode
+    code="nonbinary_ext"
+    desc="Nonbinary"
+    name="Nonbinary"/>
+</typelistextension>

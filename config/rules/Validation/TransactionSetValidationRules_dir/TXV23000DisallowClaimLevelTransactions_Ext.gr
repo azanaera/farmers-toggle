@@ -1,0 +1,17 @@
+package rules.Validation.TransactionSetValidationRules_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("TXV23000 - Disallow Claim Level Transactions _ Ext")
+internal class TXV23000DisallowClaimLevelTransactions_Ext {
+  static function doCondition(transactionSet   :    entity.TransactionSet) : boolean {
+/*start00rule*/
+return true
+/*end00rule*/
+}
+
+  static function doAction(transactionSet   :    entity.TransactionSet, actions : gw.rules.Action) {
+/*start00rule*/
+ 
+/*end00rule*/
+  }
+}

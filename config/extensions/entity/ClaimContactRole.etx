@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<extension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="ClaimContactRole">
+  <column
+    desc="the add date from the sure system"
+    name="AddDate_Ext"
+    nullok="true"
+    type="datetime"/>
+  <column
+    desc="Indicates if a contact is an Excluded party from Sure system"
+    name="IsExcluded_Ext"
+    nullok="true"
+    type="bit"/>
+</extension>

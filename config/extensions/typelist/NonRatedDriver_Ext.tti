@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<typelist xmlns="http://guidewire.com/typelists" name="NonRatedDriver_Ext" desc="">
+  <typecode
+    code="permissive"
+    name="Permissive"
+    priority="10"/>
+  <typecode
+    code="undisclosed"
+    desc="Undisclosed"
+    name="Undisclosed"
+    priority="20"/>
+</typelist>

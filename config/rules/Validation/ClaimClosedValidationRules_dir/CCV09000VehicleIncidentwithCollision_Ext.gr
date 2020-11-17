@@ -1,0 +1,30 @@
+package rules.Validation.ClaimClosedValidationRules_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("CCV09000 - Vehicle Incident with Collision_Ext")
+internal class CCV09000VehicleIncidentwithCollision_Ext {
+  static function doCondition(claim   :   entity.Claim) : boolean {
+/*start00rule*/
+    var claimOutcome_ext = (claim.Bundle.getBeansByRootType(CloseClaimInfo).firstWhere(\elt ->
+        (elt as CloseClaimInfo).Claim == claim) as CloseClaimInfo).outcome
+    return ext.config.claim.LossDetailsHelper_Ext.CollisionLossCauses(claim) and (claimOutcome_ext == ClaimClosedOutcomeType.TC_COMPLETED or
+        claimOutcome_ext == ClaimClosedOutcomeType.TC_PAYMENTSCOMPLETE)
+
+/*end00rule*/
+}
+
+  static function doAction(claim   :   entity.Claim, actions : gw.rules.Action) {
+/*start00rule*/
+    var vehIncident = claim.getIncidentsOfType(VehicleIncident).where(\vi -> vi.LossParty ==
+        LossPartyType.TC_INSURED ).first() as VehicleIncident
+    if ((vehIncident != null and !vehIncident.VehicleParked and (vehIncident.driver == null or (vehIncident.driver != null and
+        vehIncident.driver.DateOfBirth == null)))
+        or (claim.FaultRating == null)
+        or (claim.Fault == null)
+        ){
+      claim.reject(TC_NEWLOSS, DisplayKey.get("Toggle.Rules.Validation.CloseClaim.CloseAllVehInc_Ext"), null, null)
+    }
+
+/*end00rule*/
+  }
+}

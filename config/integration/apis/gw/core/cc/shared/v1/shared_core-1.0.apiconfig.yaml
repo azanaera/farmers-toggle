@@ -1,0 +1,335 @@
+resources:
+  Activities:
+    defaultSort:
+      - "priority"
+      - "subject"
+    resource: gw.rest.core.cc.common.v1.activities.ActivitiesCoreResource
+  Activity:
+    resource: gw.rest.core.cc.common.v1.activities.ActivityCoreResource
+  ActivityAssignees:
+    resource: gw.rest.core.cc.common.v1.activities.ActivityAssigneesCoreResource
+  ActivityNotes:
+    defaultSort:
+      - "-createdDate"
+    resource: gw.rest.core.cc.common.v1.activities.ActivityNotesCoreResource
+  ActivityPattern:
+    resource: gw.rest.core.cc.common.v1.activitypatterns.ActivityPatternCoreResource
+  AdminOpenApiSchema:
+    resource: gw.api.modules.rest.framework.v1.openapi.v3.OpenApiJsonPlatformResource
+  ActivityPatterns:
+    defaultPageSize: 100
+    maxPageSize: 500
+    defaultSort:
+      - "code"
+    resource: gw.rest.core.cc.common.v1.activitypatterns.ActivityPatternsCoreResource
+  Assignee:
+    resource: gw.rest.core.cc.common.v1.assignment.AssigneeCoreResource
+  CheckSet:
+    resource: gw.rest.core.cc.claim.v1.claims.transactions.CheckSetCoreResource
+  CheckSets:
+    defaultSort:
+      - "createTime"
+    resource: gw.rest.core.cc.claim.v1.claims.transactions.CheckSetsCoreResource
+  Claim:
+    resource: gw.rest.core.cc.claim.v1.claims.ClaimCoreResource
+  ClaimActivities:
+    defaultSort:
+      - "priority"
+      - "dueDate"
+    resource: gw.rest.core.cc.claim.v1.claims.activities.ClaimActivitiesCoreResource
+  ClaimActivityAssignees:
+    resource: gw.rest.core.cc.claim.v1.claims.activityassignees.ClaimActivityAssigneesCoreResource
+  ClaimActivityPatterns:
+    defaultPageSize: 100
+    maxPageSize: 500
+    defaultSort:
+      - "code"
+    resource: gw.rest.core.cc.claim.v1.claims.activitypatterns.ClaimActivityPatternsCoreResource
+  ClaimApiOpenApiSchema:
+    resource: gw.api.modules.rest.framework.v1.openapi.v3.OpenApiJsonPlatformResource
+  ClaimContact:
+    resource: gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactCoreResource
+  ClaimContacts:
+    resource: gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactsCoreResource
+  ClaimContactRoleOwners:
+    defaultSort:
+      - "type"
+      - "displayName"
+    resource: gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactRoleOwnersCoreResource
+  ClaimDocuments:
+    resource: gw.rest.core.cc.claim.v1.claims.documents.ClaimDocumentsCoreResource
+    defaultSort:
+      - "name"
+  ClaimDwellingIncidents:
+    defaultSort:
+      - "description"
+    resource: gw.rest.core.cc.claim.property.v1.claims.dwellingincidents.ClaimDwellingIncidentsCoreResource
+  ClaimExposures:
+    defaultSort:
+      - "claimOrder"
+    resource: gw.rest.core.cc.claim.v1.claims.exposures.ClaimExposuresCoreResource
+  ClaimFixedPropertyIncidents:
+    defaultSort:
+      - "description"
+    resource: gw.rest.core.cc.claim.v1.claims.fixedpropertyincidents.ClaimFixedPropertyIncidentsCoreResource
+  ClaimInjuryIncidents:
+    defaultSort:
+      - "description"
+    resource: gw.rest.core.cc.claim.v1.claims.injuryincidents.ClaimInjuryIncidentsCoreResource
+  ClaimLivingExpensesIncidents:
+    resource: gw.rest.core.cc.claim.property.v1.claims.livingexpensesincidents.ClaimLivingExpensesIncidentsCoreResource
+    defaultSort:
+      - "startDate"
+      - "description"
+  ClaimNotes:
+    defaultSort:
+      - "-createdDate"
+    resource: gw.rest.core.cc.claim.v1.claims.notes.ClaimNotesCoreResource
+  ClaimRelatedObjects:
+    defaultSort:
+      - "type"
+      - "displayName"
+    resource: gw.rest.core.cc.claim.v1.claims.relatedobjects.ClaimRelatedObjectsCoreResource
+  ClaimServiceRequests:
+    defaultSort:
+      - "kind"
+      - "progress"
+    resource: gw.rest.core.cc.claim.v1.servicerequests.ClaimServiceRequestsCoreResource
+  Claims:
+    defaultSort:
+      - "-claimNumber"
+    resource: gw.rest.core.cc.claim.v1.claims.ClaimsCoreResource
+  ClaimSearch:
+    resource: gw.rest.core.cc.claim.v1.search.claims.ClaimSearchCoreResource
+  ClaimSearchResult:
+    resource: gw.rest.core.cc.claim.v1.search.claims.ClaimSearchResultCoreResource
+  ClaimVehicle:
+    resource: gw.rest.core.cc.claim.v1.claims.vehicles.ClaimVehicleCoreResource
+  ClaimVehicleIncidents:
+    resource: gw.rest.core.cc.claim.v1.claims.vehicleincidents.ClaimVehicleIncidentsCoreResource
+  CommonOpenApiSchema:
+    resource: gw.api.modules.rest.framework.v1.openapi.v3.OpenApiJsonPlatformResource
+  ContactRoleConstraints:
+    defaultSort:
+      - "code"
+    resource: gw.rest.core.cc.claim.v1.roleconstraints.ContactRoleConstraintsCoreResource
+  ContactRoleConstraint:
+    resource: gw.rest.core.cc.claim.v1.roleconstraints.ContactRoleConstraintCoreResource
+  Document:
+    resource: gw.rest.core.cc.claim.v1.claims.documents.DocumentCoreResource
+  DocumentContent:
+    resource: gw.rest.core.cc.claim.v1.claims.documents.DocumentContentCoreResource
+  DwellingIncident:
+    resource: gw.rest.core.cc.claim.property.v1.claims.dwellingincidents.DwellingIncidentCoreResource
+  Endorsement:
+    resource: gw.rest.core.cc.claim.v1.claims.policy.endorsements.EndorsementCoreResource
+  Exposure:
+    resource: gw.rest.core.cc.claim.v1.claims.exposures.ExposureCoreResource
+  FixedPropertyIncident:
+    resource: gw.rest.core.cc.claim.v1.claims.fixedpropertyincidents.FixedPropertyIncidentCoreResource
+  GenericRelation:
+    resource: gw.rest.core.cc.claim.v1.claims.relatedobjects.GenericRelationCoreResource
+  InjuryIncident:
+    resource: gw.rest.core.cc.claim.v1.claims.injuryincidents.InjuryIncidentCoreResource
+  GroupTransactions:
+    resource: gw.rest.core.cc.claim.v1.claims.transactions.GroupTransactionsCoreResource
+  LivingExpensesIncident:
+    resource: gw.rest.core.cc.claim.property.v1.claims.livingexpensesincidents.LivingExpensesIncidentCoreResource
+  LocationBasedRiskUnit:
+    resource: gw.rest.core.cc.claim.property.v1.claims.policy.locationbasedriskunits.LocationBasedRiskUnitCoreResource
+  LocationBasedRiskUnits:
+    defaultSort:
+      - "RUNumber"
+    resource: gw.rest.core.cc.claim.property.v1.claims.policy.locationbasedriskunits.LocationBasedRiskUnitsCoreResource
+  ServiceMessages:
+    defaultSort:
+      - "sendDate"
+    resource: gw.rest.core.cc.claim.v1.servicerequests.messages.MessagesCoreResource
+  Note:
+    resource: gw.rest.core.cc.common.v1.notes.NoteCoreResource
+  Notes:
+    resource: gw.rest.core.cc.common.v1.notes.NotesCoreResource
+  Policy:
+    resource: gw.rest.core.cc.claim.v1.claims.policy.PolicyCoreResource
+  PolicyCoverage:
+    mapper: Coverage
+    resource: gw.rest.core.cc.claim.v1.claims.policy.coverages.PolicyCoverageCoreResource
+  PolicyCoverages:
+    defaultSort:
+      - "coverageType"
+    resource: gw.rest.core.cc.claim.v1.claims.policy.coverages.PolicyCoveragesCoreResource
+  PolicyEndorsements:
+    defaultSort:
+      - "formNumber"
+    resource: gw.rest.core.cc.claim.v1.claims.policy.endorsements.PolicyEndorsementsCoreResource
+  PolicyLocation:
+    resource: gw.rest.core.cc.claim.v1.claims.policy.locations.PolicyLocationCoreResource
+  PolicyLocations:
+    defaultSort:
+      - "locationNumber"
+    resource: gw.rest.core.cc.claim.v1.claims.policy.locations.PolicyLocationsCoreResource
+  ReserveSet:
+    resource: gw.rest.core.cc.claim.v1.claims.transactions.ReserveSetCoreResource
+  ReserveSets:
+    defaultSort:
+      - "createTime"
+    resource: gw.rest.core.cc.claim.v1.claims.transactions.ReserveSetsCoreResource
+  ServiceRequest:
+    resource: gw.rest.core.cc.claim.v1.servicerequests.ServiceRequestCoreResource
+  ServiceRequests:
+    resource: gw.rest.core.cc.claim.v1.servicerequests.ServiceRequestsCoreResource
+  ServiceRequestChange:
+    resource: gw.rest.core.cc.claim.v1.servicerequests.history.ServiceRequestChangeCoreResource
+  ServiceRequestHistory:
+    defaultSort:
+      - "sequence"
+    resource: gw.rest.core.cc.claim.v1.servicerequests.history.ServiceRequestHistoryCoreResource
+  ServiceRequestMessage:
+    resource: gw.rest.core.cc.claim.v1.servicerequests.messages.ServiceRequestMessageCoreResource
+  ServiceRequestMessages:
+    defaultSort:
+      - "sendDate"
+    resource: gw.rest.core.cc.claim.v1.servicerequests.messages.ServiceRequestMessagesCoreResource
+  ServiceRequestQuote:
+    mapper: ServiceRequestStatement
+    updater: ServiceRequestStatement
+    resource: gw.rest.core.cc.claim.v1.servicerequests.quotes.ServiceRequestQuoteCoreResource
+  ServiceRequestInvoice:
+    mapper: ServiceRequestStatement
+    updater: ServiceRequestStatement
+    resource: gw.rest.core.cc.claim.v1.servicerequests.invoices.ServiceRequestInvoiceCoreResource
+  ServiceRequestInvoices:
+    defaultSort:
+      - "creationTime"
+    resource: gw.rest.core.cc.claim.v1.servicerequests.invoices.ServiceRequestInvoicesCoreResource
+  ServiceRequestQuotes:
+    defaultSort:
+      - "creationTime"
+    resource: gw.rest.core.cc.claim.v1.servicerequests.quotes.ServiceRequestQuotesCoreResource
+  ServiceRequestInstruction:
+    resource: gw.rest.core.cc.claim.v1.servicerequests.instructions.ServiceRequestInstructionCoreResource
+  ServiceRequestInstructions:
+    defaultSort:
+      - "createTime"
+    resource: gw.rest.core.cc.claim.v1.servicerequests.instructions.ServiceRequestInstructionsCoreResource
+  Transaction:
+    resource: gw.rest.core.cc.claim.v1.claims.transactions.TransactionCoreResource
+  Transactions:
+    defaultSort:
+      - "createTime"
+    resource: gw.rest.core.cc.claim.v1.claims.transactions.TransactionsCoreResource
+  TransactionApprovals:
+    resource: gw.rest.core.cc.claim.v1.claims.transactions.TransactionApprovalsCoreResource
+  TypeLists:
+    resource: gw.rest.core.cc.common.v1.metadata.TypelistsCoreResource
+  TypeList:
+    resource: gw.rest.core.cc.common.v1.metadata.TypelistCoreResource
+  User:
+    resource: gw.rest.core.cc.admin.v1.user.UserCoreResource
+  Users:
+    resource: gw.rest.core.cc.admin.v1.user.UsersCoreResource
+  VehicleRiskUnit:
+    resource: gw.rest.core.cc.claim.auto.v1.claims.policy.vehicleriskunits.VehicleRiskUnitCoreResource
+  VehicleRiskUnits:
+    defaultSort:
+      - "RUNumber"
+    resource: gw.rest.core.cc.claim.auto.v1.claims.policy.vehicleriskunits.VehicleRiskUnitsCoreResource
+  VehicleIncident:
+    resource: gw.rest.core.cc.claim.v1.claims.vehicleincidents.VehicleIncidentCoreResource
+basePaths:
+  admin: /admin/v1
+  common: /common/v1
+  claim: /claim/v1
+updaterFiles:
+  - gw.core.cc.admin.v1.admin_core-1.0
+  - gw.core.cc.claim.v1.claim_combined_core-1.0
+  - gw.core.cc.common.v1.common_core-1.0
+mappingFiles:
+  - gw.core.cc.admin.v1.admin_core-1.0
+  - gw.core.cc.claim.v1.claim_combined_core-1.0
+  - gw.core.cc.common.v1.common_core-1.0
+rootCollections:
+  Claim: Claims
+  User: Users
+resourceAccess:
+  gwabuid:
+    yaml: core.shared.v1.gwabuid_core-1.0
+  internal:
+    yaml: core.shared.v1.internal_core-1.0
+  policyNumbers:
+    yaml: core.shared.v1.policyNumbers_core-1.0
+  service:
+    yaml: core.shared.v1.serviceUser_core-1.0
+  unauthenticated:
+    yaml: core.shared.v1.unauthenticatedUser_core-1.0
+entityURIMappings:
+  Activity:
+    uri: "/common/v1/activities/${Activity.RestId}"
+  Note:
+    uri: "/common/v1/notes/${Note.RestId}"
+  Claim:
+    uri: "/claim/v1/claims/${Claim.RestId}"
+  ClaimContact:
+    parent: ClaimContact.Claim
+    uri: "${parentUri}/contacts/${ClaimContact.RestId}"
+  Contact:
+    parent: Contact.RestV1_MatchingClaimContact
+    uri: "${parentUri}"
+  Coverage:
+    parent: Coverage.Policy
+    uri: "${parentUri}/coverages/${Coverage.RestId}"
+  Document:
+    parent: Document.Claim
+    uri: "${parentUri}/documents/${Document.RestId}"
+  DwellingIncident:
+    parent: DwellingIncident.Claim
+    uri: "${parentUri}/dwelling-incidents/${DwellingIncident.RestId}"
+  Endorsement:
+    parent: Endorsement.Policy
+    uri: "${parentUri}/endorsements/${Endorsement.RestId}"
+  Exposure:
+    parent: Exposure.Claim
+    uri: "${parentUri}/exposures/${Exposure.RestId}"
+  FixedPropertyIncident:
+    parent: FixedPropertyIncident.Claim
+    uri: "${parentUri}/fixed-property-incidents/${FixedPropertyIncident.RestId}"
+  InjuryIncident:
+    parent: InjuryIncident.Claim
+    uri: "${parentUri}/injury-incidents/${InjuryIncident.RestId}"
+  LivingExpensesIncident:
+    parent: LivingExpensesIncident.Claim
+    uri: "${parentUri}/living-expenses-incidents/${LivingExpensesIncident.RestId}"
+  LocationBasedRU:
+    parent: LocationBasedRU.Policy
+    uri: "${parentUri}/location-based-risk-units/${LocationBasedRU.RestId}"
+  Policy:
+    parent: Policy.Claim
+    uri: "${parentUri}/policy"
+  PolicyLocation:
+    parent: PolicyLocation.Policy
+    uri: "${parentUri}/locations/${PolicyLocation.RestId}"
+  ServiceRequest:
+    uri: "/claim/v1/claims/${ServiceRequest.Claim.RestId}/service-requests/${ServiceRequest.RestId}"
+  ServiceRequestInstruction:
+    parent: ServiceRequestInstruction.ServiceRequest
+    uri: "${parentUri}/instructions/${ServiceRequestInstruction.RestId}"
+  ServiceRequestInvoice:
+    parent: ServiceRequestInvoice.ServiceRequest
+    uri: "${parentUri}/invoices/${ServiceRequestInvoice.RestId}"
+  ServiceRequestMessage:
+    parent: ServiceRequestMessage.ServiceRequest
+    uri: "${parentUri}/messages/${ServiceRequestMessage.RestId}"
+  ServiceRequestQuote:
+    parent: ServiceRequestQuote.ServiceRequest
+    uri: "${parentUri}/quotes/${ServiceRequestQuote.RestId}"
+  Transaction:
+    parent: Transaction.Claim
+    uri: "${parentUri}/transactions/${Transaction.RestId}"
+  VehicleIncident:
+    parent: VehicleIncident.Claim
+    uri: "${parentUri}/vehicle-incidents/${VehicleIncident.RestId}"
+  User:
+    uri: "/admin/v1/users/${User.RestId}"
+  VehicleRU:
+    parent: VehicleRU.Policy
+    uri: "${parentUri}/vehicle-risk-units/${VehicleRU.RestId}"

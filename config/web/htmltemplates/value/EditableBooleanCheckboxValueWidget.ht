@@ -1,0 +1,4 @@
+<label :wrapIf="label">
+  <input type="checkbox" disabled="${disabled}" class="${noTrack ? 'gw-noTrack'}" name="${renderId}" checked="${checked}"/>
+  <span :if="label" class="gw-label--inner">${label}</span>
+</label>

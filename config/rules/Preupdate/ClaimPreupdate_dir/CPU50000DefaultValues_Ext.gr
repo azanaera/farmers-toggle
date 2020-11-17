@@ -1,0 +1,17 @@
+package rules.Preupdate.ClaimPreupdate_dir
+
+
+@gw.rules.RuleName("CPU50000 - Default Values_Ext")
+internal class CPU50000DefaultValues_Ext {
+  static function doCondition(claim : entity.Claim) : boolean {
+/*start00rule*/
+return true
+/*end00rule*/
+}
+
+  static function doAction(claim : entity.Claim, actions : gw.rules.Action) {
+/*start00rule*/
+ 
+/*end00rule*/
+  }
+}

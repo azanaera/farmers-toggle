@@ -1,0 +1,3372 @@
+swagger: '2.0'
+info:
+  description: "APIs for claims and related objects"
+  version: '1.0.0'
+  title: "Claim API"
+basePath: /claim/v1
+x-gw-combine:
+  - gw.core.pl.framework.v1.framework_pl-1.0
+  - gw.core.pl.batch.v1.batch_pl-1.0
+x-gw-schema-import:
+  claims: gw.core.cc.claim.v1.claim_core-1.0
+x-gw-cors-policy: claims
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /claims:
+    get:
+      summary: "Retrieves a list of claims"
+      description: "Retrieves a list of claims, by default those assigned to current user, or using custom filter"
+      operationId: getClaims
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: Claims
+        childResourceType: Claim
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "The list of claims"
+          schema:
+            $ref: "#/definitions/ClaimsList"
+    post:
+      summary: "Create a new draft claim"
+      description: "Create a new draft claim"
+      operationId: createClaim
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: Claims
+        childResourceType: Claim
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ClaimRequest"
+      responses:
+        '201':
+          description: "Successful creation"
+          schema:
+            $ref: "#/definitions/ClaimResponse"
+  /claims/{claimId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "Retrieve a claim"
+      description: "Retrieve a claim"
+      operationId: getClaim
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: Claim
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ClaimResponse"
+    patch:
+      summary: "Update a claim"
+      description: "Update a claim"
+      operationId: patchClaim
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: Claim
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ClaimRequest"
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ClaimResponse"
+  /claims/{claimId}/activities:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "Returns a list of activities associated with this claim"
+      description: "Returns a list of activities associated with this claim"
+      operationId: getClaimActivities
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimActivities
+        childResourceType: Activity
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns a list of activities"
+          schema:
+            $ref: "#/definitions/ActivityList"
+    post:
+      summary: "Creates a new activity associated with this claim"
+      description: "Creates a new activity associated with this claim"
+      operationId: createClaimActivity
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimActivities
+        childResourceType: Activity
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ActivityRequest"
+      responses:
+        '201':
+          description: "Returns the details for the newly-created activity"
+          schema:
+            $ref: "#/definitions/ActivityResponse"
+  /claims/{claimId}/activity-assignees:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: The list of suggested people, groups, queues, etc. that new activities on this claim can be assigned to
+      description: >
+        The list of suggested people, groups, queues, etc. that new activities on this claim can be assigned to
+      operationId: getClaimActivityAssignees
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimActivityAssignees
+        childResourceType: ActivityAssignee
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: The suggested assignees
+          schema:
+            $ref: "#/definitions/AssigneeList"
+  /claims/{claimId}/activity-patterns:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "Returns a list of activity patterns that can be used to create activities on this claim"
+      description: "Returns a list of activity patterns that can be used to create activities on this claim"
+      operationId: getClaimActivityPatterns
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimActivityPatterns
+        childResourceType: ActivityPattern
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns a list of activities"
+          schema:
+            $ref: "#/definitions/ActivityPatternList"
+  /claims/{claimId}/cancel:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    post:
+      summary: "Cancels and removes the given claim; only allowed on draft claims."
+      description: "Cancels and removes the given claim; only allowed on draft claims."
+      operationId: cancel
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: Claim
+      x-gw-parameter-sets:
+        - delete-element
+      responses:
+        '204':
+          description: "Successful deletion"
+  /claims/{claimId}/contacts:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The contacts associated with a given claim"
+      description: "The contacts associated with a given claim"
+      operationId: getClaimContacts
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimContacts
+        childResourceType: ClaimContact
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ClaimContactList"
+    post:
+      summary: "Create a new contact on the given claim"
+      description: "Create a new contact on the given claim"
+      operationId: createClaimContact
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimContacts
+        childResourceType: ClaimContact
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ContactRequest"
+      responses:
+        '201':
+          description: "Successfully created"
+          schema:
+            $ref: "#/definitions/ContactResponse"
+  /claims/{claimId}/contacts/{contactId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/contactId"
+    get:
+      summary: "The details of a specific contact"
+      description: "The details of a specific contact"
+      operationId: getClaimContact
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: ClaimContact
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ContactResponse"
+    patch:
+      summary: "Update the details of the specific contact on the given claim"
+      description: "Update the details of the specific contact on the given claim"
+      operationId: patchClaimContact
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: ClaimContact
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ContactRequest"
+      responses:
+        '200':
+          description: "Successfully updated"
+          schema:
+            $ref: "#/definitions/ContactResponse"
+    delete:
+      summary: "Delete a contact on the given claim"
+      description: "Delete a contact on the given claim"
+      operationId: deleteClaimContact
+      x-gw-extensions:
+        operationType: delete-element
+        resourceType: ClaimContact
+      x-gw-parameter-sets:
+        - delete-element
+      responses:
+        '204':
+          description: "Successful deletion"
+  /claims/{claimId}/contact-role-owners:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The contact role owners associated with a given claim, including incidents, exposures, policy, and more."
+      description: >
+        The contact role owners associated with a given claim. This includes the claim, policy, incidents, exposures,
+        matters, negotiations, and evaluations. Worker's comp injury incidents are not included.
+      operationId: getClaimContactRoleOwners
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimContactRoleOwners
+        childResourceType: GenericRelation
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/GenericRelationList"
+  /claims/{claimId}/documents:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The documents associated with a given claim"
+      description: "The documents associated with a given claim"
+      operationId: getClaimDocuments
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimDocuments
+        childResourceType: Document
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/DocumentList"
+    post:
+      summary: "Create a new document on the given claim"
+      description: "Create a new document on the given claim"
+      operationId: createClaimDocument
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimDocuments
+        childResourceType: Document
+      consumes:
+        - multipart/form-data
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: metadata
+          in: formData
+          type: string
+          required: true
+          x-gw-schema-ref: "#/definitions/ClaimDocumentRequest"
+        - name: content
+          in: formData
+          type: file
+      responses:
+        '201':
+          description: "Successfully created"
+          schema:
+            $ref: "#/definitions/ClaimDocumentResponse"
+  /claims/{claimId}/documents/{documentId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/documentId"
+    get:
+      summary: "The details of a specific document"
+      description: "The details of a specific document"
+      operationId: getClaimDocument
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: Document
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ClaimDocumentResponse"
+    patch:
+      summary: "Update a document on the given claim"
+      description: "Update a document on the given claim"
+      operationId: patchClaimDocument
+      consumes:
+        - multipart/form-data
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: Document
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: metadata
+          in: formData
+          type: string
+          x-gw-schema-ref: "#/definitions/ClaimDocumentRequest"
+        - name: content
+          in: formData
+          type: file
+      responses:
+        '200':
+          description: "Successfully updated"
+          schema:
+            $ref: "#/definitions/ClaimDocumentResponse"
+    delete:
+      summary: "Delete a document on the given claim"
+      description: "Delete a document on the given claim"
+      operationId: deleteClaimDocument
+      x-gw-extensions:
+        operationType: delete-element
+        resourceType: Document
+      x-gw-parameter-sets:
+        - delete-element
+      responses:
+        '204':
+          description: "Successful deletion"
+  /claims/{claimId}/documents/{documentId}/content:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/documentId"
+    get:
+      summary: "The contents of a document"
+      description: "The contents of a document"
+      operationId: getDocumentContent
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: DocumentContent
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/DocumentContentsResponse"
+  /claims/{claimId}/exposures:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The exposures associated with a given claim"
+      description: "The exposures associated with a given claim"
+      operationId: getClaimExposures
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimExposures
+        childResourceType: Exposure
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ExposuresList"
+    post:
+      summary: "Create a new exposure on the given claim"
+      description: "Create a new exposure on the given claim"
+      operationId: createClaimExposure
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimExposures
+        childResourceType: Exposure
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ExposureRequest"
+      responses:
+        '201':
+          description: "Successfully created"
+          schema:
+            $ref: "#/definitions/ExposureResponse"
+  /claims/{claimId}/exposures/{exposureId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/exposureId"
+    get:
+      summary: "The details of a specific exposure"
+      description: "The details of a specific exposure"
+      operationId: getExposure
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: Exposure
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ExposureResponse"
+    patch:
+      summary: "Update the details of the specific exposure on the given claim"
+      description: "Update the details of the specific exposure on the given claim"
+      operationId: patchExposure
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: Exposure
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ExposureRequest"
+      responses:
+        '200':
+          description: "Successfully updated"
+          schema:
+            $ref: "#/definitions/ExposureResponse"
+    delete:
+      summary: "Delete the draft exposure"
+      description: "Delete the draft exposure"
+      operationId: deleteExposure
+      x-gw-extensions:
+        operationType: delete-element
+        resourceType: Exposure
+      x-gw-parameter-sets:
+        - delete-element
+      responses:
+        '204':
+          description: "Successful deletion"
+  /claims/{claimId}/exposures/{exposureId}/close:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/exposureId"
+    post:
+      summary: "Close the exposure"
+      description: "Close the exposure"
+      operationId: closeExposure
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: Exposure
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/ExposureCloseRequest"
+      responses:
+        '200':
+          description: "Successfully closed the exposure"
+          schema:
+            $ref: "#/definitions/ExposureResponse"
+  /claims/{claimId}/exposures/{exposureId}/validate:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/exposureId"
+    post:
+      summary: "Validate the exposure"
+      description: "Validate the exposure"
+      operationId: validateExposure
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: Exposure
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/ExposureValidationRequest"
+      responses:
+        '200':
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/ExposureValidationResponse"
+  /claims/{claimId}/fixed-property-incidents:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The fixed property incidents associated with a given claim"
+      description: "The fixed property incidents associated with a given claim"
+      operationId: getClaimFixedPropertyIncidents
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimFixedPropertyIncidents
+        childResourceType: FixedPropertyIncident
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/FixedPropertyIncidentList"
+    post:
+      summary: "Create a new fixed property incident on the given claim"
+      description: "Create a new fixed property incident on the given claim"
+      operationId: createClaimFixedPropertyIncident
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimFixedPropertyIncidents
+        childResourceType: FixedPropertyIncident
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/FixedPropertyIncidentRequest"
+      responses:
+        '201':
+          description: "Successfully created"
+          schema:
+            $ref: "#/definitions/FixedPropertyIncidentResponse"
+  /claims/{claimId}/fixed-property-incidents/{incidentId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/incidentId"
+    get:
+      summary: "The details of a specific fixed property incident"
+      description: "The details of a specific fixed property incident"
+      operationId: getFixedPropertyIncident
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: FixedPropertyIncident
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/FixedPropertyIncidentResponse"
+    patch:
+      summary: "Update the details of a specific fixed property incident"
+      description: "Update the details of a specific fixed property incident"
+      operationId: patchFixedPropertyIncident
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: FixedPropertyIncident
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/FixedPropertyIncidentRequest"
+      responses:
+        '200':
+          description: "Successfully updated"
+          schema:
+            $ref: "#/definitions/FixedPropertyIncidentResponse"
+    delete:
+      summary: "Delete a fixed property incident on the given claim"
+      description: "Delete a fixed property incident on the given claim"
+      operationId: deleteFixedPropertyIncident
+      x-gw-extensions:
+        operationType: delete-element
+        resourceType: FixedPropertyIncident
+      x-gw-parameter-sets:
+        - delete-element
+      responses:
+        '204':
+          description: "Successful deletion"
+  /claims/{claimId}/injury-incidents:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The injury incidents associated with a given claim"
+      description: "The injury incidents associated with a given claim"
+      operationId: getClaimInjuryIncidents
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimInjuryIncidents
+        childResourceType: InjuryIncident
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/InjuryIncidentList"
+    post:
+      summary: "Create a new injury incident on the given claim"
+      description: "Create a new injury incident on the given claim"
+      operationId: createClaimInjuryIncident
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimInjuryIncidents
+        childResourceType: InjuryIncident
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/InjuryIncidentRequest"
+      responses:
+        '201':
+          description: "Successfully created"
+          schema:
+            $ref: "#/definitions/InjuryIncidentResponse"
+  /claims/{claimId}/injury-incidents/{incidentId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/incidentId"
+    get:
+      summary: "The details of a specific injury incident"
+      description: "The details of a specific injury incident"
+      operationId: getInjuryIncident
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: InjuryIncident
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/InjuryIncidentResponse"
+    patch:
+      summary: "Update the details of a specific injury incident"
+      description: "Update the details of a specific injury incident"
+      operationId: patchInjuryIncident
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: InjuryIncident
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/InjuryIncidentRequest"
+      responses:
+        '200':
+          description: "Successfully updated"
+          schema:
+            $ref: "#/definitions/InjuryIncidentResponse"
+    delete:
+      summary: "Delete an injury incident on the given claim"
+      description: "Delete an injury incident on the given claim"
+      operationId: deleteInjuryIncident
+      x-gw-extensions:
+        operationType: delete-element
+        resourceType: InjuryIncident
+      x-gw-parameter-sets:
+        - delete-element
+      responses:
+        '204':
+          description: "Successful deletion"
+  /claims/{claimId}/vehicle-incidents:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "Retrieve vehicle incidents on a claim"
+      description: "Retrieve vehicle incidents on a claim"
+      operationId: getClaimVehicleIncidents
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimVehicleIncidents
+        childResourceType: VehicleIncident
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/VehicleIncidentList"
+    post:
+      summary: "Create a new vehicle incident"
+      description: "Create a new vehicle incident"
+      operationId: createClaimVehicleIncident
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimVehicleIncidents
+        childResourceType: VehicleIncident
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/VehicleIncidentRequest"
+      responses:
+        '201':
+          description: "Successfully created"
+          schema:
+            $ref: "#/definitions/VehicleIncidentResponse"
+  /claims/{claimId}/vehicle-incidents/{incidentId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/incidentId"
+    get:
+      summary: "Retrieve a vehicle incident"
+      description: "Retrieve a vehicle incident"
+      operationId: getVehicleIncident
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: VehicleIncident
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/VehicleIncidentResponse"
+    patch:
+      summary: "Update a vehicle incident"
+      description: "Update a vehicle incident"
+      operationId: patchVehicleIncident
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: VehicleIncident
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/VehicleIncidentRequest"
+      responses:
+        '200':
+          description: "Successfully updated"
+          schema:
+            $ref: "#/definitions/VehicleIncidentResponse"
+    delete:
+      summary: "Delete a vehicle incident on the given claim"
+      description: "Delete a vehicle incident on the given claim"
+      operationId: deleteVehicleIncident
+      x-gw-extensions:
+        operationType: delete-element
+        resourceType: VehicleIncident
+      x-gw-parameter-sets:
+        - delete-element
+      responses:
+        '204':
+          description: "Successful deletion"
+  /claims/{claimId}/notes:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The notes associated with a given claim"
+      description:  "The notes associated with a given claim"
+      operationId: getClaimNotes
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimNotes
+        childResourceType: Note
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/NoteList"
+    post:
+      summary: "Create a new note on this claim"
+      description: "Create a new note on this claim"
+      operationId: createClaimNote
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimNotes
+        childResourceType: Note
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/NoteRequest"
+      responses:
+        '201':
+          description: The details of the newly-created note
+          schema:
+            $ref: "#/definitions/NoteResponse"
+  /claims/{claimId}/related-objects:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: The list of objects related to this claim
+      description: >
+        The list of objects related to this claim which can be used as the values
+        for the "relatedTo" field on a note or activity. This includes the claim, contacts, unpromoted service requests,
+        service request specialists, exposures, and matters.
+      operationId: getClaimRelatedObjects
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimRelatedObjects
+        childResourceType: GenericRelation
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: Successful request
+          schema:
+            $ref: "#/definitions/GenericRelationList"
+  /claims/{claimId}/policy:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The policy associated with a given claim"
+      description: "The policy associated with a given claim"
+      operationId: getPolicy
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: Policy
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/PolicyResponse"
+  /claims/{claimId}/policy/coverages:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The policy level coverages associated with a given claim"
+      description: "The policy level coverages associated with a given claim"
+      operationId: getPolicyCoverages
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: PolicyCoverages
+        childResourceType: PolicyCoverage
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/PolicyCoverageList"
+  /claims/{claimId}/policy/coverages/{coverageId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/coverageId"
+    get:
+      summary: "The policy level coverage associated with a given claim"
+      description: "The policy level coverage associated with a given claim"
+      operationId: getPolicyCoverage
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: PolicyCoverage
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/PolicyCoverageResponse"
+  /claims/{claimId}/policy/endorsements:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The policy endorsements of a given claim"
+      description: "The policy endorsements of a given claim"
+      operationId: getPolicyEndorsements
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: PolicyEndorsements
+        childResourceType: Endorsement
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/PolicyEndorsementList"
+  /claims/{claimId}/policy/endorsements/{endorsementId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/endorsementId"
+    get:
+      summary: "The policy endorsement of a given claim"
+      description: "The policy endorsement of a given claim"
+      operationId: getPolicyEndorsement
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: Endorsement
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/PolicyEndorsementResponse"
+  /claims/{claimId}/policy/locations:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The locations associated with a given claim's policy"
+      description: "The locations associated with a given claim's policy"
+      operationId: getPolicyLocations
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: PolicyLocations
+        childResourceType: PolicyLocation
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/PolicyLocationList"
+  /claims/{claimId}/policy/locations/{locationId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/locationId"
+    get:
+      summary: "Details of a location on the given claim's policy"
+      description: "Details of a location on the given claim's policy"
+      operationId: getPolicyLocation
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: PolicyLocation
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/PolicyLocationResponse"
+  /claims/{claimId}/check-sets:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    post:
+      summary: "Create a new check set with payments"
+      description: "Create a new check set with payments"
+      operationId: createCheckSet
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimFinancialsApisBeta
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: CheckSets
+        childResourceType: CheckSet
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/CheckSetRequest"
+      responses:
+        '201':
+          description: "Successful creation"
+          schema:
+            $ref: "#/definitions/CheckSetResponse"
+  /claims/{claimId}/reserve-sets:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    post:
+      summary: "Create a new reserve set with reserves"
+      description: "Create a new reserve set with reserves"
+      operationId: createReserveSet
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimFinancialsApisBeta
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ReserveSets
+        childResourceType: ReserveSet
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ReserveSetRequest"
+      responses:
+        '201':
+          description: "Successful creation"
+          schema:
+            $ref: "#/definitions/ReserveSetResponse"
+  /claims/{claimId}/service-requests:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "Returns a list of service requests associated with the claim"
+      description: "Returns a list of service requests associated with the claim"
+      operationId: getServiceRequestsForClaim
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimServiceRequests
+        childResourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns a list of service requests for a claim"
+          schema:
+            $ref: "#/definitions/ServiceRequestList"
+    post:
+      summary: "Adds a service request to the claim"
+      description: "Adds a service request to the claim"
+      operationId: addServiceRequestToClaim
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimServiceRequests
+        childResourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRequestRequest"
+      responses:
+        '201':
+          description: "Returns the details of the newly created service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    get:
+      summary: "Retrieves a service request by its id"
+      description: "Retrieves a service request by its id"
+      operationId: getServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Returns the details of the service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+    patch:
+      summary: "Modifies an existing service request"
+      description: "Modifies an existing service request"
+      operationId: changeServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRequestRequest"
+      responses:
+        '200':
+          description: "Returns the details of the modified service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/cancel:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    post:
+      summary: "Cancels a service request"
+      description: "Records that the specialist does not intend to perform any further work on this service request"
+      operationId: cancelServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ActionWithReasonRequestBody"
+      responses:
+        '200':
+          description: "Returns the details of the cancelled service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/accept:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    post:
+      summary: "Accepts a service request"
+      description: "Records that the specialist has accepted this service request"
+      operationId: acceptServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/AcceptServiceRequestBody"
+      responses:
+        '200':
+          description: "Returns the details of the accepted service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/complete-work:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    post:
+      summary: "Indicates that the specialist has completed work"
+      description: "Indicates that the specialist has completed work"
+      operationId: completeRequestedWork
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - custom-action
+      responses:
+        '200':
+          description: "Returns the details of the service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/completion-date:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    post:
+      summary: "Updates the expected completion date of a service request"
+      description: "Updates the expected completion date of a service request"
+      operationId: updateExpectedCompletionDate
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ChangeExpectedDateBody"
+      responses:
+        '200':
+          description: "Returns the details of the updated service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/decline:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    post:
+      summary: "Declines a service request"
+      description: "Records that the specialist has declined to perform this service request"
+      operationId: declineServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ActionWithReasonRequestBody"
+      responses:
+        '200':
+          description: "Returns the details of the declined service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/quote-date:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    post:
+      summary: "Updates the expected quote completion date for a service request"
+      description: "Updates the expected quote completion date for a service request"
+      operationId: updateExpectedQuoteDate
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ChangeExpectedDateBody"
+      responses:
+        '200':
+          description: "Returns the details of the updated service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/resume:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    post:
+      summary: "Resumes progress of a suspended service request"
+      description: "Indicates that specialist has resumed work on this service request"
+      operationId: resumeServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ActionWithReasonRequestBody"
+      responses:
+        '200':
+          description: "Returns the details of the resumed service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/suspend:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    post:
+      summary: "Suspends progress of the service request"
+      description: "Indicates that specialist is blocked from making progress"
+      operationId: suspendServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ActionWithReasonRequestBody"
+      responses:
+        '200':
+          description: "Returns the details of the suspended service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/history:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    get:
+      summary: "Retrieves the history of changes to the service request"
+      description: "Retrieves the history of changes to the service request"
+      operationId: getServiceRequestHistory
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ServiceRequestHistory
+        childResourceType: ServiceRequestChange
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns the history of the service request"
+          schema:
+            $ref: "#/definitions/ServiceRequestHistoryList"
+  /claims/{claimId}/service-requests/{serviceRequestId}/instructions:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    get:
+      summary: "Retrieves the instruction history on a service request"
+      description: "Retrieves the instruction history on a service request"
+      operationId: getServiceRequestInstructionHistory
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ServiceRequestInstructions
+        childResourceType: ServiceRequestInstruction
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns the history of the service request's instruction"
+          schema:
+            $ref: "#/definitions/ServiceRequestInstructionHistoryList"
+    post:
+      summary: "Adds an instruction to the service request"
+      description: "Adds an instruction to the service request"
+      operationId: addInstruction
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ServiceRequestInstructions
+        childResourceType: ServiceRequestInstruction
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRequestInstructionRequest"
+      responses:
+        '201':
+          description: "Returns the new service request instruction detail"
+          schema:
+            $ref: "#/definitions/ServiceRequestInstructionResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/instructions/{instructionId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+      - $ref: "#/parameters/instructionId"
+    get:
+      summary: "Retrieves the service request instruction"
+      description: "Retrieves the service request instruction"
+      operationId: getInstruction
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: ServiceRequestInstruction
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Returns the service request instruction detail"
+          schema:
+            $ref: "#/definitions/ServiceRequestInstructionResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/invoices:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    get:
+      summary: "Retrieves the invoices on a service request"
+      description: "Retrieves the invoices on a service request"
+      operationId: getServiceRequestInvoices
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ServiceRequestInvoices
+        childResourceType: ServiceRequestInvoice
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns the list of the service request's invoices"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementList"
+    post:
+      summary: "Creates a new service request invoice"
+      description: "Creates a new service request invoice"
+      operationId: addInvoice
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ServiceRequestInvoices
+        childResourceType: ServiceRequestInvoice
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementRequest"
+      responses:
+        '201':
+          description: "Returns the details of the newly created invoice"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/invoices/{invoiceId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+      - $ref: "#/parameters/invoiceId"
+    get:
+      summary: "Retrieves a service request invoice by its id"
+      description: "Retrieves a service request invoice by its id"
+      operationId: getInvoice
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: ServiceRequestInvoice
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Returns the the service request invoice"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+    patch:
+      summary: "Modifies an existing service request invoice"
+      description: "Modifies an existing service request invoice"
+      operationId: changeInvoice
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: ServiceRequestInvoice
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementRequest"
+      responses:
+        '200':
+          description: "Returns the modified service request invoice"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/invoices/{invoiceId}/approve:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+      - $ref: "#/parameters/invoiceId"
+    post:
+      summary: "Approves an invoice that has been submitted"
+      description: "Approves an invoice that has been submitted"
+      operationId: approveInvoice
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequestInvoice
+      x-gw-parameter-sets:
+        - custom-action
+      responses:
+        '200':
+          description: "Returns the details of the approved service request invoice"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/invoices/{invoiceId}/reject:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+      - $ref: "#/parameters/invoiceId"
+    post:
+      summary: "Rejects an invoice that has been submitted"
+      description: "Rejects an invoice that has been submitted"
+      operationId: rejectInvoice
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequestInvoice
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ActionWithReasonRequestBody"
+      responses:
+        '200':
+          description: "Returns the details of the rejected service request invoice"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/invoices/{invoiceId}/withdraw:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+      - $ref: "#/parameters/invoiceId"
+    post:
+      summary: "Withdraws an invoice that has been submitted"
+      description: "Withdraws an invoice that has been submitted"
+      operationId: withdrawInvoice
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequestInvoice
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ActionWithReasonRequestBody"
+      responses:
+        '200':
+          description: "Returns the details of the withrawn invoice"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/messages:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    get:
+      summary: "Retrieves all of the messages for a given service request"
+      description: "Retrieves all of the messages for a given service request"
+      operationId: getMessagesForServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ServiceRequestMessages
+        childResourceType: ServiceRequestMessage
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns the list of the service request's messages"
+          schema:
+            $ref: "#/definitions/ServiceRequestMessageList"
+    post:
+      summary: "Creates a message on the service request"
+      description: "Creates a message on the service request"
+      operationId: createServiceRequestMessage
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ServiceRequestMessages
+        childResourceType: ServiceRequestMessage
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRequestMessageRequest"
+      responses:
+        '201':
+          description: "Returns the details of the newly created message"
+          schema:
+            $ref: "#/definitions/ServiceRequestMessageResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/messages/{messageId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+      - $ref: "#/parameters/messageId"
+    get:
+      summary: "Retrieves a service request message by its id"
+      description: "Retrieves a service request message by its id"
+      operationId: getMessageForServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: ServiceRequestMessage
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Returns the details of the service request message"
+          schema:
+            $ref: "#/definitions/ServiceRequestMessageResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/quotes:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    get:
+      summary: "Retrieves the quotes on a service request"
+      description: "Retrieves the quotes on a service request"
+      operationId: getServiceRequestQuotes
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ServiceRequestQuotes
+        childResourceType: ServiceRequestQuote
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns the list of the service request's quotes"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementList"
+    post:
+      summary: "Creates a new quote on the service request"
+      description: "Creates a new quote on the service request"
+      operationId: addQuote
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ServiceRequestQuotes
+        childResourceType: ServiceRequestQuote
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementRequest"
+      responses:
+        '201':
+          description: "Returns the details of the newly created quote"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/quotes/{quoteId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+      - $ref: "#/parameters/quoteId"
+    get:
+      summary: "Retrieves a service request quote by its id"
+      description: "Retrieves a service request quote by its id"
+      operationId: getQuote
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: ServiceRequestQuote
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Returns the details of the quote"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+    patch:
+      summary: "Modifies an existing service request quote"
+      description: "Modifies an existing service request quote"
+      operationId: changeQuote
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: ServiceRequestQuote
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementRequest"
+      responses:
+        '200':
+          description: "Returns the modified service request quote"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/quotes/{quoteId}/approve:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+      - $ref: "#/parameters/quoteId"
+    post:
+      summary: "Approves a quote on the service request"
+      description: "Approves a quote on the service request"
+      operationId: approveQuote
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequestQuote
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ApproveQuoteRequestBody"
+      responses:
+        '200':
+          description: "Returns the resulting service request quote"
+          schema:
+            $ref: "#/definitions/ServiceRequestStatementResponse"
+  /claims/{claimId}/service-requests/{serviceRequestId}/submit:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/serviceRequestId"
+    post:
+      summary: "Requests service from specialist"
+      description: "Submits the service request to the specialist for acceptance (with optional instruction)"
+      operationId: submitServiceRequest
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/ServiceRequestInstructionRequest"
+      responses:
+        '200':
+          description: "Returns the resulting service request (state)"
+          schema:
+            $ref: "#/definitions/ServiceRequestResponse"
+  /claims/{claimId}/transactions:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The transactions associated with a given claim"
+      description: "The transactions associated with a given claim"
+      operationId: getTransactions
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimFinancialsApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: Transactions
+        childResourceType: Transaction
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/TransactionList"
+  /claims/{claimId}/transactions/{transactionId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/transactionId"
+    get:
+      summary: "The details of a specific transaction"
+      description: "The details of a specific transaction"
+      operationId: getTransaction
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimFinancialsApisBeta
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: Transaction
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/TransactionResponse"
+  /claims/{claimId}/transactions/{transactionId}/approvals:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/transactionId"
+    get:
+      summary: "The approvals associated with a specific transaction"
+      description: "The approvals associated with a specific transaction"
+      operationId: getTransactionApprovals
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimFinancialsApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: TransactionApprovals
+        childResourceType: Activity
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ActivityList"
+  /claims/{claimId}/transactions/{transactionId}/group-transactions:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/transactionId"
+    get:
+      summary: "All transactions in the same transaction set for a recovery or recovery reserve"
+      description: "All transactions in the same transaction set for a recovery or recovery reserve"
+      operationId: getTransactionGroup
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimFinancialsApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: GroupTransactions
+        childResourceType: Transaction
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/TransactionList"
+  /claims/{claimId}/validate:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    post:
+      summary: "Validate a claim"
+      description: "Validate a claim"
+      operationId: validate
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: Claim
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/ClaimValidationRequest"
+      responses:
+        '200':
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/ClaimValidationResponse"
+  /claims/{claimId}/submit:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    post:
+      summary: "Submit this claim and transition it to the 'open' state"
+      description: "Submit this claim and transition it to the 'open' state"
+      operationId: submitClaim
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: Claim
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/ClaimSubmitRequest"
+      responses:
+        '200':
+          description: "Successfully submitted the claim"
+          schema:
+            $ref: "#/definitions/ClaimResponse"
+  /claims/{claimId}/close:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    post:
+      summary: "Close this claim and transition it to the 'closed' state"
+      description: "Close this claim and transition it to the 'closed' state"
+      operationId: closeClaim
+      x-gw-extensions:
+        operationType: custom-action
+        resourceType: Claim
+      x-gw-parameter-sets:
+        - custom-action
+      parameters:
+        - name: body
+          in: body
+          required: false
+          schema:
+            $ref: "#/definitions/ClaimCloseRequest"
+      responses:
+        '200':
+          description: "Successfully closed the claim"
+          schema:
+            $ref: "#/definitions/ClaimResponse"
+  /openapi.json:
+    get:
+      summary: Return the Open API 3.0 representation of the schema
+      description: Return the Open API 3.0 representation of the schema
+      operationId:
+        getOpenApiSchema
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: ClaimApiOpenApiSchema
+      parameters:
+        - $ref: "#/parameters/prettyPrintSchema"
+        - $ref: "#/parameters/filterByUser"
+        - $ref: "#/parameters/enablePolymorphism"
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: string
+  /role-constraints:
+    get:
+      summary: "All contact role constraints list"
+      description: "All contact role constraints list"
+      operationId: getContactRolesConstraints
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ContactRoleConstraints
+        childResourceType: ContactRoleConstraint
+      x-gw-parameter-sets:
+        - get-collection
+      parameters:
+        - name: schema
+          in: query
+          type: array
+          collectionFormat: multi
+          items:
+            type: string
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ContactRoleConstraintList"
+  /role-constraints/{contactRoleId}:
+    parameters:
+      - $ref: "#/parameters/contactRoleId"
+    get:
+      summary: "The constraints of the given contact role"
+      description: "The constraints of the given contact role"
+      operationId: getContactRoleConstraint
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: ContactRoleConstraint
+      x-gw-parameter-sets:
+        - get-element
+      parameters:
+        - name: schema
+          in: query
+          type: array
+          collectionFormat: multi
+          items:
+            type: string
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/ContactRoleConstraintResponse"
+  /search/claims:
+    post:
+      summary: "Searches for claims that match the specified criteria"
+      description: "Searches for claims that match the specified criteria"
+      operationId: searchClaims
+      x-gw-extensions:
+        operationType: search-collection
+        resourceType: ClaimSearch
+        childResourceType: ClaimSearchResult
+      x-gw-parameter-sets:
+        - search-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ClaimSearchRequest"
+      responses:
+        '200':
+          description: "Returns a list of claims that match the search criteria"
+          schema:
+            $ref: "#/definitions/ClaimSearchResultList"
+  /service-messages:
+    get:
+      summary: "Returns a list of service request messages"
+      description: "Returns a list of service request messages"
+      operationId: getServiceMessages
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ServiceMessages
+        childResourceType: ServiceRequestMessage
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns a list of service request messages"
+          schema:
+            $ref: "#/definitions/ServiceRequestMessageList"
+  /service-requests:
+    get:
+      summary: "Retrieves servicerequests"
+      description: "Retrieves a list of service requests, by default those assigned to current user, or using custom filter"
+      operationId: getServiceRequests
+      x-gw-beta: true
+      x-gw-featureToggles:
+        - ClaimServicingApisBeta
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ServiceRequests
+        childResourceType: ServiceRequest
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Returns a list of service requests for a specialist"
+          schema:
+            $ref: "#/definitions/ServiceRequestList"
+parameters:
+  coverageId:
+    name: coverageId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the coverage"
+  claimId:
+    name: claimId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the claim"
+  contactId:
+    name: contactId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the contact"
+  contactRoleId:
+    name: contactRoleId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the contact role"
+  documentId:
+    name: documentId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the document"
+  endorsementId:
+    name: endorsementId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for policy endorsement"
+  exposureId:
+    name: exposureId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the exposure"
+  incidentId:
+    name: incidentId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the incident"
+  instructionId:
+    name: instructionId
+    in: path
+    type: string
+    required: true
+    description: "The service request instruction identifier"
+  invoiceId:
+    name: invoiceId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the invoice"
+  locationId:
+    name: locationId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the location"
+  messageId:
+    name: messageId
+    in: path
+    type: string
+    required: true
+    description: "The service request message identifier"
+  quoteId:
+    name: quoteId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the quote"
+  serviceRequestId:
+    name: serviceRequestId
+    in: path
+    type: string
+    required: true
+    description: "The service request identifier"
+  transactionId:
+    name: transactionId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the transaction"
+definitions:
+  AcceptServiceRequestAttributes:
+    type: object
+    required:
+      - expectedCompletionDate
+    properties:
+      expectedCompletionDate:
+        type: string
+        format: date
+        x-gw-extensions:
+          after: now
+  AcceptServiceRequestBody:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/AcceptServiceRequestData"
+  AcceptServiceRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "#/definitions/AcceptServiceRequestAttributes"
+  ActionWithReasonRequestAttributes:
+    type: object
+    properties:
+      reason:
+        type: string
+  ActionWithReasonRequestBody:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/ActionWithReasonRequestData"
+  ActionWithReasonRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "#/definitions/ActionWithReasonRequestAttributes"
+  ApproveQuoteRequestAttributes:
+    type: object
+    required:
+      - requestedCompletionDate
+    properties:
+      requestedCompletionDate:
+        type: string
+        format: date
+        x-gw-extensions:
+          after: now
+  ApproveQuoteRequestBody:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/ApproveQuoteRequestData"
+  ApproveQuoteRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "#/definitions/ApproveQuoteRequestAttributes"
+  CheckSetData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/CheckSet"
+  CheckSetRequest:
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/CheckSetData"
+      included:
+        $ref: "#/definitions/CheckSetRequestInclusions"
+  CheckSetRequestInclusions:
+    type: object
+    properties:
+      ClaimContact:
+        type: array
+        items:
+          $ref: "#/definitions/ClaimContactData"
+  CheckSetResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/CheckSetData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  ClaimCloseRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ClaimCloseRequestData"
+  ClaimCloseRequestAttributes:
+    type: object
+    properties:
+      closedOutcome:
+        $ref: "claims#/definitions/TypeKeyReference"
+        x-gw-extensions:
+          typelist: "ClaimClosedOutcomeType"
+      reason:
+        type: string
+  ClaimCloseRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "#/definitions/ClaimCloseRequestAttributes"
+  ClaimData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/Claim"
+  ClaimDocumentRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/DocumentData"
+  ClaimDocumentResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/DocumentData"
+      included:
+        $ref: "#/definitions/DocumentResponseInclusions"
+  ClaimRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ClaimData"
+      included:
+        $ref: "#/definitions/ClaimRequestInclusions"
+  ClaimRequestInclusions:
+    type: object
+    properties:
+      ClaimContact:
+        type: array
+        items:
+          $ref: "#/definitions/ClaimContactData"
+      Exposure:
+        type: array
+        items:
+          $ref: "#/definitions/ExposureData"
+      FixedPropertyIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/FixedPropertyIncidentData"
+      InjuryIncident:
+        type: array
+        items:
+          $ref: "#/definitions/InjuryIncidentData"
+      ServiceRequest:
+        type: array
+        items:
+          $ref: "#/definitions/ServiceRequestData"
+      VehicleIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/VehicleIncidentData"
+  ClaimResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/ClaimData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  ClaimResponseInclusions:
+    type: object
+    properties:
+      Activity:
+        type: array
+        items:
+          $ref: "#/definitions/ActivityData"
+      ActivityPattern:
+        type: array
+        items:
+          $ref: "#/definitions/ActivityPatternData"
+      ClaimContact:
+        type: array
+        items:
+          $ref: "#/definitions/ClaimContactData"
+      GenericRelation:
+        type: array
+        items:
+          $ref: "#/definitions/GenericRelationData"
+      Endorsement:
+        type: array
+        items:
+          $ref: "#/definitions/EndorsementData"
+      Exposure:
+        type: array
+        items:
+          $ref: "#/definitions/ExposureData"
+      FixedPropertyIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/FixedPropertyIncidentData"
+      InjuryIncident:
+        type: array
+        items:
+          $ref: "#/definitions/InjuryIncidentData"
+      Note:
+        type: array
+        items:
+          $ref: "#/definitions/NoteData"
+      Policy:
+        type: array
+        items:
+          $ref: "#/definitions/PolicyData"
+      PolicyCoverage:
+        type: array
+        items:
+          $ref: "#/definitions/CoverageData"
+      PolicyLocation:
+        type: array
+        items:
+          $ref: "#/definitions/PolicyLocationData"
+      ServiceRequest:
+        type: array
+        items:
+          $ref: "#/definitions/ServiceRequestData"
+      Transaction:
+        type: array
+        items:
+          $ref: "#/definitions/TransactionData"
+      VehicleIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/VehicleIncidentData"
+  ClaimSearchRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ClaimSearchRequestData"
+  ClaimSearchRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/ClaimSearchRequestAttributes"
+  ClaimSearchResultData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/ClaimSearchResult"
+  ClaimSearchResultList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/ClaimSearchResultData"
+  ClaimSubmitRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ClaimSubmitRequestData"
+  ClaimSubmitRequestAttributes:
+    type: object
+    properties:
+      initialAssignment:
+        $ref: "claims#/definitions/Assignee"
+  ClaimSubmitRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "#/definitions/ClaimSubmitRequestAttributes"
+  ClaimValidationData:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/ValidationResult"
+  ClaimValidationRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ClaimValidationRequestData"
+  ClaimValidationRequestAttributes:
+    type: object
+    required:
+      - validateExposures
+      - validationLevel
+    properties:
+      validateExposures:
+        type: boolean
+      validationLevel:
+        $ref: "claims#/definitions/TypeKeyReference"
+        x-gw-extensions:
+          typelist: "ValidationLevel"
+  ClaimValidationRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "#/definitions/ClaimValidationRequestAttributes"
+  ClaimValidationResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/ClaimValidationData"
+  ClaimsList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/ClaimData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  ChangeExpectedDateAttributes:
+    type: object
+    required:
+      - newdate
+    properties:
+      newdate:
+        type: string
+        format: date
+        x-gw-extensions:
+          after: yesterday
+      reason:
+        type: string
+  ChangeExpectedDateBody:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/ChangeExpectedDateData"
+  ChangeExpectedDateData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "#/definitions/ChangeExpectedDateAttributes"
+  ContactRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ClaimContactData"
+  ContactResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/ClaimContactData"
+  ContactRoleConstraintData:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/ContactRoleConstraint"
+  ContactRoleConstraintList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/ContactRoleConstraintData"
+  ContactRoleConstraintResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/ContactRoleConstraintData"
+  CoverageData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/Coverage"
+  DocumentList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/DocumentData"
+  EndorsementData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/Endorsement"
+  ExposureCloseRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ExposureCloseRequestData"
+  ExposureCloseRequestAttributes:
+    type: object
+    properties:
+      closedOutcome:
+        $ref: "claims#/definitions/TypeKeyReference"
+        x-gw-extensions:
+          typelist: "ExposureClosedOutcomeType"
+      reason:
+        type: string
+  ExposureCloseRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "#/definitions/ExposureCloseRequestAttributes"
+  ExposureData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/Exposure"
+  ExposureRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ExposureData"
+      included:
+        $ref: "#/definitions/ExposureRequestInclusions"
+  ExposureRequestInclusions:
+    type: object
+    properties:
+      ClaimContact:
+        type: array
+        items:
+          $ref: "#/definitions/ClaimContactData"
+      FixedPropertyIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/FixedPropertyIncidentData"
+      InjuryIncident:
+        type: array
+        items:
+          $ref: "#/definitions/InjuryIncidentData"
+      VehicleIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/VehicleIncidentData"
+  ExposureResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/ExposureData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  ExposuresList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/ExposureData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  ExposureValidationData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/ValidationResult"
+  ExposureValidationRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ExposureValidationRequestData"
+  ExposureValidationRequestAttributes:
+    type: object
+    required:
+      - validateClaim
+      - validationLevel
+    properties:
+      validateClaim:
+        type: boolean
+      validationLevel:
+        $ref: "claims#/definitions/TypeKeyReference"
+        x-gw-extensions:
+          typelist: "ValidationLevel"
+  ExposureValidationRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "#/definitions/ExposureValidationRequestAttributes"
+  ExposureValidationResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/ExposureValidationData"
+  FixedPropertyIncidentData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/FixedPropertyIncident"
+  FixedPropertyIncidentList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/FixedPropertyIncidentData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"
+  FixedPropertyIncidentRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/FixedPropertyIncidentData"
+      included:
+        "$ref": "#/definitions/FixedPropertyIncidentRequestInclusions"
+  FixedPropertyIncidentRequestInclusions:
+    type: object
+    properties:
+      Contact:
+        type: array
+        items:
+          "$ref": "#/definitions/ClaimContactData"
+  FixedPropertyIncidentResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/FixedPropertyIncidentData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"
+  GenericRelationList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/GenericRelationData"
+  InjuryIncidentData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/InjuryIncident"
+  InjuryIncidentList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/InjuryIncidentData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  InjuryIncidentRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/InjuryIncidentData"
+      included:
+        $ref: "#/definitions/InjuryIncidentRequestInclusions"
+  InjuryIncidentRequestInclusions:
+    type: object
+    properties:
+      ClaimContact:
+        type: array
+        items:
+          $ref: "#/definitions/ClaimContactData"
+  InjuryIncidentResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/InjuryIncidentData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  PolicyCoverageList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/CoverageData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  PolicyCoverageResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/CoverageData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  PolicyData:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/Policy"
+  PolicyEndorsementList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/EndorsementData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  PolicyEndorsementResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/EndorsementData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  PolicyLocationData:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/PolicyLocation"
+  PolicyLocationList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/PolicyLocationData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  PolicyLocationResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/PolicyLocationData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  PolicyResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/PolicyData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  ReserveSetData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/ReserveSet"
+  ReserveSetRequest:
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/ReserveSetData"
+  ReserveSetResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/ReserveSetData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  ServiceRequestChangeData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/ServiceRequestChange"
+  ServiceRequestData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/ServiceRequest"
+  ServiceRequestHistoryInclusions:
+    type: object
+    properties:
+      Contact:
+        type: array
+        items:
+          "$ref": "#/definitions/ClaimContactData"
+      Instruction:
+        type: array
+        items:
+          "$ref": "#/definitions/ServiceRequestInstructionData"
+  ServiceRequestHistoryList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/ServiceRequestChangeData"
+      included:
+        "$ref": "#/definitions/ServiceRequestHistoryInclusions"
+  ServiceRequestInstructionData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/ServiceRequestInstruction"
+  ServiceRequestInstructionHistoryList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/ServiceRequestInstructionData"
+      included:
+        "$ref": "#/definitions/ServiceRequestInstructionInclusions"
+  ServiceRequestInstructionInclusions:
+    type: object
+    properties:
+      ClaimContact:
+        type: array
+        items:
+          "$ref": "#/definitions/ClaimContactData"
+  ServiceRequestInstructionRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/ServiceRequestInstructionData"
+      included:
+        "$ref": "#/definitions/ServiceRequestInstructionInclusions"
+  ServiceRequestInstructionResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/ServiceRequestInstructionData"
+      included:
+        "$ref": "#/definitions/ServiceRequestInstructionInclusions"
+  ServiceRequestList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/ServiceRequestData"
+      included:
+        "$ref": "#/definitions/ServiceRequestResponseInclusions"
+  ServiceRequestMessageData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/ServiceRequestMessage"
+  ServiceRequestMessageList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/ServiceRequestMessageData"
+      included:
+        "$ref": "#/definitions/ServiceRequestResponseInclusions"
+  ServiceRequestMessageRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/ServiceRequestMessageData"
+  ServiceRequestMessageResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/ServiceRequestMessageData"
+      included:
+        "$ref": "#/definitions/ServiceRequestResponseInclusions"
+  ServiceRequestRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/ServiceRequestData"
+      included:
+        "$ref": "#/definitions/ServiceRequestRequestInclusions"
+  ServiceRequestResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/ServiceRequestData"
+      included:
+        "$ref": "#/definitions/ServiceRequestResponseInclusions"
+  ServiceRequestRequestInclusions:
+    type: object
+    properties:
+      ClaimContact:
+        type: array
+        items:
+          "$ref": "#/definitions/ClaimContactData"
+  ServiceRequestResponseInclusions:
+    type: object
+    properties:
+      Claim:
+        type: array
+        items:
+          "$ref": "#/definitions/ClaimData"
+      ClaimContact:
+        type: array
+        items:
+          "$ref": "#/definitions/ClaimContactData"
+  ServiceRequestStatementData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/ServiceRequestStatement"
+  ServiceRequestStatementList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/ServiceRequestStatementData"
+      included:
+        "$ref": "#/definitions/ServiceRequestResponseInclusions"
+  ServiceRequestStatementRequest:
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/ServiceRequestStatementData"
+  ServiceRequestStatementResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/ServiceRequestStatementData"
+      included:
+        "$ref": "#/definitions/ServiceRequestResponseInclusions"
+  TransactionData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "claims#/definitions/Transaction"
+  TransactionList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/TransactionData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  TransactionResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/TransactionData"
+      included:
+        $ref: "#/definitions/ClaimResponseInclusions"
+  VehicleIncidentData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/VehicleIncident"
+  VehicleIncidentList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/VehicleIncidentData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"
+  VehicleIncidentRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/VehicleIncidentData"
+      included:
+        "$ref": "#/definitions/VehicleIncidentRequestInclusions"
+  VehicleIncidentRequestInclusions:
+    type: object
+    properties:
+      ClaimContact:
+        type: array
+        items:
+          "$ref": "#/definitions/ClaimContactData"
+  VehicleIncidentResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/VehicleIncidentData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"
+  # Replicated definitions in common_pl
+  ActivityData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/Activity"
+  ActivityPatternData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/ActivityPattern"
+  ActivityPatternList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/ActivityPatternData"
+      included:
+        "$ref": "#/definitions/ActivityResponseInclusions"
+  ActivityList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/ActivityData"
+      included:
+        "$ref": "#/definitions/ActivityResponseInclusions"
+  ActivityRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/ActivityData"
+      included:
+        "$ref": "#/definitions/ActivityRequestInclusions"
+  ActivityRequestInclusions:
+    type: object
+    properties:
+      Note:
+        type: array
+        items:
+          "$ref": "#/definitions/NoteData"
+  ActivityResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/ActivityData"
+      included:
+        "$ref": "#/definitions/ActivityResponseInclusions"
+  ActivityResponseInclusions:
+    type: object
+    properties:
+      Note:
+        type: array
+        items:
+          "$ref": "#/definitions/NoteData"
+  AssigneeData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/Assignee"
+  AssigneeList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/AssigneeData"
+      included:
+        "$ref": "#/definitions/ActivityResponseInclusions"
+  ClaimContactData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/ClaimContact"
+  ClaimContactList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/ClaimContactData"
+      included:
+        "$ref": "#/definitions/ActivityResponseInclusions"
+  DocumentContentData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/DocumentContent"
+  DocumentContentsResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/DocumentContentData"
+  DocumentData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/Document"
+  DocumentResponseInclusions:
+    type: object
+    properties:
+      DocumentContent:
+        type: array
+        items:
+          "$ref": "#/definitions/DocumentContentData"
+  GenericRelationData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/GenericRelation"
+  NoteData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/Note"
+  NoteList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/NoteData"
+      included:
+        "$ref": "#/definitions/ActivityResponseInclusions"
+  NoteRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/NoteData"
+  NoteResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/NoteData"
+      included:
+        "$ref": "#/definitions/ActivityResponseInclusions"
+
+

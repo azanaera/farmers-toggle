@@ -1,0 +1,11 @@
+endpoints:
+  - endpoint: /admin/v1/openapi.json
+    methods:
+      - GET
+  - endpoint: /claim/v1/openapi.json
+    methods:
+      - GET
+  - endpoint: /common/v1/openapi.json
+    methods:
+      - GET
+name: UnauthenticatedRole

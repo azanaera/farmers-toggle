@@ -1,0 +1,129 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "gw.core.pl.common.v1.common_pl-1.0",
+    "gw.core.cc.framework.v1.framework_core-1.0"
+  ],
+  "definitions": {
+    "Activity": {
+      "properties": {
+        "importance": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ImportanceLevel"
+          }
+        }
+      }
+    },
+    "ActivityPattern": {
+      "properties": {
+        "activityClass": {
+          "x-gw-extensions": {
+            "filterable": true
+          }
+        },
+        "activityType": {
+          "x-gw-extensions": {
+            "filterable": true
+          }
+        },
+        "availableForClosedClaims": {
+          "type": "boolean"
+        },
+        "category": {
+          "x-gw-extensions": {
+            "filterable": true
+          }
+        },
+        "claimLossType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "LossType"
+          }
+        },
+        "externallyOwned": {
+          "type": "boolean"
+        },
+        "importance": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ImportanceLevel"
+          }
+        }
+      }
+    },
+    "Assignee": {
+      "properties": {
+        "claimOwner": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Contact": {
+      "properties": {
+        "doctorSpecialty": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "SpecialtyType"
+          }
+        },
+        "medicalLicense": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "policySystemId": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-nullable": true
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContactRole"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "ContactRole": {
+      "type": "object",
+      "required": [
+        "role",
+        "relatedTo"
+      ],
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "comments": {
+          "type": "string"
+        },
+        "relatedTo": {
+          "$ref": "#/definitions/GenericRelation"
+        },
+        "role": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ContactRole"
+          }
+        }
+      }
+    },
+    "Document": {
+      "type": "object",
+      "properties": {
+        "relatedTo": {
+          "$ref": "#/definitions/GenericRelation"
+        }
+      }
+    },
+    "Note": {
+      "properties": {
+        "relatedTo": {
+          "$ref": "#/definitions/GenericRelation"
+        }
+      }
+    }
+  }
+}

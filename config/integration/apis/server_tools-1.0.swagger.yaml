@@ -1,0 +1,82 @@
+swagger: '2.0'
+info:
+  description: "A simple Rolling Update API"
+  version: '1.0'
+  title: "RollingUpdate API"
+basePath: /servertools/v1
+x-gw-apihandlers: gw.api.rest.servertools.v1.ServerToolsAPIHandler
+paths:
+  /rollingupdate:
+    post:
+      summary: "Start Rolling Update"
+      description: "Returns a rolling update status"
+      operationId: startRollingUpdate
+      produces:
+      - text/plain
+      responses:
+        '200':
+          description: "successful operation"
+          schema:
+            type: string
+    delete:
+          summary: "Stop Rolling Update"
+          description: "Returns a rolling update status"
+          operationId: stopRollingUpdate
+          produces:
+          - text/plain
+          responses:
+            '200':
+              description: "successful operation"
+              schema:
+                type: string
+    get:
+      summary: "Get Status of RollingUpdate"
+      description: "Returns a rolling update status"
+      operationId: getRollingUpdateStatus
+      produces:
+      - text/plain
+      responses:
+        '200':
+          description: "successful operation"
+          schema:
+            type: string
+  /shutdown:
+    delete:
+      summary: "Stop localhost"
+      description: "Returns shutting down status"
+      operationId: stopLocalhost
+      produces:
+      - text/plain
+      parameters:
+      - name: minutes
+        in: query
+        description: "How long to wait before starting shutdown"
+        required: true
+        type: integer
+      - name: killBatch
+        in: query
+        description: "Should we terminate batch processes"
+        required: false
+        type: boolean
+      responses:
+        '200':
+          description: "successful operation"
+          schema:
+            type: string
+  /isalive:
+    get:
+      summary: "Is cluster running and not shutting down"
+      description: "Returns server liveness status"
+      operationId: isAlive
+      x-gw-authenticated : false
+      produces:
+        - text/plain
+      responses:
+        '200':
+          description: "successful operation"
+          schema:
+            type: string
+        '503':
+          description: "cluster is not ready or is scheduled for shutdown"
+          schema:
+            type: string

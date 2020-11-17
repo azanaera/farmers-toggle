@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<plugin
+  interface="MessageTransport"
+  name="MetromileMessagePlugin">
+  <plugin-java
+    javaclass="com.metromile.ebs.gw.messaging.EbsMessageTransport"/>
+</plugin>

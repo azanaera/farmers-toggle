@@ -1,0 +1,104 @@
+endpoints:
+  - endpoint: /claim/v1/claims
+    methods:
+      - GET
+      - POST
+  - endpoint: "/claim/v1/claims/*"
+    methods:
+      - GET
+  - endpoint: "/claim/v1/claims/*/contacts/"
+    methods:
+      - GET
+      - POST
+  - endpoint: "/claim/v1/claims/*/contacts/*"
+    methods:
+      - GET
+  - endpoint: /admin/v1/openapi.json
+    methods:
+      - GET
+  - endpoint: /claim/v1/openapi.json
+    methods:
+      - GET
+  - endpoint: /common/v1/openapi.json
+    methods:
+      - GET
+accessibleFields:
+  Claim:
+    view:
+      - assignedUser
+      - claimNumber
+      - closeDate
+      - closedOutcome
+      - description
+      - howReported
+      - id
+      - insured
+      - jurisdiction
+      - lobCode
+      - lossCause
+      - lossDate
+      - lossLocation
+      - lossType
+      - mainContact
+      - policyAddresses
+      - policyNumber
+      - reportedByType
+      - reportedDate
+      - reporter
+      - reporterDetails
+      - state
+      - witnesses
+    edit:
+      - description
+      - howReported
+      - lobCode
+      - lossCause
+      - lossDate
+      - lossLocation
+      - lossType
+      - mainContact
+      - policyNumber
+      - reportedByType
+      - reporter
+      - witnesses
+  ClaimContact:
+    view:
+      - addressBookUID
+      - cellPhone
+      - companyName
+      - contactSubtype
+      - dateOfBirth
+      - displayName
+      - doctorSpecialty
+      - emailAddress1
+      - emailAddress2
+      - firstName
+      - homePhone
+      - id
+      - lastName
+      - medicalLicense
+      - primaryAddress
+      - primaryContact
+      - primaryLanguage
+      - primaryLocale
+      - primaryPhone
+      - primaryPhoneType
+      - roles
+      - workPhone
+    edit:
+      - addressBookUID
+      - cellPhone
+      - companyName
+      - contactSubtype
+      - dateOfBirth
+      - emailAddress1
+      - emailAddress2
+      - firstName
+      - homePhone
+      - lastName
+      - primaryAddress
+      - primaryLanguage
+      - primaryLocale
+      - primaryPhoneType
+      - workPhone
+name: Insured

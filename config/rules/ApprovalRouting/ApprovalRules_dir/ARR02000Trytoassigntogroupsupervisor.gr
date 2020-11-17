@@ -1,0 +1,28 @@
+package rules.ApprovalRouting.ApprovalRules_dir
+
+@gw.rules.RuleName("ARR02000 - Try to assign to group supervisor")
+internal class ARR02000Trytoassigntogroupsupervisor {
+  static function doCondition(transactionSet : entity.TransactionSet) : boolean {
+    
+/*start00rule*/
+return true
+/*end00rule*/
+
+  }
+
+  static function doAction(transactionSet : entity.TransactionSet, actions : gw.rules.Action) {
+
+/*start00rule*/
+    var group = transactionSet.LastApprovingUser.AllGroups.first() as Group
+    if(group == null){
+      group = transactionSet.Claim.getAssignedGroup()
+    }
+    if(group.Supervisor == transactionSet.LastApprovingUser and group.Parent != null){
+      group = group.Parent
+    }
+    transactionSet.setApprovingUser(group.Supervisor, group)
+    actions.exit()
+/*end00rule*/
+
+  }
+}

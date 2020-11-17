@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "gw.core.cc.common.v1.common_core-1.0"
+  ],
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        // France
+        "CEDEX": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "maxLength": 2,
+          "x-gw-extensions": {
+            "countryRestricted": true
+          }
+        },
+        // Japan-only Kanji field
+        "addressLine1Kanji": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true
+          }
+        },
+        // Japan-only Kanji field
+        "addressLine2Kanji": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true
+          }
+        },
+        // Japan-only Kanji field
+        "cityKanji": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true
+          }
+        }
+      }
+    }
+  }
+}

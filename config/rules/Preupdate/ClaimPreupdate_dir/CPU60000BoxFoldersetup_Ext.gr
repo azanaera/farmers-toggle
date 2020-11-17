@@ -1,0 +1,16 @@
+package rules.Preupdate.ClaimPreupdate_dir
+
+@gw.rules.RuleName("CPU60000 - Box Folder setup_Ext")
+internal class CPU60000BoxFoldersetup_Ext {
+  static function doCondition(claim : entity.Claim) : boolean {
+/*start00rule*/
+return true
+/*end00rule*/
+}
+
+  static function doAction(claim : entity.Claim, actions : gw.rules.Action) {
+/*start00rule*/
+    ext.integration.helper.BoxFolderCreatorHelper_Ext.setupClaimFolderOnBox(claim)
+/*end00rule*/
+  }
+}

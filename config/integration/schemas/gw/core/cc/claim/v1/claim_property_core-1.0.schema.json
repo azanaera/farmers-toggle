@@ -1,0 +1,305 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "gw.core.cc.claim.v1.claim_core-1.0"
+  ],
+  "definitions": {
+    "Building": {
+      "type": "object",
+      "properties": {
+        "buildingNumber": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "notes": {
+          "type": "string"
+        },
+        "policySystemId": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "Claim": {
+      "properties": {
+        "arson": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "fireDepartmentResponded": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "fireSource": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "hasWaterBeenTurnedOff": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "howWasFireDiscovered": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "isAnyoneInjured": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "isHomeHabitable": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "isHomeSecure": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "isRoofProtected": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "smokeDamageOnly": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "waterSource": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "WaterSource"
+          }
+        }
+      }
+    },
+    "DwellingIncident": {
+      "type": "object",
+      "properties": {
+        "damagedAreaSize": {
+          "type": "integer",
+          "x-gw-nullable": true,
+          "minimum": 1
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "dwellingRoomDamages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DwellingRoomDamage"
+          }
+        },
+        "fireProtectionAvailable": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "location": {
+          "$ref": "#/definitions/PolicyLocation",
+          "x-gw-nullable": true
+        },
+        "lossParty": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LossPartyType"
+          }
+        },
+        "materialsDamaged": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "numberOfPeopleOnPolicy": {
+          "type": "integer",
+          "x-gw-nullable": true,
+          "minimum": 0
+        },
+        "occupancyType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "sortable": true,
+            "typelist": "OccupancyType"
+          }
+        },
+        "propertySize": {
+          "type": "integer",
+          "x-gw-nullable": true,
+          "minimum": 1
+        },
+        "severity": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "SeverityType"
+          }
+        },
+        "yearBuilt": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "before": "now"
+          }
+        },
+        "yearsInHome": {
+          "type": "integer",
+          "x-gw-nullable": true,
+          "minimum": 0
+        }
+      }
+    },
+    "DwellingRoomDamage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "numberOfRooms": {
+          "type": "integer",
+          "x-gw-nullable": true,
+          "minimum": 1
+        },
+        "roomType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "RoomType"
+          }
+        }
+      }
+    },
+    "Exposure": {
+      "properties": {
+        "dwellingIncident": {
+          "$ref": "#/definitions/SimpleReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "resourceType": "DwellingIncident"
+          }
+        },
+        "livingExpensesIncident": {
+          "$ref": "#/definitions/SimpleReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "resourceType": "LivingExpensesIncident"
+          }
+        }
+      }
+    },
+    "LivingExpensesIncident": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "lossParty": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LossPartyType"
+          }
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        }
+      }
+    },
+    "LocationBasedRiskUnit": {
+      "type": "object",
+      "properties": {
+        "RUNumber": {
+          "type": "integer",
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "building": {
+          "$ref": "#/definitions/Building"
+        },
+        "coverages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Coverage"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "locationId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "otherRiskType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "entitySubtype": "LocationMiscRU",
+            "typelist": "OtherRiskType"
+          }
+        },
+        "policyLocation": {
+          "$ref": "#/definitions/PolicyLocation"
+        },
+        "policySystemId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "subtype": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "createOnly": true,
+            "typelist": "RiskUnit"
+          }
+        }
+      }
+    },
+    "PolicyLocation": {
+      "properties": {
+        "buildings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Building"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

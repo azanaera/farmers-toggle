@@ -1,0 +1,22 @@
+package rules.Validation.TransactionSetValidationRules_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("TXV26000 - Pay to field _ Ext")
+internal class TXV26000Paytofield_Ext {
+  static function doCondition(transactionSet      :         entity.TransactionSet) : boolean {
+/*start00rule*/
+var lenPayTo : int = 40
+    return transactionSet.Subtype == TC_CHECKSET and
+        (transactionSet as CheckSet).Checks.hasMatch(\chk  -> !chk.ManualCheck and chk.PayTo.length > lenPayTo)
+/*end00rule*/
+}
+
+  static function doAction(transactionSet      :         entity.TransactionSet, actions : gw.rules.Action) {
+/*start00rule*/
+transactionSet.reject(ValidationLevel.TC_PAYMENT,
+    DisplayKey.get("Toggle.Wizard.NewCheckWizard.PayTo_Ext"),
+        null,
+        null) 
+/*end00rule*/
+  }
+}

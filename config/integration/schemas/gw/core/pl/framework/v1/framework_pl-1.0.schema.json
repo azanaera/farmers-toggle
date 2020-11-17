@@ -1,0 +1,166 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "GenericRelation": {
+      "type": "object",
+      "required": [
+        "id",
+        "type"
+      ],
+      "properties": {
+        "displayName": {
+          "description": "This property is ignored on updates.",
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "LinkObject": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Links": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/LinkObject"
+      }
+    },
+    "MetaObject": {
+      "type": "object",
+      "properties": {
+        "checksum": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "links": {
+          "$ref": "#/definitions/Links"
+        },
+        "refid": {
+          "type": "string"
+        },
+        "related": {
+          "$ref": "#/definitions/RelatedCollections"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "MonetaryAmount": {
+      "type": "object",
+      "required": [
+        "amount",
+        "currency"
+      ],
+      "properties": {
+        "amount": {
+          "type": "string",
+          "format": "gw-bigdecimal"
+        },
+        "currency": {
+          "type": "string",
+          "x-gw-type": "typekey.Currency"
+        }
+      }
+    },
+    "PhoneNumber": {
+      "type": "object",
+      "required": [
+        "countryCode",
+        "number"
+      ],
+      "properties": {
+        "countryCode": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "PhoneCountryCode"
+          }
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "extension": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "number": {
+          "type": "string"
+        }
+      }
+    },
+    "RelatedCollection": {
+      "properties": {
+        "count": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SimpleReference"
+          }
+        },
+        "total": {
+          "type": "integer"
+        }
+      }
+    },
+    "RelatedCollections": {
+      "additionalProperties": {
+        "$ref": "#/definitions/RelatedCollection"
+      }
+    },
+    "SimpleReference": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "refid": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        }
+      }
+    },
+    "TypeKeyReference": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "name": {
+          "description": "This property is ignored on updates.",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

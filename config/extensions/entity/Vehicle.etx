@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<extension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="Vehicle">
+  <column
+    desc="This is the effective date of the related vehicle on the policy and the information is expected to come from the Policy Search integration. "
+    name="EffectiveDate_Ext"
+    nullok="true"
+    type="datetime"/>
+  <column
+    desc="This is the expiration date of the related vehicle on the policy and the information is expected to come from the Policy Search integration. "
+    name="ExpirationDate_Ext"
+    nullok="true"
+    type="datetime"/>
+  <typekey
+    desc="This is the status of the vehicle and the information is expected to come from the Policy Search integration. "
+    name="VehicleStatus_Ext"
+    nullok="true"
+    typelist="PolicyStatus"/>
+  <column
+    name="RideshareUse_Ext"
+    nullok="true"
+    type="bit"/>
+  <column
+    desc="Indicates if the vehicle is used for Business from Sure system"
+    name="BusinessUse_Ext"
+    nullok="true"
+    type="bit"/>
+</extension>

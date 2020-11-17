@@ -1,0 +1,3 @@
+<input type="checkbox" value="true" name="${renderId}" data-gw-click="noOp"
+       data-gw-flags-scope="${scope}" data-gw-flags-for-entry="${flags}" data-gw-flags-target="${target}"
+       checked="${checked}"/>

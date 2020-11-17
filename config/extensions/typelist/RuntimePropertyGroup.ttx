@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<typelistextension xmlns="http://guidewire.com/typelists" name="RuntimePropertyGroup" desc="Grouping for RuntimeProperty entities">
+  <typecode
+    code="numgen"
+    desc="Number Generation properties."
+    name="Number Generation"/>
+  <typecode
+    code="surepas"
+    desc="Properties for use with Sure PAS integration"
+    name="Sure PAS Properties"/>
+  <typecode
+    code="boxprop_ext"
+    desc="Properties for BOX DMS "
+    name="Box Properties"/>
+</typelistextension>

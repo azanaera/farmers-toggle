@@ -1,0 +1,21 @@
+resources:
+  AdminOpenApiSchema:
+    permissions:
+      view: true
+  Claims:
+    permissions:
+      view: true
+      create: "user.hasPolicyAccess(resource, Optional.of(data))"
+    filter: gw.rest.core.cc.shared.v1.RestrictClaimsForPolicyNumbersFilter
+  Claim:
+    permissions:
+      view: "user.hasPolicyAccessOnClaim(resource)"
+      edit: "user.hasPolicyAccessOnClaim(resource)"
+  ClaimApiOpenApiSchema:
+    permissions:
+      view: true
+  ClaimContacts:
+    filter: __noFilter
+  CommonOpenApiSchema:
+    permissions:
+      view: true

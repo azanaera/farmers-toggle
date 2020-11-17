@@ -1,0 +1,22 @@
+package rules.Validation.TransactionSetValidationRules_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("TXV25000 - Check Memo field _ Ext")
+internal class TXV25000CheckMemofield_Ext {
+  static function doCondition(transactionSet     :        entity.TransactionSet) : boolean {
+/*start00rule*/
+    var lenMemo : int = 40
+    return transactionSet.Subtype == TC_CHECKSET and
+        (transactionSet as CheckSet).Checks.hasMatch(\chk  -> !chk.ManualCheck and chk.Memo.length > lenMemo)
+/*end00rule*/
+}
+
+  static function doAction(transactionSet     :        entity.TransactionSet, actions : gw.rules.Action) {
+/*start00rule*/
+    transactionSet.reject(ValidationLevel.TC_PAYMENT,
+        DisplayKey.get("Toggle.Web.NewCheckWizard.NewPaymentDetail.Memo40_Ext"),
+        null,
+        null)
+/*end00rule*/
+  }
+}

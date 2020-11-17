@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<typelist xmlns="http://guidewire.com/typelists" name="PotentialSideHustle_Ext" desc="Potential Side Hustle Type">
+  <typecode
+    code="food_delivery"
+    desc="Food delivery"
+    name="Food delivery"
+    priority="10"/>
+  <typecode
+    code="ride_sharing"
+    desc="Ride sharing"
+    name="Ride sharing"
+    priority="20"/>
+</typelist>

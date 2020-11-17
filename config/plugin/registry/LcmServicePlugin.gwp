@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<plugin
+  interface="LcmServicePlugin"
+  name="LcmServicePlugin">
+  <plugin-java
+    disabled="false"
+    env="cloud"
+    javaclass="com.guidewire.pl.system.config.LcmServicePluginImpl">
+    <param
+      name="baseUrl"
+      value="${lcm.baseUrl}"/>
+    <param
+      name="refreshIntervalSec"
+      value="${lcm.refreshIntervalSec}"/>
+    <param
+      name="worksetUid"
+      value="${lcm.worksetUid}"/>
+    <param
+      name="scopes"
+      value="lcm.worksets.read"/>
+  </plugin-java>
+  <plugin-java
+    javaclass="com.guidewire.pl.system.config.DefaultLcmServicePlugin"></plugin-java>
+</plugin>

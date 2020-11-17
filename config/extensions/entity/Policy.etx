@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<extension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="Policy">
+  <column
+    desc="Edition Number from the sure system"
+    name="Edition_Ext"
+    nullok="true"
+    type="shorttext"/>
+  <column
+    desc="The form number from the sure system"
+    name="FormNumber_Ext"
+    nullok="true"
+    type="shorttext"/>
+  <typekey
+    desc="The policy state from the sure system"
+    name="PolicyState_Ext"
+    nullok="true"
+    typelist="State"/>
+  <column
+    desc="The policy ID string sent from Sure system"
+    name="SurePolicySystemPeriodID_Ext"
+    nullok="true"
+    type="shorttext"/>
+  <column
+    desc="Term Number of policy from Sure System"
+    name="Term_Ext"
+    nullok="true"
+    type="integer"/>
+  <column
+    desc="The Datetime the policy was created at in Sure system"
+    name="CreatedAt_Ext"
+    nullok="true"
+    type="datetime"/>
+  <column
+    name="RenewalCadence_Ext"
+    nullok="true"
+    type="shorttext"/>
+</extension>

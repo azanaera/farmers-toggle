@@ -1,0 +1,203 @@
+{
+  "schemaName": "gw.core.pl.framework.v1.framework_pl-1.0",
+  "mappers": {
+    "CurrencyAmount": {
+      "schemaDefinition": "MonetaryAmount",
+      "root": "gw.api.financials.CurrencyAmount",
+      "properties": {
+        "amount": {
+          "path": "CurrencyAmount.Amount"
+        },
+        "currency": {
+          "path": "CurrencyAmount.Currency"
+        }
+      }
+    },
+    "GenericRelation": {
+      "schemaDefinition": "GenericRelation",
+      "root": "entity.KeyableBean",
+      "properties": {
+        "displayName": {
+          "path": "KeyableBean.RestV1_SafeDisplayName"
+        },
+        "id": {
+          "path": "KeyableBean.RestId"
+        },
+        "type": {
+          "path": "(typeof KeyableBean).RelativeName"
+        }
+      }
+    },
+    // Suppress warnings
+    "LinkObject": {
+      "schemaDefinition": "LinkObject",
+      "root": "java.lang.Object",
+      "properties": {
+        "href": {
+          "path": "null as String",
+          "predicate": "false"
+        },
+        "methods": {
+          "path": "null as String[]",
+          "predicate": "false"
+        }
+      }
+    },
+    // Suppress warnings
+    "Links": {
+      "schemaDefinition": "Links",
+      "root": "java.lang.Object",
+      "properties": { }
+    },
+    // Suppress warnings
+    "MetaObject": {
+      "schemaDefinition": "MetaObject",
+      "root": "java.lang.Object",
+      "properties": {
+        "checksum": {
+          "path": "null as String",
+          "predicate": "false"
+        },
+        "id": {
+          "path": "null as String",
+          "predicate": "false"
+        },
+        "links": {
+          "path": "null",
+          "mapper": "#/mappers/Links",
+          "predicate": "false"
+        },
+        "refid": {
+          "path": "null as String",
+          "predicate": "false"
+        },
+        "related": {
+          "path": "null",
+          "mapper": "#/mappers/RelatedCollections",
+          "predicate": "false"
+        },
+        "type": {
+          "path": "null as String",
+          "predicate": "false"
+        }
+      }
+    },
+    "MonetaryAmount": {
+      "schemaDefinition": "MonetaryAmount",
+      "root": "gw.pl.currency.MonetaryAmount",
+      "properties": {
+        "amount": {
+          "path": "MonetaryAmount.Amount"
+        },
+        "currency": {
+          "path": "MonetaryAmount.Currency"
+        }
+      }
+    },
+    "PhoneNumber": {
+      "schemaDefinition": "PhoneNumber",
+      "root": "gw.rest.core.pl.common.v1.phone.PhoneNumber",
+      "properties": {
+        "countryCode": {
+          "path": "PhoneNumber.CountryCode",
+          "mapper": "#/mappers/TypeKeyReference"
+        },
+        "displayName": {
+          "path": "PhoneNumber.DisplayName"
+        },
+        "extension": {
+          "path": "PhoneNumber.Extension"
+        },
+        "number": {
+          "path": "PhoneNumber.Number"
+        }
+      }
+    },
+    // Suppress warnings
+    "RelatedCollection": {
+      "schemaDefinition": "RelatedCollection",
+      "root": "java.lang.Object",
+      "properties": {
+        "count": {
+          "path": "null as Integer",
+          "predicate": "false"
+        },
+        "data": {
+          "path": "null as entity.KeyableBean[]",
+          "mapper": "#/mappers/SimpleReference",
+          "predicate": "false"
+        },
+        "total": {
+          "path": "null as Integer",
+          "predicate": "false"
+        }
+      }
+    },
+    // Suppress warnings
+    "RelatedCollections": {
+      "schemaDefinition": "RelatedCollections",
+      "root": "java.lang.Object",
+      "properties": { }
+    },
+    "ResourceReference": {
+      "schemaDefinition": "SimpleReference",
+      "root": "gw.api.modules.rest.framework.v1.refs.ResourceReference",
+      "properties": {
+        "displayName": {
+          "path": "ResourceReference.DisplayName"
+        },
+        "id": {
+          "path": "ResourceReference.Id"
+        },
+        // Suppress warnings
+        "refid": {
+          "path": "null as String",
+          "predicate": "false"
+        },
+        "type": {
+          "path": "ResourceReference.Type"
+        },
+        "uri": {
+          "path": "ResourceReference.Uri"
+        }
+      }
+    },
+    "SimpleReference": {
+      "schemaDefinition": "SimpleReference",
+      "root": "entity.KeyableBean",
+      "properties": {
+        "displayName": {
+          "path": "KeyableBean.RestV1_SafeDisplayName"
+        },
+        "id": {
+          "path": "KeyableBean.RestId"
+        },
+        // Suppress warnings
+        "refid": {
+          "path": "null as String",
+          "predicate": "false"
+        },
+        "type": {
+          "path": "null as String",
+          "predicate": "false"
+        },
+        "uri": {
+          "path": "null as String",
+          "predicate": "false"
+        }
+      }
+    },
+    "TypeKeyReference": {
+      "schemaDefinition": "TypeKeyReference",
+      "root": "gw.entity.TypeKey",
+      "properties": {
+        "code": {
+          "path": "TypeKey.Code"
+        },
+        "name": {
+          "path": "TypeKey.DisplayName"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "schemaName": "gw.content.cc.claim.v1.claim_content-1.0",
+  "combine": [
+    "gw.core.cc.claim.v1.claim_core-1.0"
+  ],
+  "mappers": {
+    "Claim": {
+      "schemaDefinition": "Claim",
+      "root": "entity.Claim",
+      "properties": {
+        "insured": {
+          "path": "Claim.Policy.getClaimContactByRole(ContactRole.get('insured'))",
+          "mapper": "#/mappers/ClaimContactReference"
+        },
+        "mainContact": {
+          "path": "Claim.getClaimContactByRole(ContactRole.get('maincontact'))",
+          "mapper": "#/mappers/ClaimContactReference"
+        },
+        "reporter": {
+          "path": "Claim.getClaimContactByRole(ContactRole.get('reporter'))",
+          "mapper": "#/mappers/ClaimContactReference"
+        },
+        "witnesses": {
+          "path": "Claim.getClaimContactRolesByRole(ContactRole.get('witness')).orderBy(\\elt -> elt.Contact.DisplayName)",
+          "mapper": "#/mappers/Witness"
+        }
+      }
+    },
+    "ClaimContact": {
+      "schemaDefinition": "ClaimContact",
+      "root": "entity.ClaimContact",
+      "properties": {
+        "companyNameKanji": {
+          "path": "(ClaimContact.Contact as Company).NameKanji",
+          "predicate": "ClaimContact.Contact typeis Company"
+        },
+        "doctorSpecialty": {
+          "path": "(ClaimContact.Contact as Doctor).DoctorSpecialty",
+          "mapper": "#/mappers/TypeKeyReference",
+          "predicate": "ClaimContact.Contact typeis Doctor"
+        },
+        "medicalLicense": {
+          "path": "(ClaimContact.Contact as Doctor).MedicalLicense",
+          "predicate": "ClaimContact.Contact typeis Doctor"
+        },
+        "taxId": {
+          "path": "ClaimContact.Contact.maskTaxId(ClaimContact.Contact.TaxID)"
+        }
+      }
+    },
+    "CovTerm": {
+      "schemaDefinition": "CovTerm",
+      "root": "entity.CovTerm",
+      "properties": {
+        "covTermOrder": {
+          "path": "CovTerm.CovTermOrder"
+        },
+        "covTermPattern": {
+          "path": "CovTerm.CovTermPattern",
+          "mapper": "#/mappers/TypeKeyReference"
+        },
+        "modelAggregation": {
+          "path": "CovTerm.ModelAggregation",
+          "mapper": "#/mappers/TypeKeyReference"
+        },
+        "modelRestriction": {
+          "path": "CovTerm.ModelRestriction",
+          "mapper": "#/mappers/TypeKeyReference"
+        },
+        "value": {
+          "path": "CovTerm.Value"
+        }
+      }
+    },
+    "Coverage": {
+      "schemaDefinition": "Coverage",
+      "root": "entity.Coverage",
+      "properties": {
+        //Override covTerms mapping for consistent ordering
+        "covTerms": {
+          "path": "Coverage.CovTerms.sortBy(\\term -> term.CovTermOrder)",
+          "mapper": "#/mappers/CovTerm"
+        }
+      }
+    },
+    "Exposure": {
+      "schemaDefinition": "Exposure",
+      "root": "entity.Exposure",
+      "properties": {
+        "claimant": {
+          "path": "Exposure.getClaimContactByRole(ContactRole.get('claimant'))",
+          "mapper": "#/mappers/ClaimContactReference"
+        }
+      }
+    },
+    "InjuryIncident": {
+      "schemaDefinition": "InjuryIncident",
+      "root": "entity.InjuryIncident",
+      "properties": {
+        "injuredPerson": {
+          "path": "InjuryIncident.getClaimContactByRole(ContactRole.get('injured'))",
+          "mapper": "#/mappers/ClaimContactReference"
+        },
+        "primaryDoctor": {
+          "path": "InjuryIncident.PrimaryDoctor?.RestV1_getMatchingClaimContact(InjuryIncident.Claim).RestV1_AsReference",
+          "mapper": "#/mappers/ResourceReference"
+        }
+      }
+    },
+    "VehicleIncident": {
+      "schemaDefinition": "VehicleIncident",
+      "root": "entity.VehicleIncident",
+      "properties": {
+        "airbagsDeployed": {
+          "path": "VehicleIncident.AirbagsDeployed"
+        },
+        "collision": {
+          "path": "VehicleIncident.Collision"
+        },
+        "collisionPoint": {
+          "path": "VehicleIncident.CollisionPoint",
+          "mapper": "#/mappers/TypeKeyReference"
+        },
+        "driver": {
+          "path": "VehicleIncident.driver?.RestV1_getMatchingClaimContact(VehicleIncident.Claim)",
+          "mapper": "#/mappers/ClaimContactReference"
+        },
+        "equipmentFailure": {
+          "path": "VehicleIncident.EquipmentFailure"
+        },
+        "incidentOwner": {
+          "path": "VehicleIncident.incidentowner?.RestV1_getMatchingClaimContact(VehicleIncident.Claim)",
+          "mapper": "#/mappers/ClaimContactReference"
+        },
+        "passengers": {
+          "path": "VehicleIncident.passenger?.orderBy(\\c -> c.DisplayName).map(\\p -> p.RestV1_getMatchingClaimContact(VehicleIncident.Claim))",
+          "mapper": "#/mappers/ClaimContactReference"
+        },
+        "propertyDamageDescription": {
+          "path": "VehicleIncident.PropertyDesc"
+        },
+        "safeToDrive": {
+          "path": "VehicleIncident.VehicleOperable"
+        },
+        "theft": {
+          "path": "VehicleIncident.VehStolenInd"
+        },
+        "totalLoss": {
+          "path": "VehicleIncident.TotalLoss"
+        },
+        "vehicleDirection": {
+          "path": "VehicleIncident.VehicleDirection",
+          "mapper": "#/mappers/TypeKeyReference"
+        },
+        "vehicleParked": {
+          "path": "VehicleIncident.VehicleParked"
+        },
+        "vehicleType": {
+          "path": "VehicleIncident.VehicleType",
+          "mapper": "#/mappers/TypeKeyReference"
+        }
+      }
+    },
+    "Witness": {
+      "schemaDefinition": "Witness",
+      "root": "entity.ClaimContactRole",
+      "properties": {
+        "contact": {
+          "path": "ClaimContactRole.ClaimContact",
+          "mapper": "#/mappers/ClaimContactReference"
+        },
+        "perspective": {
+          "path": "ClaimContactRole.WitnessPerspective"
+        },
+        "position": {
+          "path": "ClaimContactRole.WitnessPosition",
+          "mapper": "#/mappers/TypeKeyReference"
+        },
+        "statementObtained": {
+          "path": "ClaimContactRole.WitnessStatementInd",
+          "mapper": "#/mappers/TypeKeyReference"
+        }
+      }
+    }
+  }
+}

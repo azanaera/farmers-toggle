@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<plugin
+  interface="AuthenticationSourceCreatorPlugin"
+  name="RestAuthenticationSourceCreatorPlugin">
+  <plugin-java
+    additionalInterfaces="gw.api.modules.rest.framework.v1.plugin.security.IRestAuthenticationSourceCreatorPlugin"
+    javaclass="gw.api.modules.rest.framework.v1.plugin.security.RestAuthenticationSourceCreatorPlugin">
+    <param
+      name="unauthenticatedUserPublicId"
+      value="default_data:1"/>
+    <param
+      name="externalUserPublicId"
+      value="default_data:1"/>
+    <param
+      name="servicePublicId"
+      value="default_data:1"/>
+    <param
+      name="defaultPublicId"
+      value="default_data:1"/>
+  </plugin-java>
+</plugin>

@@ -1,0 +1,36 @@
+package rules.Assignment.GlobalClaimAssignmentRules_dir.GCA00010Claims_dir
+uses gw.api.locale.DisplayKey
+uses gw.api.database.Query
+uses gw.api.util.DisplayableException
+uses gw.surepath.suite.integration.logging.StructuredLogger
+
+@gw.rules.RuleName("GCAA00010 - Auto")
+internal class GCAA00010Auto {
+  static function doCondition(claim : entity.Claim) : boolean {
+    
+/*start00rule*/
+return claim.LossType == TC_AUTO
+
+/*end00rule*/
+
+  }
+
+  static function doAction(claim : entity.Claim, actions : gw.rules.Action) {
+
+/*start00rule*/
+    var logger = StructuredLogger.RULES
+    var sp_Ext = ScriptParameters.ParentGroupType_Generalists_Ext
+    var grpType = GroupType.getTypeKey(sp_Ext)
+    var grp = Query.make(Group).compare(Group#GroupType, Equals, grpType).select().first()
+    if(grp != null and claim.CurrentAssignment.assignGroup( grp)){
+      logger.debug(DisplayKey.get("Rules.Assignment.Global.Claim", actions.ShortRuleName))
+      logger.debug(DisplayKey.get("Rules.Assignment.AssignedGroupIs", claim.AssignedGroup))
+      actions.exit()
+    }
+
+    logger.error("GlobalClaimAssignmentRules:GCAA00010Auto - Could not assign a group to Claim : ${claim.ClaimNumber}", null)
+    actions.exit()
+/*end00rule*/
+
+  }
+}

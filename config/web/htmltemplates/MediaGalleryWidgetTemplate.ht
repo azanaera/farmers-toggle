@@ -1,0 +1,15 @@
+<div class="gw-MediaGallery--title-section">
+    <div :if="title" class="gw-title">${title}</div>
+    <div :if="hasPaging" class="gw-MediaGallery--paging">
+        <div class="gw-paging--button gw-paging--first" data-gw-click="gwMediaGallery.first"></div>
+        <div class="gw-paging--button gw-paging--prev" data-gw-click="gwMediaGallery.prev"></div>
+        <div class="gw-paging--number"></div>
+        <div class="gw-paging--button gw-paging--next" data-gw-click="gwMediaGallery.next"></div>
+        <div class="gw-paging--button gw-paging--last" data-gw-click="gwMediaGallery.last"></div>
+    </div>
+</div>
+<div class="gw-MediaGallery--gallery ${hideDataClass}">
+</div>
+<div class="gw-MediaGallery--data gw-hidden">
+    <div :for="object" :in="mediaObjects" class="gw-hidden" data-gw-media-image-json="${object}"></div>
+</div>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../../pcf.xsd">
+  <InputSet
+    id="Medicare_ExtInputSet">
+    <Require
+      name="Exposure"
+      type="Exposure"/>
+    <InputDivider/>
+    <Label
+      label="DisplayKey.get(&quot;Toggle.NVV.Exposure.SubView.Exposure.Medicare_Ext&quot;)"/>
+    <BooleanRadioInput
+      editable="true"
+      id="ORM"
+      label="DisplayKey.get(&quot;Toggle.NVV.Exposure.SubView.Exposure.ORM_Ext&quot;)"
+      value="Exposure.ORM_Ext">
+      <PostOnChange/>
+    </BooleanRadioInput>
+    <DateInput
+      editable="true"
+      id="ORMTermDate"
+      label="DisplayKey.get(&quot;Toggle.NVV.Exposure.SubView.Exposure.ORMTermDate_Ext&quot;)"
+      value="Exposure.ORMTermDate_Ext"
+      visible="Exposure.ORM_Ext"></DateInput>
+    <DateInput
+      editable="true"
+      id="ExhaustDate"
+      label="DisplayKey.get(&quot;Toggle.NVV.Exposure.SubView.Exposure.ExhaustDate_Ext&quot;)"
+      value="Exposure.ExhaustDate_Ext"
+      visible="Exposure.ExposureType != ExposureType.TC_BODILYINJURYDAMAGE">
+      <PostOnChange
+        onChange="if(Exposure.ExhaustDate_Ext != null){Exposure.ORMTermDate_Ext = Exposure.ExhaustDate_Ext}"/>
+    </DateInput>
+    <CurrencyInput
+      editable="true"
+      id="NoFaultLimit"
+      label="DisplayKey.get(&quot;Toggle.NVV.Exposure.SubView.Exposure.NoFaultLimit_Ext&quot;)"
+      value="Exposure.NoFaultLimit_Ext"
+      visible="Exposure.ExposureType != ExposureType.TC_BODILYINJURYDAMAGE"/>
+    <BooleanRadioInput
+      editable="true"
+      id="ClaimantRepresentation"
+      label="DisplayKey.get(&quot;Toggle.NVV.Exposure.SubView.Exposure.ClaimantRepresentation_Ext&quot;)"
+      value="Exposure.ClaimantRepresentation_Ext"/>
+  </InputSet>
+</PCF>

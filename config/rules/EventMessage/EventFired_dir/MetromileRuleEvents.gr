@@ -1,0 +1,22 @@
+package rules.EventMessage.EventFired_dir
+
+uses com.metromile.ebs.gw.messaging.MessageBuilder
+uses com.metromile.ebs.gw.properties.EbsProperties
+uses com.metromile.ebs.gw.properties.PropertiesManager
+
+@gw.rules.RuleName("MetromileRuleEvents")
+internal class MetromileRuleEvents {
+  static function doCondition(messageContext : entity.MessageContext) : boolean {
+/*start00rule*/
+    return messageContext.DestID == 30
+        and (PropertiesManager.INSTANCE.getPropertyAsSet("mm.message.transport.enabled.events", ",").Empty|| PropertiesManager.INSTANCE.getPropertyAsSet("mm.message.transport.enabled.events", ",").contains(messageContext.EventName))
+/*end00rule*/
+}
+
+  static function doAction(messageContext : entity.MessageContext, actions : gw.rules.Action) {
+/*start00rule*/
+    var message = messageContext.createMessage("");
+    message.Payload = MessageBuilder.build(messageContext, message.Claim);
+/*end00rule*/
+  }
+}

@@ -1,0 +1,17 @@
+package rules.Validation.ExposureValidationRules_dir
+
+@gw.rules.RuleDisabled
+@gw.rules.RuleName("EXV09000 - Ability to Pay Validation_Ext")
+internal class EXV09000AbilitytoPayValidation_Ext {
+  static function doCondition(exposure    :    entity.Exposure) : boolean {
+/*start00rule*/
+return true
+/*end00rule*/
+}
+
+  static function doAction(exposure    :    entity.Exposure, actions : gw.rules.Action) {
+/*start00rule*/
+
+/*end00rule*/
+  }
+}

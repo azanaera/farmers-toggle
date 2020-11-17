@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<plugin
+  interface="IStartablePlugin"
+  name="SignatureKeyProviderPluginV1">
+  <plugin-gosu
+    additionalInterfaces="gw.api.modules.rest.framework.v1.plugin.security.SignatureKeyProviderPlugin"
+    env="ci-test"
+    gosuclass="gw.rest.testsupport.v1.auth.MockSignatureKeyProviderPlugin"/>
+  <plugin-java
+    javaclass="gw.api.modules.rest.framework.v1.plugin.security.JwkSignatureKeyProviderPlugin">
+    <param
+      name="defaultIssuer"
+      value="${signaturekeyprovider.defaultissuer:}"/>
+    <param
+      name="allowedIssuers"
+      value="${signaturekeyprovider.allowedissuers:}"/>
+  </plugin-java>
+</plugin>

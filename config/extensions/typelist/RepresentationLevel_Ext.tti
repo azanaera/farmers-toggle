@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<typelist xmlns="http://guidewire.com/typelists" name="RepresentationLevel_Ext" desc="">
+  <typecode
+    code="Direct"
+    desc="Direct"
+    name="Direct"
+    priority="10"/>
+  <typecode
+    code="Attorney"
+    desc="Attorney"
+    name="Attorney"
+    priority="20"/>
+  <typecode
+    code="Litigated"
+    desc="Litigated"
+    name="Litigated"
+    priority="30"/>
+</typelist>

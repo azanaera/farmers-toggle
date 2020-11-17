@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<extension xmlns="http://guidewire.com/datamodel" entityName="Document">
+  
+  <column name="Content" nullok="true" type="blob"/>
+  <column
+    desc="Received Date"
+    name="ReceivedDate_Ext"
+    nullok="true"
+    type="datetime"/>
+</extension>

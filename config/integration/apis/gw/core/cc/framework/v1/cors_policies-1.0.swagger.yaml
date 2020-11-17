@@ -1,0 +1,34 @@
+swagger: '2.0'
+x-gw-cors-policies:
+  admin:
+    enabled: ${cors.claims.enabled:true}
+    allowOrigins: ${cors.claims.allowOrigins:any}
+    allowMethods: ${cors.claims.allowMethods:null}
+    allowHeaders: ${cors.claims.allowHeaders:null}
+    allowCredentials: ${cors.claims.allowCredentials:true}
+    exposeHeaders: ${cors.claims.exposeHeaders:null}
+    maxAge: ${cors.claims.maxAge:1200}
+  claims:
+    enabled: ${cors.claims.enabled:true}
+    allowOrigins: ${cors.claims.allowOrigins:any}
+    allowMethods: ${cors.claims.allowMethods:null}
+    allowHeaders: ${cors.claims.allowHeaders:null}
+    allowCredentials: ${cors.claims.allowCredentials:true}
+    exposeHeaders: ${cors.claims.exposeHeaders:null}
+    maxAge: ${cors.claims.maxAge:1200}
+  common:
+    enabled: ${cors.common.enabled:true}
+    allowOrigins: ${cors.common.allowOrigins:any}
+    allowMethods: ${cors.common.allowMethods:null}
+    allowHeaders: ${cors.common.allowHeaders:null}
+    allowCredentials: ${cors.common.allowCredentials:true}
+    exposeHeaders: ${cors.common.exposeHeaders:null}
+    maxAge: ${cors.common.maxAge:1200}
+  servicerequests:
+    enabled: ${cors.servicerequests.enabled:true}
+    allowOrigins: ${cors.servicerequests.allowOrigins:any}
+    allowMethods: ${cors.servicerequests.allowMethods:null}
+    allowHeaders: ${cors.servicerequests.allowHeaders:null}
+    allowCredentials: ${cors.servicerequests.allowCredentials:true}
+    exposeHeaders: ${cors.servicerequests.exposeHeaders:null}
+    maxAge: ${cors.servicerequests.maxAge:1200}

@@ -1,0 +1,12 @@
+swagger: '2.0'
+info:
+  description: "APIs for InsuranceSuite administration objects"
+  version: '1.0.0'
+  title: "Admin API"
+x-gw-combine:
+  - gw.core.pl.admin.v1.admin_pl-1.0
+  - gw.core.cc.framework.v1.framework_core-1.0
+x-gw-schema-import:
+  admin: gw.core.cc.admin.v1.admin_core-1.0
+x-gw-cors-policy: admin
+paths: {}

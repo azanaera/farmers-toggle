@@ -1,0 +1,3 @@
+TXV24100BIExposureClaimCostPaymentRule
+TXV24200MedPayorPIPexposureclaimcostpaymentRule
+TXV243003rdpartyPaymentRule

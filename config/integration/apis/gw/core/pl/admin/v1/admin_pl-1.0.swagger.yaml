@@ -1,0 +1,145 @@
+swagger: '2.0'
+info:
+  description: "APIs for InsuranceSuite administration objects"
+  version: '1.0.0'
+  title: "Admin API"
+basePath: /admin/v1
+x-gw-combine:
+  - gw.core.pl.framework.v1.framework_pl-1.0
+  - gw.core.pl.batch.v1.batch_pl-1.0
+x-gw-schema-import:
+  admin: gw.core.pl.admin.v1.admin_pl-1.0
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /openapi.json:
+    get:
+      summary: Return the Open API 3.0 representation of the schema
+      description: Return the Open API 3.0 representation of the schema
+      operationId:
+        getOpenApiSchema
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: AdminOpenApiSchema
+      parameters:
+        - $ref: "#/parameters/prettyPrintSchema"
+        - $ref: "#/parameters/filterByUser"
+        - $ref: "#/parameters/enablePolymorphism"
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: string
+  /users:
+    get:
+      summary: "Do not use."
+      description: "Do not use."
+      operationId: getUsers
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: Users
+        childResourceType: User
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Do not use."
+          schema:
+            $ref: "#/definitions/UserList"
+    post:
+      summary: "Create a new user"
+      description: "Create a new user"
+      operationId: createUser
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: Users
+        childResourceType: User
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserRequest"
+      responses:
+        '201':
+          description: "The details of the newly-created user"
+          schema:
+            $ref: "#/definitions/UserResponse"
+  /users/{userId}:
+    parameters:
+      - $ref: "#/parameters/userId"
+    get:
+      summary: "Returns details for a single user"
+      description: "Returns details for a single user"
+      operationId: getUser
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: User
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Returns details for a single user"
+          schema:
+            $ref: "#/definitions/UserResponse"
+    patch:
+      summary: "Update this user's fields"
+      description: "Update this user's fields"
+      operationId: updateUser
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: User
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserRequest"
+      responses:
+        '200':
+          description: "Successful update"
+          schema:
+            $ref: "#/definitions/UserResponse"
+parameters:
+  userId:
+    name: userId
+    in: path
+    type: string
+    required: true
+    description: The REST identifier for the user
+definitions:
+  UserData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "admin#/definitions/User"
+  UserRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/UserData"
+  UserResponse:
+    type: object
+    properties:
+      data:
+        $ref: "#/definitions/UserData"
+  UserList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/UserData"

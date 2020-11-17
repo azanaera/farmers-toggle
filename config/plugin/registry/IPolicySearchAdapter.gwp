@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<plugin
+  interface="IPolicySearchAdapter"
+  name="IPolicySearchAdapter">
+  <plugin-gosu
+    additionalInterfaces="gw.rest.testsupport.v1.plugin.policy.PolicyStorePlugin"
+    gosuclass="gw.rest.testsupport.v1.plugin.policy.impl.TestSupportPolicyPlugin"/>
+  <plugin-gosu
+    env="cloud-dev,local"
+    gosuclass="ext.integration.plugin.policy.searchandretrieve.SurePolicySearchPlugin"/>
+</plugin>

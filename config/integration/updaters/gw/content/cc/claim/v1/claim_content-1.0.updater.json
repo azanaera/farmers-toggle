@@ -1,0 +1,192 @@
+{
+  "schemaName": "gw.content.cc.claim.v1.claim_content-1.0",
+  "combine": [
+    "gw.core.cc.claim.v1.claim_core-1.0"
+  ],
+  "typeUses": [
+    "gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactJsonValueResolver"
+  ],
+  "updaters": {
+    "Claim": {
+      "schemaDefinition": "Claim",
+      "root": "entity.Claim",
+      "properties": {
+        "mainContact": {
+          "path": "Claim.maincontact",
+          "valueResolver": {
+            "typeName": "ClaimContactJsonValueResolver"
+          }
+        },
+        "reporter": {
+          "path": "Claim.reporter",
+          "valueResolver": {
+            "typeName": "ClaimContactJsonValueResolver"
+          }
+        },
+        "witnesses": {
+          "path": "Claim.getClaimContactRolesByRole(ContactRole.get('witness'))",
+          "items": {
+            "create": "Claim.addEmptyRole(ContactRole.get('witness'))",
+            "remove": "Claim.removeRole(value)",
+            "jsonKey": "jsonValue.getObject('contact').get('id')",
+            "valueKey": "value.ClaimContact.RestId",
+            "updaterRef": "#/updaters/Witness"
+          }
+        }
+      }
+    },
+    "ClaimContact": {
+      "schemaDefinition": "ClaimContact",
+      "root": "entity.ClaimContact",
+      "properties": {
+        "companyNameKanji": {
+          "path": "(ClaimContact.Contact as Company).NameKanji"
+        },
+        "doctorSpecialty": {
+          "path": "(ClaimContact.Contact as Doctor).DoctorSpecialty",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "medicalLicense": {
+          "path": "(ClaimContact.Contact as Doctor).MedicalLicense"
+        }
+      }
+    },
+    "Exposure": {
+      "schemaDefinition": "Exposure",
+      "root": "entity.Exposure",
+      "properties": {
+        "claimant": {
+          "path": "Exposure.Claimant",
+          "valueResolver": {
+            "typeName": "ClaimContactJsonValueResolver"
+          }
+        }
+      }
+    },
+    "InjuryIncident": {
+      "schemaDefinition": "InjuryIncident",
+      "root": "entity.InjuryIncident",
+      "properties": {
+        "injuredPerson": {
+          "path": "InjuryIncident.injured",
+          "valueResolver": {
+            "typeName": "ClaimContactJsonValueResolver"
+          }
+        },
+        "primaryDoctor": {
+          "path": "InjuryIncident.PrimaryDoctor",
+          "valueResolver": {
+            "typeName": "ClaimContactJsonValueResolver"
+          }
+        }
+      }
+    },
+    "VehicleIncident": {
+      "schemaDefinition": "VehicleIncident",
+      "root": "entity.VehicleIncident",
+      "properties": {
+        "airbagsDeployed": {
+          "path": "VehicleIncident.AirbagsDeployed"
+        },
+        "collision": {
+          "path": "VehicleIncident.Collision"
+        },
+        "collisionPoint": {
+          "path": "VehicleIncident.CollisionPoint",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "driver": {
+          "path": "VehicleIncident.driver",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactJsonValueResolver"
+          }
+        },
+        "equipmentFailure": {
+          "path": "VehicleIncident.EquipmentFailure"
+        },
+        "incidentOwner": {
+          "path": "VehicleIncident.incidentowner",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactJsonValueResolver"
+          }
+        },
+        "passengers": {
+          "path": "VehicleIncident.passenger",
+          "items": {
+            "add": "VehicleIncident.addRole(ContactRole.get('passenger'), value)",
+            "remove": "VehicleIncident.removeRole(ContactRole.get('passenger'), value)",
+            "jsonKey": "jsonValue.get('id') as String",
+            "valueKey": "value.RestV1_getMatchingClaimContact(VehicleIncident.Claim).RestId",
+            "valueResolver": {
+              "typeName": "gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactJsonValueResolver"
+            }
+          },
+          "preUpdateValidators": [
+            {
+              "typeName": "gw.rest.core.cc.claim.v1.claims.vehicleincidents.ReferenceListValidator"
+            }
+          ]
+        },
+        "propertyDamageDescription": {
+          "path": "VehicleIncident.PropertyDesc"
+        },
+        "safeToDrive": {
+          "path": "VehicleIncident.VehicleOperable"
+        },
+        "theft": {
+          "path": "VehicleIncident.VehStolenInd"
+        },
+        "totalLoss": {
+          "path": "VehicleIncident.TotalLoss"
+        },
+        "vehicleDirection": {
+          "path": "VehicleIncident.VehicleDirection",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "vehicleParked": {
+          "path": "VehicleIncident.VehicleParked"
+        },
+        "vehicleType": {
+          "path": "VehicleIncident.VehicleType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "Witness": {
+      "schemaDefinition": "Witness",
+      "root": "entity.ClaimContactRole",
+      "properties": {
+        "contact": {
+          "path": "ClaimContactRole.Contact",
+          "valueResolver": {
+            "claimPath": "ClaimContactRole.ClaimContact.Claim",
+            "typeName": "ClaimContactJsonValueResolver"
+          }
+        },
+        "perspective": {
+          "path": "ClaimContactRole.WitnessPerspective"
+        },
+        "position": {
+          "path": "ClaimContactRole.WitnessPosition",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "statementObtained": {
+          "path": "ClaimContactRole.WitnessStatementInd",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    }
+  }
+}

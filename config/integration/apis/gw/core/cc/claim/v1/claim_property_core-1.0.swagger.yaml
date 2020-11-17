@@ -1,0 +1,339 @@
+swagger: '2.0'
+info:
+  description: "APIs for property claims and related objects"
+  version: '1.0.0'
+  title: "Claim API"
+x-gw-combine:
+  - gw.core.cc.claim.v1.claim_core-1.0
+x-gw-schema-import:
+  claims: gw.core.cc.claim.v1.claim_property_core-1.0
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /claims/{claimId}/dwelling-incidents:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "Retrieve dwelling incidents on a claim"
+      description: "Retrieve dwelling incidents on a claim"
+      operationId: getDwellingIncidents
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimDwellingIncidents
+        childResourceType: DwellingIncident
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/DwellingIncidentList"
+    post:
+      summary: "Create a new dwelling incident"
+      description: "Create a new dwelling incident"
+      operationId: createClaimDwellingIncident
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimDwellingIncidents
+        childResourceType: DwellingIncident
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/DwellingIncidentRequest"
+      responses:
+        '201':
+          description: "Successfully created"
+          schema:
+            $ref: "#/definitions/DwellingIncidentResponse"
+  /claims/{claimId}/dwelling-incidents/{incidentId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/incidentId"
+    get:
+      summary: "Retrieve a dwelling incident"
+      description: "Retrieve a dwelling incident"
+      operationId: getDwellingIncident
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: DwellingIncident
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/DwellingIncidentResponse"
+    patch:
+      summary: "Update a dwelling incident"
+      description: "Update a dwelling incident"
+      operationId: patchDwellingIncident
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: DwellingIncident
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/DwellingIncidentRequest"
+      responses:
+        '200':
+          description: "Successfully updated"
+          schema:
+            $ref: "#/definitions/DwellingIncidentResponse"
+  /claims/{claimId}/living-expenses-incidents:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "Retrieve living expense incidents on a claim"
+      description: "Retrieve living expense incidents on a claim"
+      operationId: getLivingExpensesIncidents
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: ClaimLivingExpensesIncidents
+        childResourceType: LivingExpensesIncident
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/LivingExpensesIncidentList"
+    post:
+      summary: "Create a new living expense incident"
+      description: "Create a new living expense incident"
+      operationId: createClaimLivingExpensesIncident
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: ClaimLivingExpensesIncidents
+        childResourceType: LivingExpensesIncident
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/LivingExpensesIncidentRequest"
+      responses:
+        '201':
+          description: "Successfully created"
+          schema:
+            $ref: "#/definitions/LivingExpensesIncidentResponse"
+  /claims/{claimId}/living-expenses-incidents/{incidentId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/incidentId"
+    get:
+      summary: "Retrieve a living expense incident"
+      description: "Retrieve a living expense incident"
+      operationId: getLivingExpensesIncident
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: LivingExpensesIncident
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/LivingExpensesIncidentResponse"
+    patch:
+      summary: "Update a living expense incident"
+      description: "Update a living expense incident"
+      operationId: patchLivingExpensesIncident
+      x-gw-extensions:
+        operationType: patch-element
+        resourceType: LivingExpensesIncident
+      x-gw-parameter-sets:
+        - patch-element
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/LivingExpensesIncidentRequest"
+      responses:
+        '200':
+          description: "Successfully updated"
+          schema:
+            $ref: "#/definitions/LivingExpensesIncidentResponse"
+  /claims/{claimId}/policy/location-based-risk-units:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The location based risk units of a policy associated with a given claim"
+      description: "The location based risk units of a policy associated with a given claim"
+      operationId: getLocationBasedRiskUnits
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: LocationBasedRiskUnits
+        childResourceType: LocationBasedRiskUnit
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/LocationBasedRiskUnitList"
+  /claims/{claimId}/policy/location-based-risk-units/{locationBasedRiskUnitId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/locationBasedRiskUnitId"
+    get:
+      summary: "Retrieve a location based risk unit"
+      description: "Retrieve a location based risk unit"
+      operationId: getLocationBasedRiskUnit
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: LocationBasedRiskUnit
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/LocationBasedRiskUnitResponse"
+parameters:
+  locationBasedRiskUnitId:
+    name: locationBasedRiskUnitId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the location based risk unit"
+definitions:
+  ClaimRequestInclusions:
+    type: object
+    properties:
+      DwellingIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/DwellingIncidentData"
+      LivingExpensesIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/LivingExpensesIncidentData"
+  ClaimResponseInclusions:
+    type: object
+    properties:
+      DwellingIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/DwellingIncidentData"
+      LivingExpensesIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/LivingExpensesIncidentData"
+      LocationBasedRiskUnit:
+        type: array
+        items:
+          "$ref": "#/definitions/LocationBasedRiskUnitData"
+  DwellingIncidentData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/DwellingIncident"
+  DwellingIncidentList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/DwellingIncidentData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"
+  DwellingIncidentRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/DwellingIncidentData"
+  DwellingIncidentResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/DwellingIncidentData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"
+  ExposureRequestInclusions:
+    type: object
+    properties:
+      DwellingIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/DwellingIncidentData"
+      LivingExpensesIncident:
+        type: array
+        items:
+          "$ref": "#/definitions/LivingExpensesIncidentData"
+  LivingExpensesIncidentData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/LivingExpensesIncident"
+  LivingExpensesIncidentList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/LivingExpensesIncidentData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"
+  LivingExpensesIncidentRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/LivingExpensesIncidentData"
+  LivingExpensesIncidentResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/LivingExpensesIncidentData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"
+  LocationBasedRiskUnitData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/LocationBasedRiskUnit"
+  LocationBasedRiskUnitList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/LocationBasedRiskUnitData"
+  LocationBasedRiskUnitResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/LocationBasedRiskUnitData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"

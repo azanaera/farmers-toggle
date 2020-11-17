@@ -1,0 +1,160 @@
+swagger: '2.0'
+info:
+  title: "System tools cluster API"
+  description: |
+               This API is related to system cluster resources.
+  version: '1.0'
+basePath: /system/v1/cluster
+x-gw-permissions:
+- integadmin
+x-gw-runlevel: maintenance
+x-gw-schema-import:
+  cluster: gw.pl.system.cluster_tools-1.0
+x-gw-apihandlers:
+- gw.api.rest.pl.system.v1.ClusterToolsAPIHandler
+paths:
+  /runlevel/highest:
+    get:
+      summary: Gets the highest run level of all/any servers in the cluster
+      description: |
+                   Gets the highest run level of all/any servers in the cluster.
+      operationId: getHighestRunlevel
+      produces:
+      - text/plain
+      responses:
+        '200':
+          description: |
+                       Successful operation
+          schema:
+            type: string
+  /state:
+    get:
+      summary: "Get state of cluster"
+      description: |
+                   Returns a list of all nodes in the cluster, their roles, and what distributed components they run.
+      operationId: getClusterState
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: |
+                       Successful operation
+          schema:
+            $ref: "cluster#/definitions/ClusterState"
+  "/{serverid}/releaseresources":
+    post:
+      summary: "Release resources (batch processes, plugins, message destinations etc) of node"
+      description: |
+                    Cleans and releases resources (batch processes, plugins, message destinations etc) held by a specified node.
+                    This method might have a dangerous impact if the node is still running.
+      operationId: nodeFailed
+      parameters:
+      - $ref: "#/parameters/serverid"
+      - name: evenifincluster
+        in: query
+        required: false
+        type: boolean
+        default: false
+      responses:
+        '200':
+          description: |
+                       Successful operation
+  "/{serverid}/shutdown":
+    post:
+      summary: "Schedule shutdown of node"
+      description: |
+                   Schedules the shutdown of a specified server.
+      operationId: scheduleShutdown
+      consumes:
+      - application/json
+      parameters:
+      - $ref: "#/parameters/serverid"
+      - name: body
+        in: body
+        required: true
+        schema:
+          $ref: "cluster#/definitions/ShutdownOptions"
+      responses:
+        '200':
+          description: "Shutdown scheduled"
+    delete:
+      summary: "Cancel shutdown"
+      description: |
+                   Cancels shutdown of a specified server.
+      operationId: cancelShutdown
+      parameters:
+      - $ref: "#/parameters/serverid"
+      responses:
+        '200':
+          description: |
+                       Shutdown cancellation accepted
+  "/components/{componenttype}/{componentid}/completefailedfailover":
+    post:
+      summary: "Complete failed failover"
+      description: |
+                   Completes component failover.
+      operationId: completeFailedFailover
+      parameters:
+      - $ref: "#/parameters/componenttype"
+      - $ref: "#/parameters/componentid"
+      responses:
+        '200':
+          description: |
+                       Successful operation
+  "/components/{transferableComponentType}/{componentid}/requesttransfer":
+    post:
+      summary: "Request Component Transfer"
+      description: |
+                   Requests component transfer.
+      operationId: requestComponentTransfer
+      parameters:
+      - $ref: "#/parameters/transferableComponentType"
+      - $ref: "#/parameters/componentid"
+      - name: serverId
+        in: query
+        description: |
+                      Target server id
+        required: true
+        type: string
+      responses:
+        '200':
+          description: |
+                       Successful operation
+parameters:
+  serverid:
+    name: serverid
+    in: path
+    description: |
+                 Id of the server
+    required: true
+    type: string
+  componenttype:
+    name: componenttype
+    in: path
+    description: |
+                 Type of component, these are subset of enum *gw.api.system.cluster.ComponentType*
+    required: true
+    type: string
+    enum:
+      - BATCH_PROCESS
+      - MESSAGE_DESTINATION
+      - MESSAGE_PREPROCESSOR
+      - STARTABLE_PLUGIN
+  transferableComponentType:
+    name: transferableComponentType
+    in: path
+    description: |
+                 Type of component, these are subset of enum *gw.api.system.cluster.ComponentType*
+    required: true
+    type: string
+    enum:
+      - MESSAGE_DESTINATION
+      - MESSAGE_PREPROCESSOR
+      - STARTABLE_PLUGIN
+  componentid:
+    name: componentid
+    in: path
+    description: |
+               Id of the component
+    required: true
+    type: string

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<plugin
+  interface="DisplayKeyLoaderPlugin"
+  name="DisplayKeyLoaderPlugin">
+  <plugin-java
+    disabled="false"
+    env="cloud"
+    javaclass="com.guidewire.pl.plugin.displaykeyloader.TsmDisplayKeyLoader">
+    <param
+      name="baseUrl"
+      value="${tsm.baseUrl}"/>
+    <param
+      name="defaultComponent"
+      value="${tsm.defaultComponent}"/>
+    <param
+      name="components"
+      value="${tsm.components}"/>
+  </plugin-java>
+  <plugin-java
+    javaclass="com.guidewire.pl.system.locale.DefaultDisplayKeyLoader">
+    <param
+      name="displayKeyBundleNames"
+      value=""/>
+  </plugin-java>
+</plugin>

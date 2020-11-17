@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  desc=""
+  name="UnderwritingCompanyType">
+  <typecode
+    code="parent"
+    desc="The main parent company"
+    name="Acme Insurance Parent Co."/>
+  <typecode
+    code="child1"
+    desc="A separately branded book of business"
+    name="Acme Fire Insurance Co."/>
+  <typecode
+    code="child2"
+    desc="An acquired subsidiary company"
+    name="Southern Mutual Insurance"/>
+  <typecode
+    code="44245"
+    desc="Toggle Insurance"
+    name="Toggle Insurance"/>
+  <typecode
+    code="21687"
+    name="Mid-Century Insurance Company "/>
+</typelistextension>

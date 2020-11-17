@@ -1,0 +1,24 @@
+
+.gw-EmbeddedWidget {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+
+  .gw-embedded-widget-iframe {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.gw-EmbeddedPanelWidget:not(.gw-border) {
+  .gw-EmbeddedWidget .gw-embedded-widget-iframe{
+    border:0;
+  }
+}
+
+.gw-EmbeddedInputWidget .gw-value {
+  width: 100%;
+  height: 100%;
+}

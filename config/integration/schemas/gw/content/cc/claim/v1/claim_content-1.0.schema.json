@@ -1,0 +1,219 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "gw.core.cc.claim.v1.claim_core-1.0"
+  ],
+  "definitions": {
+    "Claim": {
+      "properties": {
+        "insured": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference",
+          "readOnly": true
+        },
+        "mainContact": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference",
+          "x-gw-extensions": {
+            "resourceType": "ClaimContact"
+          }
+        },
+        "reporter": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "resourceType": "ClaimContact"
+          }
+        },
+        "witnesses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Witness"
+          }
+        }
+      }
+    },
+    "ClaimContact": {
+      "properties": {
+        "companyNameKanji": {
+          "type": "string",
+          "x-gw-extensions": {
+            "entitySubtype": "Company"
+          }
+        },
+        "doctorSpecialty": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Doctor",
+            "typelist": "SpecialtyType"
+          }
+        },
+        "medicalLicense": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Doctor"
+          }
+        }
+      }
+    },
+    "CovTerm": {
+      "properties": {
+        "covTermOrder": {
+          "type": "integer",
+          "x-gw-nullable": true
+        },
+        "covTermPattern": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "CovTermPattern"
+          }
+        },
+        "modelAggregation": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "CovTermModelAgg"
+          }
+        },
+        "modelRestriction": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "CovTermModelRest"
+          }
+        },
+        "value": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "Exposure": {
+      "properties": {
+        "claimant": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "resourceType": "ClaimContact"
+          }
+        }
+      }
+    },
+    "InjuryIncident": {
+      "properties": {
+        "injuredPerson": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference",
+          "x-gw-extensions": {
+            "resourceType": "ClaimContact"
+          }
+        },
+        "primaryDoctor": {
+          "$ref": "#/definitions/SimpleReference",
+          "x-gw-nullable": true
+        }
+      }
+    },
+    "VehicleIncident": {
+      "properties": {
+        "airbagsDeployed": {
+          "type": "boolean"
+        },
+        "collision": {
+          "type": "boolean"
+        },
+        "collisionPoint": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "CollisionPoint"
+          }
+        },
+        "driver": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference",
+          "x-gw-extensions": {
+            "resourceType": "ClaimContact"
+          }
+        },
+        "equipmentFailure": {
+          "type": "boolean"
+        },
+        "incidentOwner": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "resourceType": "ClaimContact"
+          }
+        },
+        "passengers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UpdatablePolicyObjectReference",
+            "x-gw-extensions": {
+              "resourceType": "ClaimContact"
+            }
+          }
+        },
+        "propertyDamageDescription": {
+          "type": "string"
+        },
+        "safeToDrive": {
+          "type": "boolean"
+        },
+        "theft": {
+          "type": "boolean"
+        },
+        "totalLoss": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "vehicleDirection": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "VehicleDirection"
+          }
+        },
+        "vehicleParked": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "vehicleType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "VehicleType"
+          }
+        }
+      }
+    },
+    "Witness": {
+      "type": "object",
+      "required": [
+        "contact"
+      ],
+      "properties": {
+        "contact": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference",
+          "x-gw-extensions": {
+            "resourceType": "ClaimContact"
+          }
+        },
+        "perspective": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "WitnessPosition"
+          }
+        },
+        "statementObtained": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "YesNo"
+          }
+        }
+      }
+    }
+  }
+}

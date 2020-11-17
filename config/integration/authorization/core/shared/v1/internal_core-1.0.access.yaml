@@ -1,0 +1,275 @@
+combine:
+  - gw.core.pl.common.v1.common_pl-1.0
+resources:
+  ActivityNotes:
+    permissions:
+      view:
+        - __inherit
+        - "perm.System.viewclaimnotes"
+      create: "perm.Claim.createnote(resource.Activity.Claim)"
+    filter: gw.rest.core.cc.claim.v1.claims.notes.ActivityNoteFilter
+  AdminOpenApiSchema:
+    permissions:
+      view: true
+  CheckSets:
+    permissions:
+      view:
+        - __inherit
+        - "perm.Claim.viewpayments(resource.Claim)"
+      create:
+        - "perm.Claim.viewpayments(resource.Claim)"
+        - "perm.Claim.createpayment(resource.Claim)"
+    filter: __noFilter
+  Claim:
+    permissions:
+      view: "perm.Claim.view(resource.Claim)"
+      edit: "perm.Claim.edit(resource.Claim)"
+      delete: false
+      cancel: "perm.Claim.edit(resource.Claim)"
+      close: "perm.Claim.close(resource.Claim)"
+      submit:
+        - "perm.Claim.edit(resource.Claim)"
+        - "perm.Claim.create"
+      validate: "perm.Claim.validate(resource.Claim)"
+  ClaimActivities:
+    permissions:
+      view:
+        - __inherit
+        - "perm.System.viewworkplan"
+      create: "perm.Claim.createactivity(resource.Claim)"
+    filter: __noFilter
+  ClaimApiOpenApiSchema:
+    permissions:
+      view: true
+  ClaimContact:
+    permissions:
+      view:
+        - __inherit
+        - "perm.Contact.viewlocal"
+      edit:
+        - __inherit
+        - "perm.Contact.editlocal(resource.ClaimContact.Contact)"
+      delete:
+        - "perm.Claim.edit(resource.Claim)"
+        - "perm.Claim.managepartiesinvolved(resource.Claim)"
+  ClaimContacts:
+    permissions:
+      view:
+        - __inherit
+        - "perm.Contact.viewlocal"
+      create:
+        - "perm.Claim.edit(resource.Claim)"
+        - "perm.Contact.createlocal"
+    filter: __noFilter
+  ClaimDocuments:
+    permissions:
+      view:
+        - __inherit
+        - "perm.System.viewdocs"
+      create: "perm.Claim.createdocument(resource.Claim)"
+    filter: gw.rest.core.cc.claim.v1.claims.documents.DocumentFilterFactory
+  ClaimDwellingIncidents:
+    permissions:
+      create: "perm.Claim.createincident(resource.Claim)"
+    filter: __noFilter
+  ClaimExposures:
+    permissions:
+      view:
+        - __inherit
+        - "perm.System.viewexposures"
+      create: "perm.Claim.createexposure(resource.Parent.Claim)"
+    filter: gw.rest.core.cc.claim.v1.claims.exposures.ExposureFilterFactory
+  ClaimFixedPropertyIncidents:
+    permissions:
+      create: "perm.Claim.createincident(resource.Claim)"
+    filter: __noFilter
+  ClaimInjuryIncidents:
+    permissions:
+      create: "perm.Claim.createincident(resource.Claim)"
+    filter: __noFilter
+  ClaimLivingExpensesIncidents:
+    permissions:
+      create: "perm.Claim.createincident(resource.Claim)"
+    filter: __noFilter
+  ClaimNotes:
+    permissions:
+      view:
+        - __inherit
+        - "perm.System.viewclaimnotes"
+      create: "perm.Claim.createnote(resource.Claim)"
+    filter: gw.rest.core.cc.claim.v1.claims.notes.NoteFilterFactory
+  Claims:
+    permissions:
+      view: true
+      create: "perm.Claim.create"
+    filter: gw.rest.core.cc.claim.v1.claims.ClaimSecurityFilter
+  ClaimSearch:
+    permissions:
+      view: "perm.System.viewsearch"
+    filter: __noFilter
+  ClaimSearchResult:
+    permissions:
+      view: "perm.Claim.genericviewclaim"
+  ClaimServiceRequests:
+    filter: __noFilter
+  ClaimVehicleIncidents:
+    permissions:
+      create: "perm.Claim.createincident(resource.Claim)"
+    filter: __noFilter
+  ContactRoleConstraint:
+    permissions:
+      view: true
+  ContactRoleConstraints:
+    permissions:
+      view: true
+  # override common_pl
+  Document:
+    permissions:
+      view:
+        - __inherit
+        - "perm.Document.view(resource.Document)"
+      edit:
+        - __inherit
+        - "perm.Document.edit(resource.Document)"
+      delete:
+        - "perm.Document.edit(resource.Document)"
+        - "perm.Document.delete(resource.Document)"
+  DwellingIncident:
+    permissions:
+      view: "perm.Incident.view(resource.DwellingIncident)"
+      edit: "perm.Incident.edit(resource.DwellingIncident)"
+  Exposure:
+    permissions:
+      view: "perm.Exposure.view(resource.Exposure)"
+      edit: "perm.Exposure.edit(resource.Exposure)"
+      delete: "perm.Exposure.edit(resource.Exposure)"
+      close: "perm.Claim.closeexposure(resource.Exposure)"
+      validate: "perm.Exposure.validate(resource.Exposure)"
+  FixedPropertyIncident:
+    permissions:
+      view: "perm.Incident.view(resource.FixedPropertyIncident)"
+      edit: "perm.Incident.edit(resource.FixedPropertyIncident)"
+      delete: "perm.Incident.edit(resource.FixedPropertyIncident)"
+  GenericRelation:
+    permissions:
+      view: true
+  InjuryIncident:
+    permissions:
+      view: "perm.Incident.view(resource.InjuryIncident)"
+      edit: "perm.Incident.edit(resource.InjuryIncident)"
+      delete: "perm.Incident.edit(resource.InjuryIncident)"
+  LivingExpensesIncident:
+    permissions:
+      view: "perm.Incident.view(resource.LivingExpensesIncident)"
+      edit: "perm.Incident.edit(resource.LivingExpensesIncident)"
+  LocationBasedRiskUnits:
+    filter: __noFilter
+  ServiceMessages:
+    permissions:
+      view: true
+    filter: gw.rest.core.cc.claim.v1.servicerequests.messages.MessagesInternalFilter
+  # override common_pl
+  Note:
+    permissions:
+      view:
+        - "perm.Claim.view(resource.Note.Claim)"
+        - "perm.System.viewclaimnotes"
+        - "perm.Note.view(resource.Note)"
+        - "!resource.Note.Confidential || resource.Note.Author == entity.User.util.CurrentUser || perm.Claim.viewconfidentialnotes(resource.Note.Claim)"
+  Policy:
+    permissions:
+      view:
+        - __inherit
+        - "perm.Policy.view(resource.Claim)"
+        - "perm.System.viewpolicy"
+  PolicyCoverages:
+    permissions:
+      create: false
+    filter: __noFilter
+  PolicyEndorsements:
+    permissions:
+      create: false
+    filter: __noFilter
+  PolicyLocations:
+    permissions:
+      create: false
+    filter: __noFilter
+  ReserveSets:
+    permissions:
+      view:
+        - __inherit
+        - "perm.Claim.viewreserves(resource.Claim)"
+      create:
+        - "perm.Claim.viewreserves(resource.Claim)"
+        - "perm.Claim.createreserve(resource.Claim)"
+    filter: __noFilter
+  ServiceRequest:
+    permissions:
+      view: "perm.Claim.view(resource.ServiceRequest.Claim) || user.isAssignedUserFor(resource.ServiceRequest)"
+      edit: "user.isAssignedUserFor(resource.ServiceRequest)"
+      # The assumption here is that the assigned user may perform
+      # certain vendor-specific actions--such as accept or decline--
+      # "on behalf" of the vendor. Set these to "false" or disallow
+      # the endpoints for internal users if this is not the case.
+      accept: "user.isAssignedUserFor(resource.ServiceRequest)"
+      cancel: "user.isAssignedUserFor(resource.ServiceRequest)"
+      complete-work: "user.isAssignedUserFor(resource.ServiceRequest)"
+      completion-date: "user.isAssignedUserFor(resource.ServiceRequest)"
+      decline: "user.isAssignedUserFor(resource.ServiceRequest)"
+      quote-date: "user.isAssignedUserFor(resource.ServiceRequest)"
+      resume: "user.isAssignedUserFor(resource.ServiceRequest)"
+      submit: "user.isAssignedUserFor(resource.ServiceRequest)"
+      suspend: "user.isAssignedUserFor(resource.ServiceRequest)"
+  ServiceRequestInvoices:
+    permissions:
+      view: __inherit
+      create:
+        - "resource.Parent.ServiceRequest.invoiceAllowed()"
+        - "resource.CreateAvailable"
+    filter: __noFilter
+  ServiceRequestQuotes:
+    permissions:
+      view: __inherit
+      create:
+        - "resource.Parent.ServiceRequest.quoteAllowed()"
+        - "resource.CreateAvailable"
+    filter: __noFilter
+  ServiceRequests:
+    permissions:
+      view: true
+    filter: gw.rest.core.cc.claim.v1.servicerequests.ServiceRequestsInternalFilter
+  ServiceRequestHistory:
+    filter: __noFilter
+  ServiceRequestInstructions:
+    filter: __noFilter
+  ServiceRequestInvoice:
+    permissions:
+      withdraw: false
+  ServiceRequestMessages:
+    filter: __noFilter
+  Transaction:
+    permissions:
+      view: "perm.Transaction.view(resource.Transaction)"
+  Transactions:
+    permissions:
+      view:
+        - __inherit
+        - "perm.Claim.viewtransactiondetails(resource.Claim)"
+      create: false
+    filter: __noFilter
+  User:
+    permissions:
+      view: "perm.User.view(resource.Element)"
+      edit: "perm.User.edit(resource.Element)"
+  Users:
+    filter: __noFilter
+    permissions:
+      view: "perm.User.view"
+      create: "perm.User.create"
+  VehicleIncident:
+    permissions:
+      view: "perm.Incident.view(resource.VehicleIncident)"
+      edit: "perm.Incident.edit(resource.VehicleIncident)"
+      delete: "perm.Incident.edit(resource.VehicleIncident)"
+  VehicleRiskUnits:
+    filter: __noFilter

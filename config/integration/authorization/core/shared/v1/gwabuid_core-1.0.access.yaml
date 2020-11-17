@@ -1,0 +1,54 @@
+resources:
+  AdminOpenApiSchema:
+    permissions:
+      view: true
+  Claim:
+    permissions:
+      view: "user.isMatchingServiceRequestSpecialist(resource)"
+      edit: false
+  Claims:
+    permissions:
+      view: true
+      create: false
+    filter: gw.rest.core.cc.shared.v1.RestrictClaimsForSpecialistFilter
+  ClaimApiOpenApiSchema:
+    permissions:
+      view: true
+  ClaimServiceRequests:
+    filter: gw.rest.core.cc.shared.v1.RestrictServiceRequestsForSpecialistFilter
+  CommonOpenApiSchema:
+    permissions:
+      view: true
+  ServiceMessages:
+    permissions:
+      view: true
+    filter: gw.rest.core.cc.shared.v1.RestrictMessagesForSpecialistFilter
+  ServiceRequest:
+    permissions:
+      edit: "user.isMatchingServiceRequestSpecialist(resource)"
+  ServiceRequestHistory:
+    filter: __noFilter
+  ServiceRequestInvoices:
+    permissions:
+      view: __inherit
+      create:
+        - "resource.Parent.hasEditPermission()"
+        - "resource.Parent.ServiceRequest.invoiceAllowed()"
+        - "resource.CreateAvailable"
+    filter: __nofilter
+  ServiceRequestQuotes:
+    permissions:
+      view: __inherit
+      create:
+        - "resource.Parent.hasEditPermission()"
+        - "resource.Parent.ServiceRequest.quoteAllowed()"
+        - "resource.CreateAvailable"
+    filter: __nofilter
+  ServiceRequests:
+    permissions:
+      view: true
+    filter: gw.rest.core.cc.shared.v1.RestrictServiceRequestsForSpecialistFilter
+  ServiceRequestInstructions:
+    filter: __noFilter
+  ServiceRequestMessages:
+    filter: __noFilter

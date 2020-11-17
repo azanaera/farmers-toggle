@@ -1,0 +1,255 @@
+<?xml version="1.0"?>
+<typelist
+  xmlns="http://guidewire.com/typelists"
+  desc="BLOCode_Ext"
+  name="BLOCode_Ext">
+  <typecode
+    code="7F"
+    desc="7F - Connecticut Legal"
+    name="7F - Connecticut Legal"/>
+  <typecode
+    code="7G"
+    desc="7G - New Jersey PIP Legal"
+    name="7G - New Jersey PIP Legal"/>
+  <typecode
+    code="7H"
+    desc="7H - Long Island Legal"
+    name="7H - Long Island Legal"/>
+  <typecode
+    code="7L"
+    desc="7L - Long Beach Satellite"
+    name="7L - Long Beach Satellite"/>
+  <typecode
+    code="7M"
+    desc="7M - Miami South Legal"
+    name="7M - Miami South Legal"/>
+  <typecode
+    code="7P"
+    desc="7P - Tampa Bay Legal"
+    name="7P - Tampa Bay Legal"/>
+  <typecode
+    code="7R"
+    desc="7R - New Orleans Legal"
+    name="7R - New Orleans Legal"/>
+  <typecode
+    code="7T"
+    desc="7T - Mt. Laurel Legal"
+    name="7T - Mt. Laurel Legal"/>
+  <typecode
+    code="7U"
+    desc="7U - Edison Legal"
+    name="7U - Edison Legal"/>
+  <typecode
+    code="7W"
+    desc="7W - Work Comp Legal"
+    name="7W - Work Comp Legal"/>
+  <typecode
+    code="80"
+    desc="80 - Memphis Legal"
+    name="80 - Memphis Legal"/>
+  <typecode
+    code="82"
+    desc="82 - Boise Legal"
+    name="82 - Boise Legal"/>
+  <typecode
+    code="8A"
+    desc="8A - Albuquerque Legal"
+    name="8A - Albuquerque Legal"/>
+  <typecode
+    code="8B"
+    desc="8B - Central Coast Legal"
+    name="8B - Central Coast Legal"/>
+  <typecode
+    code="8C"
+    desc="8C - St. Louis Legal"
+    name="8C - St. Louis Legal"/>
+  <typecode
+    code="8D"
+    desc="8D - Tulsa Legal"
+    name="8D - Tulsa Legal"/>
+  <typecode
+    code="8E"
+    desc="8E - Tucson Legal"
+    name="8E - Tucson Legal"/>
+  <typecode
+    code="8F"
+    desc="8F - Miami Legal"
+    name="8F - Miami Legal"/>
+  <typecode
+    code="8G"
+    desc="8G - San Antonio Legal"
+    name="8G - San Antonio Legal"/>
+  <typecode
+    code="8H"
+    desc="8H - Cleveland Legal"
+    name="8H - Cleveland Legal"/>
+  <typecode
+    code="8J"
+    desc="8J - Salt Lake City Legal"
+    name="8J - Salt Lake City Legal"/>
+  <typecode
+    code="8K"
+    desc="8K - Philadelphia Legal"
+    name="8K - Philadelphia Legal"/>
+  <typecode
+    code="8L"
+    desc="8L - Columbus Legal"
+    name="8L - Columbus Legal"/>
+  <typecode
+    code="8M"
+    desc="8M - Orlando Legal"
+    name="8M - Orlando Legal"/>
+  <typecode
+    code="8N"
+    desc="8N - Nashville Legal"
+    name="8N - Nashville Legal"/>
+  <typecode
+    code="8P"
+    desc="8P - Spokane Legal"
+    name="8P - Spokane Legal"/>
+  <typecode
+    code="8R"
+    desc="8R - Reno Legal"
+    name="8R - Reno Legal"/>
+  <typecode
+    code="8S"
+    desc="8S - Indianapolis Legal"
+    name="8S - Indianapolis Legal"/>
+  <typecode
+    code="8U"
+    desc="8U - Austin Legal"
+    name="8U - Austin Legal"/>
+  <typecode
+    code="8VA"
+    desc="8V - Atlanta Legal"
+    name="8V - Atlanta Legal"/>
+  <typecode
+    code="8VK"
+    desc="8V - Knoxville Satellite"
+    name="8V - Knoxville Satellite"/>
+  <typecode
+    code="8W"
+    desc="8W - Longview Legal"
+    name="8W - Longview Legal"/>
+  <typecode
+    code="8X"
+    desc="8X - Las Cruces Legal"
+    name="8X - Las Cruces Legal"/>
+  <typecode
+    code="8Y"
+    desc="8Y - New York Legal"
+    name="8Y - New York Legal"/>
+  <typecode
+    code="8Z"
+    desc="8Z - Eugene Legal"
+    name="8Z - Eugene Legal"/>
+  <typecode
+    code="90A"
+    desc="90 - Aurora Legal"
+    name="90 - Aurora Legal"/>
+  <typecode
+    code="90C"
+    desc="90 - Chicago Legal"
+    name="90 - Chicago Legal"/>
+  <typecode
+    code="92"
+    desc="92 - Los Angeles Legal"
+    name="92 - Los Angeles Legal"/>
+  <typecode
+    code="93"
+    desc="93 - Kansas City Legal"
+    name="93 - Kansas City Legal"/>
+  <typecode
+    code="94"
+    desc="94 - San Francisco Legal"
+    name="94 - San Francisco Legal"/>
+  <typecode
+    code="95"
+    desc="95 - San Jose Legal"
+    name="95 - San Jose Legal"/>
+  <typecode
+    code="96"
+    desc="96 - Seattle Legal"
+    name="96 - Seattle Legal"/>
+  <typecode
+    code="97"
+    desc="97 - Detroit Legal"
+    name="97 - Detroit Legal"/>
+  <typecode
+    code="98"
+    desc="98 - Denver Legal"
+    name="98 - Denver Legal"/>
+  <typecode
+    code="9A"
+    desc="9A - Santa Ana Legal"
+    name="9A - Santa Ana Legal"/>
+  <typecode
+    code="9C"
+    desc="9C - Vancouver Satellite"
+    name="9C - Vancouver Satellite"/>
+  <typecode
+    code="9D"
+    desc="9D - Dallas Legal"
+    name="9D - Dallas Legal"/>
+  <typecode
+    code="9E"
+    desc="9E - Rio Grande Legal"
+    name="9E - Rio Grande Legal"/>
+  <typecode
+    code="9F"
+    desc="9F - Fresno Legal"
+    name="9F - Fresno Legal"/>
+  <typecode
+    code="9J"
+    desc="9J - Oklahoma City Legal"
+    name="9J - Oklahoma City Legal"/>
+  <typecode
+    code="9L"
+    desc="9L - Las Vegas Legal"
+    name="9L - Las Vegas Legal"/>
+  <typecode
+    code="9M"
+    desc="9M - Sacramento Legal"
+    name="9M - Sacramento Legal"/>
+  <typecode
+    code="9N"
+    desc="9N - San Diego Legal"
+    name="9N - San Diego Legal"/>
+  <typecode
+    code="9P"
+    desc="9P - Inland Empire Legal"
+    name="9P - Inland Empire Legal"/>
+  <typecode
+    code="9Q"
+    desc="9Q - Florida PIP Legal"
+    name="9Q - Florida PIP Legal"/>
+  <typecode
+    code="9R"
+    desc="9R - Santa Rosa Legal"
+    name="9R - Santa Rosa Legal"/>
+  <typecode
+    code="9S"
+    desc="9S - Phoenix Legal"
+    name="9S - Phoenix Legal"/>
+  <typecode
+    code="9T"
+    desc="9T - Portland Legal"
+    name="9T - Portland Legal"/>
+  <typecode
+    code="9U"
+    desc="9U - Twin Cities Legal"
+    name="9U - Twin Cities Legal"/>
+  <typecode
+    code="9V"
+    desc="9V - Milwaukee Legal"
+    name="9V - Milwaukee Legal"/>
+  <typecode
+    code="9W"
+    desc="9W - Houston Legal"
+    name="9W - Houston Legal"/>
+  <typecode
+    code="Closed"
+    desc="This Office is Closed (Salem L"
+    name="This Office is Closed (Salem L"/>
+
+</typelist>

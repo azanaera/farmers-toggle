@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<typelistextension xmlns="http://guidewire.com/typelists" name="ContactTagType" desc="Types of contact tags">
+  <typecode
+    code="blo_ext"
+    desc="BLO"
+    name="BLO"/>
+  <typecode
+    code="grp_ext"
+    desc="GRP"
+    name="GRP"/>
+</typelistextension>

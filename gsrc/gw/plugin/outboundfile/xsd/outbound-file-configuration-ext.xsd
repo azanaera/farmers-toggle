@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://guidewire.com/outbound/ext" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://guidewire.com/outbound/ext" elementFormDefault="qualified">
+
+  <xs:element name="OutboundConfigurations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="ManagedS3OutboundConfiguration" name="ManagedS3Configuration" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="ManagedS3OutboundConfiguration">
+    <xs:sequence>
+      <xs:element type="xs:string" name="Name"/>
+      <xs:element type="xs:string" name="Prefix"/>
+      <xs:element type="xs:string" name="Extension"/>
+      <xs:element type="xs:string" name="FileHandlerClass"/>
+      <xs:element type="xs:integer" name="DaysTillPurge"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

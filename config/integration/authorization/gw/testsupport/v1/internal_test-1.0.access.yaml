@@ -1,0 +1,49 @@
+combine:
+  - ext.shared.v1.internal_ext-1.0
+resources:
+  Contact:
+    permissions:
+      view: true
+      edit: true
+  Contacts:
+    permissions:
+      view: true
+      create: true
+    filter: __noFilter
+  ContactSearch:
+    permissions:
+      view: true
+    filter: __noFilter
+  PolicySearch:
+    permissions:
+      view: true
+  PolicySearchResult:
+    permissions:
+      view: true
+  TestSupportPolicy:
+    permissions:
+      view: true
+      edit: true
+  TestSupportPolicies:
+    permissions:
+      view: true
+      create: true
+    filter: __noFilter
+  TestSupportRole:
+    permissions:
+      view: true
+      edit: true
+  TestSupportRoles:
+    permissions:
+      view: true
+      create: true
+    filter: __noFilter
+  TestSupportUser:
+    permissions:
+      view: true
+      edit: true
+  TestSupportUsers:
+    permissions:
+      view: true
+      create: true
+    filter: __noFilter

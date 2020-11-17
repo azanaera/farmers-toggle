@@ -1,0 +1,40 @@
+package rules.Validation.TransactionSetValidationRules_dir.TXV24000ExposurePaymentRules_Ext_dir
+uses gw.api.locale.DisplayKey
+uses typekey.TransactionSet
+
+@gw.rules.RuleName("TXV24300 - 3rd party Payment Rule")
+internal class TXV243003rdpartyPaymentRule {
+  static function doCondition(transactionSet      :       entity.TransactionSet) : boolean {
+/*start00rule*/
+    var status =  (transactionSet as CheckSet).Checks.first().Status
+    return (transactionSet.New or
+        status == TransactionStatus.TC_PENDINGAPPROVAL or
+        status == TransactionStatus.TC_DENIED or
+        status == TransactionStatus.TC_AWAITINGSUBMISSION  )
+        and
+        transactionSet.AllTransactions.hasMatch(\trn -> trn.CostType == CostType.TC_CLAIMCOST
+            and
+            trn.Exposure.LossParty == LossPartyType.TC_THIRD_PARTY and
+        ext.config.claim.LossDetailsHelper_Ext.CollisionLossCauses(trn.Exposure.Claim)
+        )
+/*end00rule*/
+}
+
+  static function doAction(transactionSet      :       entity.TransactionSet, actions : gw.rules.Action) {
+/*start00rule*/
+var clm = transactionSet.Claim
+    var vehIncident = clm.getIncidentsOfType(VehicleIncident).where(\vi -> vi.LossParty ==
+        LossPartyType.TC_INSURED ).first() as VehicleIncident
+    if ((vehIncident != null and !vehIncident.VehicleParked and (vehIncident.driver == null or (vehIncident.driver != null and
+        vehIncident.driver.DateOfBirth == null)))
+        or (clm.FaultRating == null)
+        or (clm.Fault == null)
+        ){
+      transactionSet.reject(ValidationLevel.TC_PAYMENT,
+          DisplayKey.get("Toggle.Rules.Validation.Exposure.3rdPartyExpAbilityToPay_Ext")
+          , null, null)
+
+    } 
+/*end00rule*/
+  }
+}

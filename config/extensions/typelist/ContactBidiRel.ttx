@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- NOTE: Entries in this typelist must correspond to entries in contact-relationship-config.xml. -->
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  desc=""
+  name="ContactBidiRel">
+  <typecode
+    code="attorney_ext"
+    name="Attorney"/>
+  <typecode
+    code="client_ext"
+    desc="Client"
+    name="Client"/>
+  <typecode
+    code="other_ext"
+    desc="Other"
+    name="Other"/>
+  <typecode
+    code="otherother_ext"
+    desc="Other"
+    name="Other"/>
+  <typecode
+    code="poa_ext"
+    desc="Power of Attorney"
+    name="Power of Attorney"/>
+  <typecode
+    code="grantor_ext"
+    desc="Grantor"
+    name="Grantor"/>
+  <typecode
+    code="ParentVendor_Ext"
+    desc="Parent Vendor"
+    name="Parent Vendor"/>
+  <typecode
+    code="ChildVendor_Ext"
+    desc="Child Vendor"
+    name="Child Vendor"/>
+  <typecode
+    code="FarmersConsultant_Ext"
+    desc="Farmers Consultant"
+    name="Farmers Consultant"/>
+  <typecode
+    code="FarmersConsultantFor_Ext"
+    desc="Farmers Consultant For"
+    name="Farmers Consultant For"/>
+</typelistextension>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  name="State">
+  <typecode
+    code="OT_Ext"
+    desc="OT"
+    name="OT"
+    retired="true"/>
+  <typecode
+    code="other_Ext"
+    desc="Other"
+    name="Other"
+    retired="true"/>
+</typelistextension>

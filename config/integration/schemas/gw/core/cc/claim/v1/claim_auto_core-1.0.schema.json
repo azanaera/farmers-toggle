@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "gw.core.cc.claim.v1.claim_core-1.0",
+    "gw.core.cc.common.v1.common_auto_core-1.0"
+  ],
+  "definitions": {
+    "ClaimContact": {
+      "properties": {
+        "licenseNumber": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "licenseState": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person",
+            "typelist": "Jurisdiction"
+          }
+        }
+      }
+    },
+    "VehicleRiskUnit": {
+      "type": "object",
+      "properties": {
+        "RUNumber": {
+          "type": "integer",
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "coverages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Coverage"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "policySystemId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "vehicle": {
+          "$ref": "#/definitions/Vehicle",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "vehicleId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "vehicleLocation": {
+          "$ref": "#/definitions/PolicyLocation"
+        }
+      }
+    }
+  }
+}

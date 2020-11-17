@@ -1,0 +1,17 @@
+endpoints:
+  - endpoint: "/admin/v1/openapi.json"
+    methods:
+      - "*"
+  - endpoint: "/claim/v1/**"
+    methods:
+      - "*"
+  - endpoint: "/common/v1/**"
+    methods:
+      - "*"
+accessibleFields:
+  "*":
+    view:
+      - "*"
+    edit:
+      - "*"
+name: "Account Manager"

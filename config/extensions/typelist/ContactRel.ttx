@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  name="ContactRel"
+  desc="Types of relationships a contact can have with another contact">
+  <typecode
+    code="attorney_ext"
+    desc="Attorney / Client"
+    name="Attorney / Client"/>
+  <typecode
+    code="other_ext"
+    desc="Other / Other"
+    name="Other / Other"/>
+  <typecode
+    code="poa_ext"
+    desc="Power of Attorney / Grantor"
+    name="Power of Attorney / Grantor"/>
+  <typecode
+    code="FarmersConsultant_Ext"
+    desc="Farmers Consultant"
+    name="Farmers Consultant"/>
+  <typecode
+    code="Levyholder_Ext"
+    desc="Levyholder"
+    name="Levyholder"/>
+  <typecode
+    code="ParentVendor_Ext"
+    desc="Parent Vendor"
+    name="Parent Vendor"/>
+</typelistextension>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<typelistextension xmlns="http://guidewire.com/typelists" name="PhoneType" desc="List of regions and their regional phone codes">
+  <typecode
+    code="altphone_ext"
+    desc="Alternate Phone"
+    name="Alternate Phone"/>
+</typelistextension>

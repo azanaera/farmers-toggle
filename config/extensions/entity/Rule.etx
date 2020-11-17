@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<extension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="Rule">
+  <column-override name="UpdateUserName">
+    <columnParam
+      name="size"
+      value="100"/>
+  </column-override>
+</extension>

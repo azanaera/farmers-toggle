@@ -1,0 +1,50 @@
+{
+  "theme_files_to_include_and_their_display_key_names": {
+    "gw-theme--green-white-web": "Web.Theme.Default",
+    "gw-theme--green-white-web-high-contrast": "Web.Theme.GreenWhiteWebHighContrast",
+    "gw-theme--base": "Web.Theme.Base",
+    "gw-theme--darcula": "Web.Theme.Dark"
+  },
+  "font_sizes": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    24,
+    28
+  ],
+  "global_spacing_modifiers": [
+    0.5,
+    0.75,
+    1,
+    1.25,
+    1.5
+  ],
+  "pref_panel_defaults": {
+    "theme": "gw-theme--green-white-web",
+    "fontSize": "default",
+    "globalSpacingModifier": "default",
+    "enableMacroChars": true,
+    "copyAndCutGrabSymbol": true,
+    "todayClosesDatePicker": true,
+    "disableBrowserAutocomplete": true,
+    "default0Placeholder": false,
+    "capDateTimeUserInput": false,
+    "scrollToTopOnError": true,
+    "showWidgetTypesAsInlineTitles": false,
+    "highlightDirtyData": true,
+    "keyboardNavSelectsListDetail": true,
+    "replaceWordProcessingCharacters": true,
+    "lockFocusInApplication": true
+  },
+  "pref_panel_hidden_preferences": {
+    "showDrawFlash": true
+  },
+  "system_preferences": {
+    "show_debug_preferences_in_production": true
+  }
+}

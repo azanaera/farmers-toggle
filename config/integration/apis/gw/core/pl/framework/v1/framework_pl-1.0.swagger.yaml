@@ -1,0 +1,212 @@
+swagger: '2.0'
+paths: {}
+x-gw-schema-import:
+  framework: gw.core.pl.framework.v1.framework_pl-1.0
+parameters:
+  pageSize:
+    name: pageSize
+    in: query
+    collectionFormat: multi
+    type: array
+    items:
+      type: string
+    description: >
+      The maximum number of results to return in the result.  If not specified, the default settings for that endpoint
+      will be used; each endpoint also defines a maximum pageSize.  The pageSize parameter can be specified as either pageSize=<size> or
+      pageSize=<include>:<size>, where <include> represents the name of an included resource.  For example,
+      ?pageSize=100 will indicate that 100 resources should be returned, while ?include=activities&pageSize=activities:5
+      will indicate that 5 activities should be returned along with the response.
+      <include> can also represent a nested included resource, such as pageSize=activities.notes:5.
+  pageOffset:
+    name: pageOffset
+    in: query
+    type: string
+    description: >
+      The pageOffset parameter is used to indicate the first result to fetch, in order to page through a list of results.
+      The token may represent a zero-indexed offset, but it may also represent something else such as the id of the
+      last or previous result, depending upon how the server implements pagination for a particular operation.
+      As a general rule, pagination of an API should use the "next" and "prev" links on the query results to navigate back
+      and forth, rather than attempting to manually construct the pageOffset value.
+  includeTotal:
+    name: includeTotal
+    in: query
+    collectionFormat: multi
+    type: array
+    items:
+      type: string
+    description: >
+      The includeTotal parameter is used to indicate that the results should include a count of the total number of
+      results available, in cases where the list of results is paginated and not all results are included.  This parameter
+      is of the form includeTotal=<true|false> or includeTotal=<include>:<true|false>.  Specifying the <include>:
+      prefix on the query parameter will apply the includeTotal option to the included list.
+      <include> can also represent a nested included resource, such as includeTotal=activities.notes:true.
+      Calculating the total size of a list can require additional database load, and the option is turned off by default.
+      The returned total is capped at 1000, and will not be accurate if the resource contains more than 1000 elements.
+  sort:
+    name: sort
+    in: query
+    collectionFormat: multi
+    type: array
+    items:
+      type: string
+    description: >
+      The sort parameter is used to control the sorting of the returned results.  The sort parameter can appear multiple
+      times in the query string, and is either of the form sort=<include>:<properties> or sort=<properties>, where
+      <properties> is a comma-separated list of properties to sort on and <include> represents the name of an included
+      resource.  Property names can be prefixed with '-' to specify a descending sort on that property, otherwise the
+      default is an ascending sort.  The set of valid sort property names depends on the specific endpoint being requested.
+      For example, ?sort=priority,-dueDate will specify a primary sort on priority (ascending) and a secondary sort on
+      dueDate (descending).  ?include=activities&sort=activities:priority,-dueDate specifies the same sort values, but
+      applies them to the included "activities" list rather than to the primary resource.
+      <include> can also represent a nested included resource, such as sort=activities.notes:dueDate.
+  filter:
+    name: filter
+    in: query
+    collectionFormat: multi
+    type: array
+    items:
+      type: string
+    description: >
+      Filters the list of results based on the specified field, operator, and value.  The query parameter's value
+      should be of the form <field>:<operator>:<value> or <include>:<field>:<operator>:<value>.  If the <include>:
+      piece is specified, the filter will be applied to the included resource. The set of supported fields is dependent
+      upon the resource being filtered.  Valid operators include "eq", "ne", "lt", "gt", "le", "ge", "in", "ni", "sw", and "cn".
+      Values should be formatted according to the same JSON type and format as the filtered field, i.e. if the filtered
+      field is a boolean field, the value should either be "true" or "false" and if the filtered field is a date-time
+      field, the value should be an ISO-8601 date-time value.  One exception is that filtering on date-time fields can
+      accept either date-times or dates. On occasions where the value needs to contain a ":" character, this character
+      can be escaped with an additional ":". For example, to compare against "some:value", the query parameter would
+      take the form <field>:<operator>:some::value. The filter query parameter can be specified multiple times for the
+      same resource or field, and all the specified filters will effectively be ANDed together.
+      <include> can also represent a nested included resource, such as filter=activities.notes:subject:cn:NoteSubject.
+  fields:
+    name: fields
+    in: query
+    collectionFormat: multi
+    type: array
+    items:
+      type: string
+    description: >
+      The fields parameter allows the caller to specify the set of fields that should be included for a given resource,
+      and allows the client to avoid fetching fields they don't want as well as to request optional fields that aren't
+      included by default.  The parameter is of the form fields=<field list> or fields=<include>:<field list>.  The <field list>
+      is a comma-separated list of fields desired on the response, and <include> indicates that the field selection applies
+      to an included resource.  If not specified, the default fields for a resource will be returned.  If you wish to
+      select fields on the root resource and the included resources, each of those must be in a separate fields
+      parameter. For example, ?fields=<field list>&fields=<include1>:<field list>&fields=<include2>:<field list>.
+      Special values beginning with the '*' character are used to indicate a set of fields to return, which will then be
+      combined with additional fields that are explicitly listed. The '*default' set will include whatever set of the
+      fields the endpoint would normally return if the "fields" query parameter wasn't specified. For example, specifying
+      fields=firstName,lastName will return only the firstName and lastName fields on the response, while specifying
+      fields=default,firstName,lastName will return all the default fields as well as the firstName and lastName. Other
+      '' options are '*detail', '*summary', and '*all'. Properties on sub-objects can be selected via dot-separated
+      paths, for example fields=assignedUser,assignedUser.id will fetch only the id of the assignedUser object but not
+      the displayName.
+      <include> can also represent a nested included resource, such as fields=activities.notes:subject,body.
+  include:
+    name: include
+    in: query
+    collectionFormat: multi
+    type: array
+    items:
+      type: string
+    description: >
+      Indicates that the caller would like additional resources returned along with this call in the "included" section
+      of the response.  The include parameter can appear multiple times, and is a comma-separated list of additional
+      resources to include.  Nested inclusions can be specified by prefixing the inclusion list with the name of the
+      included property and :.  For example, to include the vehicleincidents and mainContact for a Claim, as well as
+      the driver of the vehicle, you could specify ?include=vehicleincidents,mainContact&include=vehicleincidents:driver.
+      The exact set of options for the include parameter depends upon the particular endpoint.
+  prettyPrintSchema:
+    name: prettyPrint
+    in: query
+    type: boolean
+    default: false
+    description: Whether or not to pretty-print the returned schema, making it larger but more human readable.  Defaults to false.
+  filterByUser:
+    name: filterByUser
+    in: query
+    type: boolean
+    default: false
+    description: Whether or not to filter endpoints and schema properties by the authorization of this user. Defaults to false.
+  enablePolymorphism:
+    name: enablePolymorphism
+    in: query
+    type: boolean
+    default: true
+    description: >
+      Whether or not to use the discriminator/oneOf pattern to output schemas in cases where the valid set of fields can
+      vary based on some attribute of the data such as the country or subtype.  Defaults to true.  When set to false,
+      the schema in these cases will contain the superset of all valid fields, e.g. address schemas will contain all
+      fields for all countries, rather than have separate schemas for different countries.  Setting this to false may
+      make the schema output more consumable by tools that don't support that part of the OpenAPI schema.
+x-gw-parameter-sets:
+  custom-action:
+    - $ref: "#/parameters/fields"
+  delete-element:
+  get-collection:
+    - $ref: "#/parameters/fields"
+    - $ref: "#/parameters/filter"
+    - $ref: "#/parameters/include"
+    - $ref: "#/parameters/includeTotal"
+    - $ref: "#/parameters/pageSize"
+    - $ref: "#/parameters/pageOffset"
+    - $ref: "#/parameters/sort"
+  get-element:
+    - $ref: "#/parameters/fields"
+    - $ref: "#/parameters/filter"
+    - $ref: "#/parameters/include"
+    - $ref: "#/parameters/includeTotal"
+    - $ref: "#/parameters/pageSize"
+    - $ref: "#/parameters/sort"
+  patch-element:
+    - $ref: "#/parameters/fields"
+  post-collection:
+    - $ref: "#/parameters/fields"
+  search-collection:
+    - $ref: "#/parameters/fields"
+    - $ref: "#/parameters/filter"
+    - $ref: "#/parameters/include"
+    - $ref: "#/parameters/includeTotal"
+    - $ref: "#/parameters/pageSize"
+    - $ref: "#/parameters/pageOffset"
+    - $ref: "#/parameters/sort"
+definitions:
+  DataEnvelope:
+    type: object
+    properties:
+      checksum:
+        type: string
+        readOnly: true
+      id:
+        type: string
+      links:
+        $ref: "framework#/definitions/Links"
+        readOnly: true
+      method:
+        type: string
+        enum:
+        - post
+        - patch
+      refid:
+        type: string
+      related:
+        $ref: "framework#/definitions/RelatedCollections"
+        readOnly: true
+      type:
+        type: string
+        readOnly: true
+      uri:
+        type: string
+  DataListEnvelope:
+    type: object
+    properties:
+      count:
+        type: integer
+        readOnly: true
+      links:
+        $ref: "framework#/definitions/Links"
+        readOnly: true
+      total:
+        type: integer
+        readOnly: true

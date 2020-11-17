@@ -1,0 +1,3 @@
+<textarea aria-describedby="${describedBy}" style="${heightOrMaxHeight}" disabled="${disabled}" name="${renderId}" maxlength="${maxlength}"
+          placeholder="${placeholder}"
+          class="${noTrack ? 'gw-noTrack'}">${currentValue}</textarea>

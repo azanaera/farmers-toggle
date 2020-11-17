@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!-- Based on the WCIO (Workers' Comp Insurance Organizations) "Nature of Injury" Injury Description Codes -->
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  desc=""
+  name="InjuryType">
+  <typecode
+    code="multiple"
+    desc="Multiple injuries"
+    name="Multiple injuries"
+    priority="3"
+    retired="true"/>
+  <typecode
+    code="occupational"
+    desc="Occupational disease or cumulative injury"
+    name="Occupational disease or cumulative injury"
+    priority="2"
+    retired="true"/>
+  <typecode
+    code="specific"
+    desc="Specific injury"
+    name="Specific injury"
+    priority="1"
+    retired="true"/>
+  <typecode
+    code="all_other"
+    desc="All other"
+    name="All other"
+    priority="10"/>
+  <typecode
+    code="coma"
+    desc="Coma"
+    name="Coma"
+    priority="20"/>
+  <typecode
+    code="fatality"
+    desc="Fatality"
+    name="Fatality"
+    priority="30"/>
+  <typecode
+    code="loss_of_limb"
+    desc="Loss of limb"
+    name="Loss of limb"
+    priority="40"/>
+  <typecode
+    code="loss_of_one_or_more_senses"
+    desc="Loss of one or more senses"
+    name="Loss of one or more senses"
+    priority="50"/>
+  <typecode
+    code="paralysis"
+    desc="Paralysis"
+    name="Paralysis"
+    priority="60"/>
+  <typecode
+    code="rsd"
+    desc="RSD"
+    name="RSD"
+    priority="70"/>
+  <typecode
+    code="severe_burns"
+    desc="Severe burns"
+    name="Severe burns"
+    priority="80"/>
+  <typecode
+    code="brain_injury"
+    desc="Traumatic Brain Injury with Cognitive Indicators"
+    name="Traumatic Brain Injury with Cognitive Indicators"
+    priority="90"/>
+</typelistextension>

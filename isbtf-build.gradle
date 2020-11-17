@@ -1,0 +1,29 @@
+task runCucumberSuite {
+  group = 'Guidewire'
+  description = 'Run cucumber suite, requires -Dsuite=<fully qualified suite class name>, e.g. -Dsuite=com.acme.cucumber.ExampleCucumberSuite.'
+  outputs.upToDateWhen { false } //always run
+  if (!System.properties.containsKey("suite")) {
+    doLast {
+      def errorMsg = "USAGE:\nThe suite property must be set:\n" +
+        " -Dsuite=<fully qualified suite class name>, e.g. -Dsuite=com.acme.cucumber.ExampleCucumberSuite"
+      println errorMsg
+    }
+  } else {
+    task executeCucumberSuite(type : Test) {
+      workingDir = project.projectDir
+      sourceSets.main.gosu.srcDir 'gtest'
+      classpath = files(tasks.compileGosu.destinationDir, classpath)
+      classpath += fileTree(dir: 'plugins/Gosu/lib', include: '*.jar')
+      classpath += fileTree(dir: 'plugins/Gosu/basic/lib', include: '*.jar')
+      classpath += fileTree(dir: 'plugins/shared/basic/lib', include: '*.jar')
+      classpath += fileTree(dir: 'plugins/shared/lib', include: '*.jar')
+      testClassesDirs = files(tasks.compileGosu.destinationDir)
+      testLogging.showStandardStreams = true
+      outputs.upToDateWhen { false } //always run
+      include "${System.properties['suite'].replaceAll('\\.', '/')}.class"
+      minHeapSize = "1g"
+      maxHeapSize = "4g"
+    }
+    runCucumberSuite.dependsOn executeCucumberSuite
+  }
+}

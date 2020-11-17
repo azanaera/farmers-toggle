@@ -1,0 +1,615 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "ext.claim.v1.claim_combined_ext-1.0"
+  ],
+  "definitions": {
+    "ContactSearchCriteria": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "contactSubtype": {
+          "type": "string",
+          "x-gw-type": "typekey.Contact"
+        },
+        "employerName": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "officialId": {
+          "type": "string"
+        },
+        "preferredVendors": {
+          "type": "boolean"
+        },
+        "taxId": {
+          "type": "string"
+        }
+      }
+    },
+    "PolicySearchRequestAttributes": {
+      "type": "object",
+      "properties": {
+        "city": {
+          "type": "string"
+        },
+        "companyName": {
+          "type": "string"
+        },
+        "country": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "Country"
+          }
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "lossDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lossType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "LossType"
+          }
+        },
+        "policyNumber": {
+          "type": "string"
+        },
+        "policyType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "PolicyType"
+          }
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "State"
+          }
+        },
+        "taxId": {
+          "type": "string"
+        },
+        "vin": {
+          "type": "string"
+        }
+      }
+    },
+    "PolicySearchResult": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expirationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "insuredName": {
+          "type": "string",
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "policyNumber": {
+          "type": "string",
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "policyType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "PolicyType"
+          }
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "state": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "State"
+          }
+        }
+      }
+    },
+    "TestSupportBuilding": {
+      "type": "object",
+      "properties": {
+        "buildingNumber": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "notes": {
+          "type": "string"
+        },
+        "policySystemId": {
+          "type": "string"
+        }
+      }
+    },
+    "TestSupportContact": {
+      "type": "object",
+      "properties": {
+        "addressBookUID": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "cellPhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "companyName": {
+          "type": "string",
+          "x-gw-extensions": {
+            "entitySubtype": "Company"
+          }
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "before": "now",
+            "entitySubtype": "Person"
+          }
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-nullable": true
+        },
+        "doctorSpecialty": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "SpecialtyType"
+          }
+        },
+        "emailAddress1": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "emailAddress2": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "firstName": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "homePhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lastName": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "licenseNumber": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "licenseState": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person",
+            "typelist": "Jurisdiction"
+          }
+        },
+        "medicalLicense": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "policySystemId": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "primaryAddress": {
+          "$ref": "#/definitions/Address",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "primaryLanguage": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LanguageType"
+          }
+        },
+        "primaryLocale": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LocaleType"
+          }
+        },
+        "primaryPhone": {
+          "type": "string",
+          "readOnly": true
+        },
+        "primaryPhoneType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person",
+            "typelist": "PrimaryPhoneType"
+          }
+        },
+        "subtype": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "createOnly": true,
+            "typelist": "Contact"
+          }
+        },
+        "taxId": {
+          "type": "string"
+        },
+        "workPhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true
+        }
+      }
+    },
+    "TestSupportLocationBasedRiskUnit": {
+      "type": "object",
+      "properties": {
+        "RUNumber": {
+          "type": "integer"
+        },
+        "building": {
+          "$ref": "#/definitions/TestSupportBuilding"
+        },
+        "coverages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Coverage"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "otherRiskType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "entitySubtype": "LocationMiscRU",
+            "typelist": "OtherRiskType"
+          }
+        },
+        "policySystemId": {
+          "type": "string"
+        },
+        "subtype": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "createOnly": true,
+            "typelist": "RiskUnit"
+          }
+        }
+      }
+    },
+    "TestSupportPolicy": {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "type": "string"
+        },
+        "cancellationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "currency": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "Currency"
+          }
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endorsements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Endorsement"
+          }
+        },
+        "expirationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "originalEffectiveDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "policyContacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TestSupportPolicyContact"
+          }
+        },
+        "policyCoverages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Coverage"
+          }
+        },
+        "policyLocations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TestSupportPolicyLocation"
+          }
+        },
+        "policyNumber": {
+          "type": "string"
+        },
+        "policyType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "PolicyType"
+          }
+        },
+        "producerCode": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "PolicyStatus"
+          }
+        },
+        "underwritingCo": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "UnderwritingCompanyType"
+          }
+        },
+        "underwritingGroup": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "UnderwritingGroupType"
+          }
+        },
+        "vehicleRiskUnits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TestSupportVehicleRiskUnit"
+          }
+        },
+        "verifiedPolicy": {
+          "type": "boolean"
+        }
+      }
+    },
+    "TestSupportPolicyContact": {
+      "type": "object",
+      "required": [
+        "contact",
+        "roles"
+      ],
+      "properties": {
+        "contact": {
+          "$ref": "#/definitions/SimpleReference"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TypeKeyReference",
+            "x-gw-extensions": {
+              "typelist": "ContactRole"
+            }
+          }
+        }
+      }
+    },
+    "TestSupportPolicyLocation": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/ClaimAddress"
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "locationBasedRiskUnits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TestSupportLocationBasedRiskUnit"
+          }
+        },
+        "locationNumber": {
+          "type": "string",
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "notes": {
+          "type": "string"
+        },
+        "policySystemId": {
+          "type": "string"
+        },
+        "primaryLocation": {
+          "type": "boolean",
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        }
+      }
+    },
+    "TestSupportRole": {
+      "type": "object",
+      "required": [
+        "permissions"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "TestSupportUser": {
+      "type": "object",
+      "properties": {
+        "authorityProfile": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "groupId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "TestSupportVehicleRiskUnit": {
+      "type": "object",
+      "properties": {
+        "RUNumber": {
+          "type": "integer",
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "coverages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Coverage"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "policySystemId": {
+          "type": "string"
+        },
+        "vehicle": {
+          "$ref": "#/definitions/Vehicle",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "vehicleId": {
+          "type": "string",
+          "readOnly": true
+        },
+        "vehicleLocation": {
+          "$ref": "#/definitions/PolicyLocation"
+        }
+      }
+    }
+  }
+}

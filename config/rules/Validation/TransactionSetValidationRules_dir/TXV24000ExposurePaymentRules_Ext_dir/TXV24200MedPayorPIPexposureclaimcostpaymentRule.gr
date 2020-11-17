@@ -1,0 +1,35 @@
+package rules.Validation.TransactionSetValidationRules_dir.TXV24000ExposurePaymentRules_Ext_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("TXV24200 - MedPay or PIP exposure claim cost payment Rule")
+internal class TXV24200MedPayorPIPexposureclaimcostpaymentRule {
+  static function doCondition(transactionSet        :        entity.TransactionSet) : boolean {
+/*start00rule*/
+    var status =  (transactionSet as CheckSet).Checks.first().Status
+    return (transactionSet.New or
+        status == TransactionStatus.TC_PENDINGAPPROVAL or
+        status == TransactionStatus.TC_DENIED or
+        status == TransactionStatus.TC_AWAITINGSUBMISSION  )
+    and
+    transactionSet.AllTransactions.hasMatch(\trn -> trn.CostType == CostType.TC_CLAIMCOST
+        and
+        (trn.Exposure.ExposureType == ExposureType.TC_MEDPAY or
+            trn.Exposure.ExposureType == ExposureType.TC_PIPDAMAGES) and
+        (trn.Exposure.Incident as InjuryIncident).injured.MedicareBeneficiary_Ext != false and
+        ((trn.Exposure.ORM_Ext == null or trn.Exposure.NoFaultLimit_Ext == null  or
+            (trn.Exposure.Incident as InjuryIncident).InjuryDiagnoses.IsEmpty  )
+
+        ))
+
+/*end00rule*/
+}
+
+  static function doAction(transactionSet        :        entity.TransactionSet, actions : gw.rules.Action) {
+/*start00rule*/
+transactionSet.reject(ValidationLevel.TC_PAYMENT,
+        DisplayKey.get("Toggle.Web.NewCheckWizard.NewPaymentDetail.MedPayPIP_Ext"),
+        null,
+        null) 
+/*end00rule*/
+  }
+}

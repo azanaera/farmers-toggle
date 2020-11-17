@@ -1,0 +1,22 @@
+package rules.Validation.TransactionSetValidationRules_dir.TXV23000DisallowClaimLevelTransactions_Ext_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("TXV23100 - Disallow Claim Level expense at exposure level _ Ext")
+internal class TXV23100DisallowClaimLevelexpenseatexposurelevel_Ext {
+  static function doCondition(transactionSet  :  entity.TransactionSet) : boolean {
+/*start00rule*/
+return transactionSet.AllTransactions.hasMatch(\trn -> trn.CostCategory == CostCategory.TC_CLAIM_LEVEL_EXP_EXT
+        and trn.Exposure != null)
+
+/*end00rule*/
+}
+
+  static function doAction(transactionSet  :  entity.TransactionSet, actions : gw.rules.Action) {
+/*start00rule*/
+transactionSet.reject(ValidationLevel.TC_PAYMENT,
+        DisplayKey.get("Toggle.Web.NewCheckWizard.NewPaymentDetail.NonClaimLevel_Ext"),
+        null,
+        null) 
+/*end00rule*/
+  }
+}

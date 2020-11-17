@@ -1,0 +1,24 @@
+package rules.Validation.ExposureValidationRules_dir.EXV09000AbilitytoPayValidation_Ext_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("EXV09100 - BI Exposure Ability to Pay Validation_Ext")
+internal class EXV09100BIExposureAbilitytoPayValidation_Ext {
+  static function doCondition(exposure    :      entity.Exposure) : boolean {
+/*start00rule*/
+return exposure.ExposureType == ExposureType.TC_BODILYINJURYDAMAGE and
+        (exposure.Incident as InjuryIncident).injured.MedicareBeneficiary_Ext and
+        ((exposure.Incident as InjuryIncident).InjuryDiagnoses.IsEmpty or
+            exposure.Settlements.IsEmpty or
+            !exposure.Settlements*.SettleDate.where(\elt -> elt == null ).IsEmpty  or
+            !exposure.Settlements*.SettleAmount.where(\elt -> elt == null ).IsEmpty )
+/*end00rule*/
+}
+
+  static function doAction(exposure    :      entity.Exposure, actions : gw.rules.Action) {
+/*start00rule*/
+exposure.reject(ValidationLevel.TC_PAYMENT,
+        DisplayKey.get("Toggle.Rules.Validation.Exposure.BIExpAbilityToPay_Ext")
+        , null, null) 
+/*end00rule*/
+  }
+}

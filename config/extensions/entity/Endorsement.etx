@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<extension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="Endorsement">
+  <column
+    desc="Edition number of endorsement from Sure system"
+    name="Edition_Ext"
+    nullok="true"
+    type="varchar">
+    <columnParam
+      name="size"
+      value="10"/>
+  </column>
+  <foreignkey
+    columnName="VehicleID_Ext"
+    desc="The Vehicle the Endorsement is associated with"
+    fkentity="Vehicle"
+    name="Vehicle_Ext"
+    nullok="true"/>
+</extension>

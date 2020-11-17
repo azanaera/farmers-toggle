@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<typelist xmlns="http://guidewire.com/typelists" name="ChildSafetySeat_Ext" desc="Child Safety Seat">
+  <typecode
+    code="damaged"
+    desc="Damaged"
+    name="Damaged"
+    priority="10"/>
+  <typecode
+    code="in_use"
+    desc="In use"
+    name="In use"
+    priority="20"/>
+  <typecode
+    code="none"
+    desc="None"
+    name="None"
+    priority="30"/>
+  <typecode
+    code="not_damaged"
+    desc="Not damaged"
+    name="Not damaged"
+    priority="40"/>
+  <typecode
+    code="not_in_use"
+    desc="Not in use"
+    name="Not in use"
+    priority="50"/>
+  <typecode
+    code="unknown"
+    desc="Unknown"
+    name="Unknown"
+    priority="60"/>
+</typelist>

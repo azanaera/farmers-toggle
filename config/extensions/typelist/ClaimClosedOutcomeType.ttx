@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  desc="The possible outcomes of a claim when it is closed"
+  name="ClaimClosedOutcomeType">
+  <typecode
+    code="completed"
+    desc="Completed"
+    name="Completed"
+    priority="20"/>
+  <typecode
+    code="duplicate"
+    desc="Duplicate"
+    name="Duplicate"
+    priority="80"/>
+  <typecode
+    code="mistake"
+    desc="Mistake"
+    name="Mistake"
+    retired="true"/>
+  <typecode
+    code="fraud"
+    desc="Fraud"
+    name="Fraud"
+    retired="true"/>
+  <typecode
+    code="paymentscomplete"
+    desc="Payments complete"
+    name="Payments Complete"
+    priority="10"/>
+  <typecode
+    code="denial_ext"
+    desc="Denial"
+    name="Denial"
+    priority="30"/>
+  <typecode
+    code="inactivity_ext"
+    desc="Inactivity"
+    name="Inactivity"
+    priority="40"/>
+  <typecode
+    code="below_deductible_ext"
+    desc="Below Deductible"
+    name="Below Deductible"
+    priority="50"/>
+  <typecode
+    code="withdrawn_ext"
+    desc="Withdrawn"
+    name="Withdrawn"
+    priority="60"/>
+  <typecode
+    code="rekeyed_ext"
+    desc="Rekeyed"
+    name="Rekeyed"
+    priority="70"/>
+</typelistextension>

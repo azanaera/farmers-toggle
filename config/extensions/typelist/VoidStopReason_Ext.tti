@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<typelist xmlns="http://guidewire.com/typelists" name="VoidStopReason_Ext" desc="Void/Stop Reasons">
+  <typecode
+    code="incorctclmexp"
+    desc="Paid on Incorrect Claim/Exposure"
+    name="Paid on Incorrect Claim/Exposure"/>
+  <typecode
+    code="stale"
+    desc="Stale"
+    name="Stale"/>
+  <typecode
+    code="withdrawn"
+    desc="Withdrawn"
+    name="Withdrawn"/>
+  <typecode
+    code="duplicate"
+    desc="Duplicate"
+    name="Duplicate"/>
+  <typecode
+    code="incorinfo"
+    desc="Incorrect Information "
+    name="Incorrect Information "/>
+  <typecode
+    code="other"
+    desc="Other"
+    name="Other"/>
+  <typecode
+    code="lost"
+    desc="Lost"
+    name="Lost"/>
+  <typecode
+    code="prterror"
+    desc="Printing Error"
+    name="Printing Error"/>
+</typelist>

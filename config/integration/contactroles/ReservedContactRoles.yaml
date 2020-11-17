@@ -1,0 +1,18 @@
+reservedRoles:
+  Claim:
+    roles:
+      - "reporter"
+      - "maincontact"
+      - "witness"
+  Exposure:
+    roles:
+      - "claimant"
+  InjuryIncident:
+    roles:
+      - "injured"
+      - "PrimaryDoctor"
+  VehicleIncident:
+    roles:
+      - "driver"
+      - "incidentowner"
+      - "passenger"

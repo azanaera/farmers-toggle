@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<typelist xmlns="http://guidewire.com/typelists" name="VehicleDamageLocation_Ext" desc="">
+  <typecode
+    code="home"
+    desc="Home"
+    name="Home"
+    priority="10"/>
+  <typecode
+    code="body_shop"
+    desc="Body shop"
+    name="Body shop"
+    priority="20"/>
+  <typecode
+    code="tow_yard"
+    desc="Tow yard"
+    name="Tow yard"
+    priority="30"/>
+  <typecode
+    code="business"
+    desc="Business"
+    name="Business"
+    priority="40"/>
+  <typecode
+    code="other"
+    desc="Other"
+    name="Other"
+    priority="50"/>
+  <typecode
+    code="police_impound"
+    desc="Police impound"
+    name="Police impound"
+    priority="60"/>
+  <typecode
+    code="salvage_pool"
+    desc="Salvage pool"
+    name="Salvage pool"
+    priority="70"/>
+  <typecode
+    code="storage_facility"
+    desc="Storage facility"
+    name="Storage facility"
+    priority="80"/>
+</typelist>
+

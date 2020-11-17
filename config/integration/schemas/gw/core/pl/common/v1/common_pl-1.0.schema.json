@@ -1,0 +1,794 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "gw.core.pl.framework.v1.framework_pl-1.0"
+  ],
+  "definitions": {
+    "Activity": {
+      "type": "object",
+      "properties": {
+        "activityPattern": {
+          "type": "string",
+          "x-gw-extensions": {
+            "createOnly": true
+          }
+        },
+        "activityType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ActivityType"
+          }
+        },
+        "approvalIssue": {
+          "type": "string"
+        },
+        "approvalRationale": {
+          "type": "string"
+        },
+        "approved": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "assignedByUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedGroup": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedQueue": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "assignmentStatus": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "AssignmentStatus"
+          }
+        },
+        "closeDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "filterable": true
+          }
+        },
+        "closeUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "dueDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "escalated": {
+          "type": "boolean",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "escalationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "externallyOwned": {
+          "type": "boolean",
+          "x-gw-extensions": {
+            "filterable": true
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "initialAssignment": {
+          "$ref": "#/definitions/Assignee",
+          "x-gw-extensions": {
+            "createOnly": true
+          }
+        },
+        "mandatory": {
+          "type": "boolean"
+        },
+        "priority": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true,
+            "typelist": "Priority"
+          }
+        },
+        "recurring": {
+          "type": "boolean"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "status": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true,
+            "typelist": "ActivityStatus"
+          }
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1,
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        }
+      }
+    },
+    "ActivityPattern": {
+      "type": "object",
+      "properties": {
+        "activityClass": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ActivityClass"
+          }
+        },
+        "activityType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ActivityType"
+          }
+        },
+        "category": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "sortable": true,
+            "typelist": "ActivityCategory"
+          }
+        },
+        "code": {
+          "type": "string",
+          "x-gw-extensions": {
+            "createOnly": true,
+            "sortable": true
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "dueDate": {
+          "description": "The default dueDate for activities created from this pattern, calculated based on the current date and time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "escalationDate": {
+          "description": "The default escalationDate for activities created from this pattern, calculated based on the current date and time",
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string"
+        },
+        "mandatory": {
+          "type": "boolean"
+        },
+        "priority": {
+          "description": "The default priority for activities created from this pattern",
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "sortable": true,
+            "typelist": "Priority"
+          }
+        },
+        "recurring": {
+          "type": "boolean"
+        },
+        "subject": {
+          "description": "The default subject for activities created from this pattern",
+          "type": "string"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "x-gw-extensions": {
+        "discriminatorProperty": "country"
+      },
+      "properties": {
+        "addressLine1": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "addressLine2": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "addressLine3": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        // Hong Kong - Kowloon or New Territories
+        "area": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "city": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "country": {
+          "type": "string",
+          "x-gw-type": "typekey.Country",
+          "x-gw-nullable": true
+        },
+        "county": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true
+          }
+        },
+        // Columbia and Nicaragua
+        "department": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        // United Arab Emirates
+        "emirate": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "island": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        // Russia
+        "oblast": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        // Jamaica and Barbados
+        "parish": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "postalCode": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true
+          }
+        },
+        // Japan
+        "prefecture": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "province": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "state": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        }
+      }
+    },
+    "Assignee": {
+      "type": "object",
+      "properties": {
+        "autoAssign": {
+          "type": "boolean"
+        },
+        "groupId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "queueId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "Contact": {
+      "type": "object",
+      "properties": {
+        "addressBookUID": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "cellPhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "companyName": {
+          "type": "string",
+          "x-gw-extensions": {
+            "entitySubtype": "Company"
+          }
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "before": "now",
+            "entitySubtype": "Person"
+          }
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-nullable": true
+        },
+        "emailAddress1": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "emailAddress2": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "firstName": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "homePhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lastName": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "primaryAddress": {
+          "$ref": "#/definitions/Address",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "primaryLanguage": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LanguageType"
+          }
+        },
+        "primaryLocale": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LocaleType"
+          }
+        },
+        "primaryPhone": {
+          "type": "string",
+          "readOnly": true
+        },
+        "primaryPhoneType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person",
+            "typelist": "PrimaryPhoneType"
+          }
+        },
+        "subtype": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "createOnly": true,
+            "typelist": "Contact"
+          }
+        },
+        "taxId": {
+          "type": "string"
+        },
+        "workPhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true
+        }
+      }
+    },
+    "Document": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "dateModified": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "docUID": {
+          "type": "string",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ],
+            "x-gw-extensions": {
+              "createOnly": true
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "inbound": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "language": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LanguageType"
+          }
+        },
+        "mimeType": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "obsolete": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "recipient": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "section": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "filterable": true,
+            "typelist": "DocumentSection"
+          }
+        },
+        "securityType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "DocumentSecurityType"
+          }
+        },
+        "status": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "filterable": true,
+            "typelist": "DocumentStatusType"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "DocumentType"
+          }
+        }
+      }
+    },
+    "DocumentContent": {
+      "type": "object",
+      "properties": {
+        "contents": {
+          "type": "string",
+          "format": "byte",
+          "readOnly": true
+        },
+        "responseMimeType": {
+          "type": "string",
+          "readOnly": true
+        },
+        "url": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "GroupDetail": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "Note": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "body": {
+          "type": "string",
+          "minLength": 1,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ],
+            "filterable": true
+          }
+        },
+        "bodySummary": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "summary"
+            ]
+          }
+        },
+        "confidential": {
+          "type": "boolean"
+        },
+        "createdDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "securityType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "NoteSecurityType"
+          }
+        },
+        "subject": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "topic": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "sortable": true,
+            "typelist": "NoteTopicType"
+          }
+        },
+        "updateTime": {
+          "description": "Time when the note was updated",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        }
+      }
+    },
+    "QueueDetail": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "TypeFilter": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "typeKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        }
+      }
+    },
+    "TypeKey": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "none"
+            ]
+          }
+        },
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "retired": {
+          "type": "boolean",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "none"
+            ]
+          }
+        }
+      }
+    },
+    "TypeList": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "typeFilters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TypeFilter"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "typeKeys": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TypeKey"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+swagger: '2.0'
+info:
+  title: "APIs for claims and related objects"
+  version: '1.0.0'
+x-gw-combine:
+  - gw.core.cc.claim.v1.claim_property_core-1.0
+  - ext.claim.v1.claim_ext-1.0
+x-gw-schema-import:
+  claims: ext.claim.v1.claim_property_ext-1.0
+produces:
+  - application/json
+consumes:
+  - application/json
+paths: {}

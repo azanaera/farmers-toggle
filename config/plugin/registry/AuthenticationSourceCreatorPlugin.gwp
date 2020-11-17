@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<plugin
+  name="AuthenticationSourceCreatorPlugin">
+  <plugin-gosu
+    env="cloud-dev"
+    gosuclass="gw.auth.AuthSourceCreatorPlugin">
+    <param
+      name="redirectUri"
+      value="${PLUGIN_SSO_REDIRECT_URI}"/>
+    <param
+      name="tokenServiceUri"
+      value="${PLUGIN_TOKENSERVICE_URI}"/>
+    <param
+      name="introspectServiceUri"
+      value="${PLUGIN_INTROSPECTSERVICE_URI}"/>
+  </plugin-gosu>
+  <plugin-osgi
+    servicepid="com.guidewire.pl.web.internal.DefaultAuthenticationSourceCreatorPlugin"/>
+</plugin>

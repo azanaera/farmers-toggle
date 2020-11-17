@@ -1,0 +1,89 @@
+swagger: '2.0'
+info:
+  description: "APIs for auto claims and related objects"
+  version: '1.0.0'
+  title: "Claim API"
+x-gw-combine:
+  - gw.core.cc.claim.v1.claim_core-1.0
+x-gw-schema-import:
+  claims: gw.core.cc.claim.v1.claim_auto_core-1.0
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /claims/{claimId}/policy/vehicle-risk-units:
+    parameters:
+      - $ref: "#/parameters/claimId"
+    get:
+      summary: "The vehicle risk units of a policy associated with a given claim"
+      description: "The vehicle risk units of a policy associated with a given claim"
+      operationId: getVehicleRiskUnits
+      x-gw-extensions:
+        operationType: get-collection
+        resourceType: VehicleRiskUnits
+        childResourceType: VehicleRiskUnit
+      x-gw-parameter-sets:
+        - get-collection
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/VehicleRiskUnitList"
+  /claims/{claimId}/policy/vehicle-risk-units/{vehicleRiskUnitId}:
+    parameters:
+      - $ref: "#/parameters/claimId"
+      - $ref: "#/parameters/vehicleRiskUnitId"
+    get:
+      summary: "Retrieve a vehicle risk unit"
+      description: "Retrieve a vehicle risk unit"
+      operationId: getVehicleRiskUnit
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: VehicleRiskUnit
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/VehicleRiskUnitResponse"
+parameters:
+  vehicleRiskUnitId:
+    name: vehicleRiskUnitId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the vehicle risk unit"
+definitions:
+  ClaimResponseInclusions:
+    type: object
+    properties:
+      VehicleRiskUnit:
+        type: array
+        items:
+          "$ref": "#/definitions/VehicleRiskUnitData"
+  VehicleRiskUnitData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "claims#/definitions/VehicleRiskUnit"
+  VehicleRiskUnitList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/VehicleRiskUnitData"
+  VehicleRiskUnitResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/VehicleRiskUnitData"
+      included:
+        "$ref": "#/definitions/ClaimResponseInclusions"

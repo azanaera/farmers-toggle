@@ -1,0 +1,64 @@
+.gw-badge-style--none {
+  background-color: transparent;
+  color: inherit;
+}
+
+.gw-badge-style--info {
+  background-color: $gw-app--palette--info;
+  color: $gw-app--palette--info--text-overlay-col;
+}
+
+.gw-badge-style--warning {
+  background-color: $gw-app--palette--orange--vibrant;
+  color: $gw-app--palette--orange--vibrant--text-overlay-col;
+}
+
+.gw-badge-style--error {
+  background-color: $gw-app--palette--error;
+  color: $gw-app--palette--error--text-overlay-col;
+}
+
+.gw-badge-style--success {
+  background-color: $gw-app--palette--outcomepositive;
+  color: $gw-app--palette--outcomepositive--text-overlay-col;
+}
+
+.gw-badge-style--tier1 {
+  background-color: $gw-app--palette--tier1;
+  color: $gw-app--palette--tier1--text-overlay-col;
+}
+
+.gw-badge-style--tier2 {
+  background-color: $gw-app--palette--tier2;
+  color: $gw-app--palette--tier2--text-overlay-col;
+}
+
+.gw-badge-style--tier3 {
+  background-color: $gw-app--palette--tier3;
+  color: $gw-app--palette--tier3--text-overlay-col;
+}
+
+.gw-badge-style--tier4 {
+  background-color: $gw-app--palette--tier4;
+  color: $gw-app--palette--tier4--text-overlay-col;
+}
+
+.gw-badge-style--highlight {
+  background-color: $gw-app--palette--highlight;
+  color: $gw-app--palette--highlight--text-overlay-col;
+}
+
+.gw-badge-style--highlight_alt {
+  background-color: $gw-app--palette--highlightalt;
+  color: $gw-app--palette--highlightalt--text-overlay-col;
+}
+
+.gw-badge-style--callout {
+  background-color: $gw-app--palette--callout;
+  color: $gw-app--palette--callout--text-overlay-col;
+}
+
+.gw-badge-style--callout_alt {
+  background-color: $gw-app--palette--calloutalt;
+  color: $gw-app--palette--calloutalt--text-overlay-col;
+}

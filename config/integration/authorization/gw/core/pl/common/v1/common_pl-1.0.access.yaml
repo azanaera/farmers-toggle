@@ -1,0 +1,42 @@
+resources:
+  Activities:
+    permissions:
+      view: true
+    filter: gw.rest.core.pl.common.v1.activities.AssignedActivitiesFilter
+  Activity:
+    permissions:
+      view: "perm.Activity.view(resource.Activity)"
+      edit: "perm.Activity.edit(resource.Activity)"
+      assign: "gw.rest.core.pl.util.v1.ActivityInternalPermissionUtil.canAssign(resource.Activity)"
+      approve: "gw.rest.core.pl.util.v1.ActivityInternalPermissionUtil.canApprove(resource.Activity)"
+      complete: "perm.Activity.edit(resource.Activity)"
+      skip: "perm.Activity.edit(resource.Activity)"
+  ActivityAssignees:
+    permissions:
+      view:
+        - __inherit
+        - "gw.rest.core.pl.util.v1.ActivityInternalPermissionUtil.canAssign(resource.Activity)"
+  ActivityPatterns:
+    permissions:
+      view: true
+    filter: __noFilter
+  ActivityPattern:
+    permissions:
+      view: true
+  Assignee:
+    permissions:
+      view: true
+  CommonOpenApiSchema:
+    permissions:
+      view: true
+  Note:
+    permissions:
+      view: "perm.Note.view(resource.Note)"
+      edit: "perm.Note.edit(resource.Note)"
+      delete: "perm.Note.delete(resource.Note)"
+  TypeLists:
+    permissions:
+      view: true
+  TypeList:
+    permissions:
+      view: true

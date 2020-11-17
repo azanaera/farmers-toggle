@@ -1,0 +1,25 @@
+package rules.Validation.ExposureClosedValidationRules_dir
+  uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("ECV08000 - Stop Closing Of Medpay or PIP Exposure_Ext")
+internal class ECV08000StopClosingOfMedpayorPIPExposure_Ext {
+  static function doCondition(exposure :  entity.Exposure) : boolean {
+/*start00rule*/
+    var expOutcome_Ext = (exposure.Bundle.getBeansByRootType(CloseExposureInfo).firstWhere(\elt ->
+        (elt as CloseExposureInfo).Exposure == exposure) as CloseExposureInfo).outcome
+    return
+        (exposure.ExposureType == ExposureType.TC_MEDPAY or
+            exposure.ExposureType == ExposureType.TC_PIPDAMAGES) and
+            (exposure.Incident as InjuryIncident).injured.MedicareBeneficiary_Ext!= false and
+            (expOutcome_Ext == ExposureClosedOutcomeType.TC_COMPLETED or
+                expOutcome_Ext == ExposureClosedOutcomeType.TC_PAYMENTSCOMPLETE) and
+            exposure.ORM_Ext == true and exposure.ORMTermDate_Ext == null
+/*end00rule*/
+}
+
+  static function doAction(exposure :  entity.Exposure, actions : gw.rules.Action) {
+/*start00rule*/
+    exposure.reject(TC_NEWLOSS, DisplayKey.get("Toggle.Rules.Validation.Exposure.MedPipFields_Ext"), null, null)
+/*end00rule*/
+  }
+}

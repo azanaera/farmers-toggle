@@ -1,0 +1,1152 @@
+{
+  "schemaName": "gw.core.cc.claim.v1.claim_core-1.0",
+  "combine": [
+    "gw.core.cc.common.v1.common_core-1.0"
+  ],
+  "typeUses": [
+    "com.guidewire.pl.modules.rest.framework.v1.refs.SemiSharedPropertyUpdateHandler",
+    "com.guidewire.pl.modules.rest.framework.v1.updater.validators.ExplicitlyFilteredTypekeyPostUpdateValidator",
+    "gw.rest.core.cc.claim.v1.claims.refs.PolicyObjectSemiSharedPropertyUpdateHandler",
+    "gw.rest.core.pl.common.v1.phone.PhoneNumberResolver",
+    "gw.rest.core.cc.claim.v1.claims.CoverageJsonValueResolver",
+    "gw.rest.core.cc.claim.v1.claims.LossLocationJsonValueResolver",
+    "gw.rest.core.cc.claim.v1.claims.addresses.ClaimAddress",
+    "gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactJsonValueResolver",
+    "gw.rest.core.cc.claim.v1.claims.transactions.CheckOccurrence",
+    "gw.rest.core.cc.claim.v1.claims.transactions.CheckUpdateKey",
+    "gw.rest.core.cc.claim.v1.claims.transactions.PaymentUpdateKey",
+    "gw.rest.core.cc.common.v1.contacts.ClaimContactRoleKey",
+    "gw.rest.core.cc.common.v1.relatedto.RelatedToJsonValueResolver"
+  ],
+  "updaters": {
+    "Check": {
+      "schemaDefinition": "Check",
+      "root": "entity.Check",
+      "properties": {
+        "checkNumber": {
+          "path": "Check.CheckNumber"
+        },
+        "deductionType": {
+          "path": "Check.DeductionType",
+          "allowed": "Check.RestV1.disallowForPrimaryCheck('deductionType')",
+          // Ignore the property if it's a new check:  in that case it will be processed by the check creator
+          "ignore": "Check.New",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "deliveryMethod": {
+          "path": "Check.DeliveryMethod",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "mailTo": {
+          "path": "Check.MailTo"
+        },
+        "mailingAddress": {
+          "path": "Check.MailingAddress",
+          "create": "new Address(Check)",
+          "updaterRef": "#/updaters/Address"
+        },
+        "memo": {
+          "path": "Check.Memo"
+        },
+        "payTo": {
+          "path": "Check.PayTo"
+        },
+        "payees": {
+          "path": "Check.Payees",
+          // Ignore the property if it's a new check:  in that case it will be processed by the check creator
+          "ignore": "Check.New",
+          "items": {
+            "create": "Check.addNewPayee()",
+            "remove": "Check.removeFromPayees(value)",
+            "jsonKey": "jsonValue.get('id')",
+            "valueKey": "value.RestId",
+            "updaterRef": "#/updaters/Payee"
+          }
+        },
+        "paymentMethod": {
+          "path": "Check.PaymentMethod",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "portion": {
+          "path": "Check.Portion",
+          "allowed": "Check.RestV1.disallowForPrimaryCheck('portion')",
+          "create": "new CheckPortion(Check)",
+          // Ignore the property if it's a new check:  in that case it will be processed by the check creator
+          "ignore": "Check.New",
+          "updaterRef": "#/updaters/CheckPortion"
+        },
+        "reportability": {
+          "path": "Check.Reportability",
+          "allowed": "Check.RestV1.disallowForSecondaryCheck('reportability')",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "CheckOccurrence": {
+      "schemaDefinition": "CheckOccurrence",
+      "root": "CheckOccurrence",
+      "properties": {
+        "checkBatching": {
+          "path": "CheckOccurrence.PrimaryCheck.CheckBatching",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "checkInstructions": {
+          "path": "CheckOccurrence.PrimaryCheck.CheckInstructions",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "checks": {
+          "path": "CheckOccurrence.SortedChecks",
+          "items": {
+            "create": "CheckOccurrence.PrimaryCheck.RestV1.createSecondaryCheck(jsonValue, context)",
+            "validateCreate": "jsonValue.containsKey('id') ? 'The id ' + jsonValue.get('id') + ' did not match any existing secondary check' : null",
+            "jsonKey": "new CheckUpdateKey(jsonValue)",
+            "valueKey": "new CheckUpdateKey(value)",
+            "updaterRef": "#/updaters/Check"
+          }
+        },
+        "comments": {
+          "path": "CheckOccurrence.PrimaryCheck.Comments"
+        },
+        "dateOfService": {
+          "path": "CheckOccurrence.PrimaryCheck.DateOfService"
+        },
+        "enteredTime": {
+          "path": "CheckOccurrence.PrimaryCheck.EnteredTime"
+        },
+        "invoiceNumber": {
+          "path": "CheckOccurrence.PrimaryCheck.InvoiceNumber"
+        },
+        "issueDate": {
+          "path": "CheckOccurrence.PrimaryCheck.IssueDate"
+        },
+        "payments": {
+          "path": "CheckOccurrence.SortedPayments",
+          "items": {
+            "create": "CheckOccurrence.createAndAddPayment(jsonValue, context)",
+            "validateCreate": "jsonValue.containsKey('id') ? 'The id ' + jsonValue.get('id') + ' did not match any existing payment' : null",
+            "jsonKey": "new PaymentUpdateKey(jsonValue, index)",
+            "valueKey": "new PaymentUpdateKey(value, index)",
+            "updaterRef": "#/updaters/Transaction"
+          }
+        },
+        "scheduledSendDate": {
+          "path": "CheckOccurrence.PrimaryCheck.ScheduledSendDate"
+        },
+        "servicePdEnd": {
+          "path": "CheckOccurrence.PrimaryCheck.ServicePdEnd"
+        },
+        "servicePdStart": {
+          "path": "CheckOccurrence.PrimaryCheck.ServicePdStart"
+        }
+      }
+    },
+    "CheckPortion": {
+      "schemaDefinition": "CheckPortion",
+      "root": "entity.CheckPortion",
+      "properties": {
+        "fixedAmount": {
+          "path": "CheckPortion.FixedAmount",
+          "valueResolver": {
+            "typeName": "gw.api.modules.rest.framework.v1.updater.resolver.CurrencyAmountValueResolver"
+          }
+        },
+        "percentage": {
+          "path": "CheckPortion.Percentage"
+        }
+      }
+    },
+    "CheckSet": {
+      "schemaDefinition": "CheckSet",
+      "root": "entity.CheckSet",
+      "properties": {
+        "occurrences": {
+          "path": "CheckSet.RestV1.Occurrences",
+          "items": {
+            // If there's no id on the request, we assume it's creation of a new CheckOccurrence based on the primary check
+            "create": "new CheckOccurrence(CheckSet.PrimaryCheck)",
+            "validateCreate": "jsonValue.containsKey('id') ? 'The id ' + jsonValue.get('id') + ' did not match any existing CheckOccurrence' : null",
+            "jsonKey": "jsonValue.get('id')",
+            "valueKey": "value.RestId",
+            "updaterRef": "#/updaters/CheckOccurrence"
+          }
+        }
+      }
+    },
+    "Claim": {
+      "schemaDefinition": "Claim",
+      "root": "entity.Claim",
+      "properties": {
+        "description": {
+          "path": "Claim.Description"
+        },
+        "faultRating": {
+          "path": "Claim.FaultRating",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "filterPropertyRiskUnits": {
+          "ignore": "true"
+        },
+        "filterVehicleRiskUnits": {
+          //Handled during creation
+          "ignore": "true"
+        },
+        "howReported": {
+          "path": "Claim.HowReported",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "incidentOnly": {
+          "path": "Claim.IncidentReport"
+        },
+        "lobCode": {
+          // Handled during creation
+          "ignore": "true"
+        },
+        "lossCause": {
+          "path": "Claim.LossCause",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "lossDate": {
+          // Handled during creation
+          "ignore": "true"
+        },
+        "lossLocation": {
+          "path": "Claim.RestV1.LossLocationWrapper",
+          "create": "new ClaimAddress(new Address(Claim), Claim)",
+          "handler": "SemiSharedPropertyUpdateHandler",
+          "valueResolver": {
+            "typeName": "LossLocationJsonValueResolver"
+          },
+          "shouldCreate": "currentValue == null || currentValue.PolicyAddress",
+          "touchParent": "currentValue.Address.Changed",
+          "updaterRef": "#/updaters/ClaimAddress"
+        },
+        "policyNumber": {
+          // Handled during creation
+          "ignore": "true"
+        },
+        "reportedByType": {
+          "path": "Claim.ReportedByType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "ClaimAddress": {
+      "schemaDefinition": "Address",
+      "root": "ClaimAddress",
+      "properties": {
+        "addressLine1": {
+          "path": "ClaimAddress.Address.AddressLine1",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('addressLine1', srcJson)"
+        },
+        "addressLine2": {
+          "path": "ClaimAddress.Address.AddressLine2",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('addressLine2', srcJson)"
+        },
+        "addressLine3": {
+          "path": "ClaimAddress.Address.AddressLine3",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('addressLine3', srcJson)"
+        },
+        // Hong Kong - Kowloon or New Territories
+        "area": {
+          "path": "ClaimAddress.Address.State",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('area', srcJson)",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "city": {
+          "path": "ClaimAddress.Address.City"
+        },
+        "country": {
+          "path": "ClaimAddress.Address.Country"
+        },
+        "county": {
+          "path": "ClaimAddress.Address.County",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('county', srcJson)"
+        },
+        // Columbia
+        "department": {
+          "path": "ClaimAddress.Address.State",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('department', srcJson)",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        // United Arab Emirates
+        "emirate": {
+          "path": "ClaimAddress.Address.State",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('emirate', srcJson)",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "island": {
+          "path": "ClaimAddress.Address.State",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('island', srcJson)",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        //Russia
+        "oblast": {
+          "path": "ClaimAddress.Address.State",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('oblast', srcJson)",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        // Jamaica and Barbados
+        "parish": {
+          "path": "ClaimAddress.Address.State",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('parish', srcJson)",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "postalCode": {
+          "path": "ClaimAddress.Address.PostalCode",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('postalCode', srcJson)"
+        },
+        //Japan
+        "prefecture": {
+          "path": "ClaimAddress.Address.State",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('prefecture', srcJson)",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "province": {
+          "path": "ClaimAddress.Address.State",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('province', srcJson)",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "state": {
+          "path": "ClaimAddress.Address.State",
+          "allowed": "ClaimAddress.Address.RestV1_validateInputField('state', srcJson)",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "ClaimContact": {
+      "schemaDefinition": "ClaimContact",
+      "root": "entity.ClaimContact",
+      "properties": {
+        "addressBookUID": {
+          "path": "ClaimContact.Contact.AddressBookUID"
+        },
+        "cellPhone": {
+          "path": "(ClaimContact.Contact as Person).RestV1_CellPhone",
+          "setter": "ClaimContact.Contact.RestV1_setPhoneNumber(Person#CellPhone, value)",
+          "valueResolver": {
+            "typeName": "PhoneNumberResolver"
+          }
+        },
+        "companyName": {
+          "path": "ClaimContact.Contact.Name"
+        },
+        "contactSubtype": {
+          // This field is ignored, but is present in order to trigger createOnly validation of the field
+          "ignore": "true"
+        },
+        "dateOfBirth": {
+          "path": "(ClaimContact.Contact as Person).RestV1_DateOfBirth"
+        },
+        "editableRoles": {
+          "path": "ClaimContact.RestV1_EditableRoles",
+          "items": {
+            "add": "ClaimContact.addToRoles(value)",
+            "create": "new ClaimContactRole(ClaimContact)",
+            "remove": "ClaimContact.removeFromRoles(value)",
+            "jsonKey": "new ClaimContactRoleKey(jsonValue)",
+            "valueKey": "new ClaimContactRoleKey(value)",
+            "updaterRef": "#/updaters/ClaimContactRole"
+          },
+          "preUpdateValidators": [
+            {
+              "typeName": "gw.rest.core.cc.claim.v1.claims.contacts.EditableRolesValidator"
+            }
+          ],
+          "postUpdateValidators": [
+            {
+              "typeName": "gw.rest.core.cc.claim.v1.roleconstraints.RoleConstraintValidator"
+            }
+          ]
+        },
+        "emailAddress1": {
+          "path": "ClaimContact.Contact.EmailAddress1"
+        },
+        "emailAddress2": {
+          "path": "ClaimContact.Contact.EmailAddress2"
+        },
+        "firstName": {
+          "path": "(ClaimContact.Contact as Person).FirstName"
+        },
+        "homePhone": {
+          "path": "ClaimContact.Contact.RestV1_HomePhone",
+          "setter": "ClaimContact.Contact.RestV1_setPhoneNumber(Contact#HomePhone, value)",
+          "valueResolver": {
+            "typeName": "PhoneNumberResolver"
+          }
+        },
+        "lastName": {
+          "path": "(ClaimContact.Contact as Person).LastName"
+        },
+        "policySystemId": {
+          "ignore": "true"
+        },
+        "primaryAddress": {
+          "path": "ClaimContact.Contact.PrimaryAddress",
+          "create": "new Address(ClaimContact)",
+          "touchParent": "currentValue.Changed",
+          "updaterRef": "#/updaters/Address"
+        },
+        "primaryLanguage": {
+          "path": "ClaimContact.Contact.PrimaryLanguage",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "primaryLocale": {
+          "path": "ClaimContact.Contact.PrimaryLocale",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "primaryPhoneType": {
+          "path": "ClaimContact.Contact.PrimaryPhone",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "taxId": {
+          "path": "ClaimContact.Contact.TaxID"
+        },
+        "workPhone": {
+          "path": "ClaimContact.Contact.RestV1_WorkPhone",
+          "setter": "ClaimContact.Contact.RestV1_setPhoneNumber(Contact#WorkPhone, value)",
+          "valueResolver": {
+            "typeName": "PhoneNumberResolver"
+          }
+        }
+      }
+    },
+    "ClaimSearch": {
+      "schemaDefinition": "ClaimSearchRequestAttributes",
+      "root": "entity.ClaimSearchCriteria",
+      "properties": {
+        "claimNumber": {
+          "path": "ClaimSearchCriteria.ClaimNumber"
+        },
+        "firstName": {
+          "path": "ClaimSearchCriteria.NameCriteria.FirstName"
+        },
+        "lastName": {
+          "path": "ClaimSearchCriteria.NameCriteria.LastName"
+        },
+        "nameSearchType": {
+          "path": "ClaimSearchCriteria.NameSearchType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "policyNumber": {
+          "path": "ClaimSearchCriteria.PolicyNumber"
+        }
+      }
+    },
+    "ClaimVehicle": {
+      "schemaDefinition": "Vehicle",
+      "root": "gw.rest.core.cc.claim.v1.claims.vehicles.ClaimVehicle",
+      "properties": {
+        "color": {
+          "path": "ClaimVehicle.Vehicle.Color"
+        },
+        "licensePlate": {
+          "path": "ClaimVehicle.Vehicle.LicensePlate"
+        },
+        "make": {
+          "path": "ClaimVehicle.Vehicle.Make"
+        },
+        "manufacturer": {
+          "path": "ClaimVehicle.Vehicle.Manufacturer",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "model": {
+          "path": "ClaimVehicle.Vehicle.Model"
+        },
+        "policySystemId": {
+          "ignore": "true"
+        },
+        "state": {
+          "path": "ClaimVehicle.Vehicle.State",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "style": {
+          "path": "ClaimVehicle.Vehicle.Style",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "vin": {
+          "path": "ClaimVehicle.Vehicle.Vin"
+        },
+        "year": {
+          "path": "ClaimVehicle.Vehicle.Year"
+        }
+      }
+    },
+    "Exposure": {
+      "schemaDefinition": "Exposure",
+      "root": "entity.Exposure",
+      "properties": {
+        "claimOrder": {
+          "path": "Exposure.ClaimOrder"
+        },
+        "claimantType": {
+          "path": "Exposure.ClaimantType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "contactPermitted": {
+          "path": "Exposure.ContactPermitted"
+        },
+        "coverage": {
+          "path": "Exposure.Coverage",
+          "valueResolver": {
+            "typeName": "CoverageJsonValueResolver"
+          }
+        },
+        "coverageSubtype": {
+          //Handled during creation. Uneditable.
+          "ignore": "true"
+        },
+        "fixedPropertyIncident": {
+          "path": "Exposure.FixedPropertyIncident",
+          "allowed": "Exposure.RestV1.incidentTypeAllowedMessage('FixedPropertyIncident')",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.v1.claims.fixedpropertyincidents.FixedPropertyIncidentJsonValueResolver"
+          }
+        },
+        "injuryIncident": {
+          "path": "Exposure.InjuryIncident",
+          "allowed": "Exposure.RestV1.incidentTypeAllowedMessage('InjuryIncident')",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.v1.claims.injuryincidents.InjuryIncidentJsonValueResolver"
+          }
+        },
+        "jurisdiction": {
+          "path": "Exposure.JurisdictionState",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "lossCategory": {
+          "path": "Exposure.LossCategory",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "lossParty": {
+          "path": "Exposure.LossParty",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "otherCoverage": {
+          "path": "Exposure.OtherCoverage"
+        },
+        "primaryCoverage": {
+          //Handled during creation. Uneditable.
+          "ignore": "true"
+        },
+        "progress": {
+          "path": "Exposure.Progress",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "securityLevel": {
+          "path": "Exposure.SecurityLevel",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "segment": {
+          "path": "Exposure.Segment",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "strategy": {
+          "path": "Exposure.Strategy",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "tier": {
+          "path": "Exposure.ExposureTier",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "vehicleIncident": {
+          "path": "Exposure.VehicleIncident",
+          "allowed": "Exposure.RestV1.incidentTypeAllowedMessage('VehicleIncident')",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.v1.claims.vehicleincidents.VehicleIncidentJsonValueResolver"
+          }
+        }
+      }
+    },
+    "FixedPropertyIncident": {
+      "schemaDefinition": "FixedPropertyIncident",
+      "root": "entity.FixedPropertyIncident",
+      "properties": {
+        "description": {
+          "path": "FixedPropertyIncident.Description"
+        },
+        "location": {
+          "path": "FixedPropertyIncident.Property",
+          "create": "new PolicyLocation(FixedPropertyIncident)",
+          "handler": "PolicyObjectSemiSharedPropertyUpdateHandler",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.property.v1.claims.PolicyLocationJsonValueResolver"
+          },
+          "shouldCreate": "currentValue == null || currentValue.Policy != null",
+          "touchParent": "currentValue.Changed",
+          "updaterRef": "#/updaters/Location"
+        },
+        "lossParty": {
+          "path": "FixedPropertyIncident.LossParty",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "occupancyType": {
+          "path": "FixedPropertyIncident.OccupancyType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "severity": {
+          "path": "FixedPropertyIncident.Severity",
+          "postUpdateValidators": [
+            {
+              "typeName": "ExplicitlyFilteredTypekeyPostUpdateValidator",
+              "categories": "new gw.entity.TypeKey[]{FixedPropertyIncident.Subtype}"
+            }
+          ],
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "InjuryBodyPart": {
+      "schemaDefinition": "InjuryBodyPart",
+      "root": "entity.BodyPartDetails",
+      "properties": {
+        "detailedBodyPart": {
+          "path": "BodyPartDetails.DetailedBodyPart",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "detailedBodyPartDesc": {
+          "path": "BodyPartDetails.DetailedBodyPartDesc",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "impairmentPercentage": {
+          "path": "BodyPartDetails.ImpairmentPercentage"
+        },
+        "ordering": {
+          "path": "BodyPartDetails.Ordering"
+        },
+        "primaryBodyPart": {
+          "path": "BodyPartDetails.PrimaryBodyPart",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "sideOfBody": {
+          "path": "BodyPartDetails.SideOfBody",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "InjuryIncident": {
+      "schemaDefinition": "InjuryIncident",
+      "root": "entity.InjuryIncident",
+      "properties": {
+        "ambulanceUsed": {
+          "path": "InjuryIncident.AmbulanceUsed"
+        },
+        "bodyParts": {
+          "path": "InjuryIncident.BodyParts",
+          "items": {
+            "create": "InjuryIncident.newBodyPart()",
+            "validateCreate": "InjuryIncident.RestV1_ValidateNewInjuryBodyPartJson(jsonValue)",
+            "remove": "InjuryIncident.removeFromBodyParts(value)",
+            "jsonKey": "jsonValue.get('id')",
+            "valueKey": "value.RestId",
+            "updaterRef": "#/updaters/InjuryBodyPart"
+          }
+        },
+        "description": {
+          "path": "InjuryIncident.Description"
+        },
+        "detailedInjuryType": {
+          "path": "InjuryIncident.DetailedInjuryType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "disabledDueToAccident": {
+          "path": "InjuryIncident.DisabledDueToAccident",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "generalInjuryType": {
+          "path": "InjuryIncident.GeneralInjuryType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "lossParty": {
+          "path": "InjuryIncident.LossParty",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "lostWages": {
+          "path": "InjuryIncident.LostWages"
+        },
+        "severity": {
+          "path": "InjuryIncident.Severity",
+          "postUpdateValidators": [
+            {
+              "typeName": "ExplicitlyFilteredTypekeyPostUpdateValidator",
+              "categories": "new gw.entity.TypeKey[]{InjuryIncident.Subtype}"
+            }
+          ],
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "treatmentType": {
+          "path": "InjuryIncident.MedicalTreatmentType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "Location": {
+      "schemaDefinition": "PolicyLocation",
+      "root": "entity.PolicyLocation",
+      "properties": {
+        "address": {
+          "path": "PolicyLocation.RestV1.PolicyLocationAddress",
+          "create": "new ClaimAddress(new Address(PolicyLocation), null as Claim)",
+          "shouldCreate": "currentValue == null || currentValue.PolicyAddress",
+          "touchParent": "currentValue.Address.Changed",
+          "updaterRef": "#/updaters/ClaimAddress"
+        },
+        "locationNumber": {
+          "path": "PolicyLocation.LocationNumber"
+        },
+        "notes": {
+          "path": "PolicyLocation.Notes"
+        },
+        "primaryLocation": {
+          "path": "PolicyLocation.PrimaryLocation"
+        }
+      }
+    },
+    "Payee": {
+      "schemaDefinition": "Payee",
+      "root": "entity.CheckPayee",
+      "properties": {
+        "contact": {
+          "path": "CheckPayee.Payee",
+          "valueResolver": {
+            "claimPath": "CheckPayee.Check.Claim",
+            "typeName": "ClaimContactJsonValueResolver",
+            "createClaimContact": true
+          }
+        },
+        "payeeType": {
+          "path": "CheckPayee.PayeeType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "ReserveSet": {
+      "schemaDefinition": "ReserveSet",
+      "root": "entity.ReserveSet",
+      "properties": {
+        "reserves": {
+          "path": "ReserveSet.RestV1.SortedReserves",
+          "items": {
+            "create": "ReserveSet.RestV1.createAndAddReserve(jsonValue, context)",
+            "validateCreate": "jsonValue.containsKey('id') ? 'The id ' + jsonValue.get('id') + ' did not match any existing payment' : null",
+            "jsonKey": "jsonValue.get('id')",
+            "valueKey": "value.RestId",
+            "updaterRef": "#/updaters/Transaction"
+          }
+        }
+      }
+    },
+    "ServiceRequest": {
+      "schemaDefinition": "ServiceRequest",
+      "root": "entity.ServiceRequest",
+      "properties": {
+        "customer": {
+          "path": "ServiceRequest.Instruction.RestV1.CustomerContact",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactJsonValueResolver"
+          }
+        },
+        "initialAssignment": {
+          // here to trigger validation
+          "ignore": "true"
+        },
+        "initialServices": {
+          "path": "ServiceRequest.Instruction.Services*.Service",
+          "items": {
+            "add": "ServiceRequest.Instruction.addToServices(new ServiceRequestInstructionService(ServiceRequest.Instruction) { :Service = value })",
+            "valueResolver": {
+              "typeName": "gw.rest.core.cc.claim.v1.servicerequests.specialists.SpecialistServiceCodeResolver"
+            }
+          }
+        },
+        "initialSpecialist": {
+          "path": "ServiceRequest.Specialist",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactJsonValueResolver"
+          }
+        },
+        "kind": {
+          "path": "ServiceRequest.Kind",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "progress": {
+          "path": "ServiceRequest.Progress",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "referenceNumber": {
+          "path": "ServiceRequest.RestV1.ServiceRequestReferenceNumber"
+        },
+        "relatedTo": {
+          "ignore": "true"
+        },
+        "requestedQuoteCompletionDate": {
+          "path": "ServiceRequest.RestV1.RequestedQuoteCompletionDate"
+        },
+        "requestedServiceCompletionDate": {
+          "path": "ServiceRequest.RestV1.RequestedServiceCompletionDate"
+        },
+        "specialistCommMethod": {
+          "path": "ServiceRequest.RestV1.SpecialistCommMethod",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "tier": {
+          "path": "ServiceRequest.Tier",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "ServiceRequestInstruction": {
+      "schemaDefinition": "ServiceRequestInstruction",
+      "root": "entity.ServiceRequestInstruction",
+      "properties": {
+        "customer": {
+          "path": "ServiceRequestInstruction.RestV1.CustomerContact",
+          "valueResolver": {
+            "claimPath": "ServiceRequestInstruction.ServiceRequest.Claim",
+            "typeName": "gw.rest.core.cc.claim.v1.claims.contacts.ClaimContactJsonValueResolver"
+          }
+        },
+        "instructionText": {
+          "path": "ServiceRequestInstruction.RestV1.InstructionText"
+        },
+        "services": {
+          "path": "ServiceRequestInstruction.Services*.Service",
+          "items": {
+            "add": "ServiceRequestInstruction.addToServices(new ServiceRequestInstructionService(ServiceRequestInstruction) { :Service = value })",
+            "create": "new SpecialistService(ServiceRequestInstruction)",
+            "updaterRef": "#/updaters/SpecialistService",
+            "valueResolver": {
+              "typeName": "gw.rest.core.cc.claim.v1.servicerequests.specialists.SpecialistServiceJsonValueResolver"
+            }
+          }
+        }
+      }
+    },
+    "ServiceRequestMessage": {
+      "schemaDefinition": "ServiceRequestMessage",
+      "root": "entity.ServiceRequestMessage",
+      "properties": {
+        "body": {
+          "path": "ServiceRequestMessage.Body"
+        },
+        "messageType": {
+          "path": "ServiceRequestMessage.Type",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "sendDate": {
+          "path": "ServiceRequestMessage.SendDate"
+        },
+        "title": {
+          "path": "ServiceRequestMessage.Title"
+        }
+      }
+    },
+    "ServiceRequestStatement": {
+      "schemaDefinition": "ServiceRequestStatement",
+      "root": "entity.ServiceRequestStatement",
+      "properties": {
+        "declinedReason": {
+          "path": "ServiceRequestStatement.DeclinedReason"
+        },
+        "description": {
+          "path": "ServiceRequestStatement.Description"
+        },
+        "expectedDaysToPerformService": {
+          "path": "(ServiceRequestStatement as ServiceRequestQuote).ExpectedDaysToPerformService"
+        },
+        "lineItems": {
+          "path": "ServiceRequestStatement.LineItems",
+          "items": {
+            "add": "ServiceRequestStatement.addToLineItems(value)",
+            "create": "new ServiceRequestStatementLineItem(ServiceRequestStatement)",
+            "updaterRef": "#/updaters/ServiceRequestStatementLineItem"
+          }
+        },
+        "paymentDate": {
+          "path": "(ServiceRequestStatement as ServiceRequestInvoice).PaymentDate"
+        },
+        "referenceNumber": {
+          "path": "ServiceRequestStatement.ReferenceNumber"
+        },
+        "source": {
+          "path": "ServiceRequestStatement.Source",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "status": {
+          "path": "(ServiceRequestStatement as ServiceRequestInvoice).Status",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "ServiceRequestStatementLineItem": {
+      "schemaDefinition": "ServiceRequestStatementLineItem",
+      "root": "entity.ServiceRequestStatementLineItem",
+      "properties": {
+        "amount": {
+          "path": "ServiceRequestStatementLineItem.Amount",
+          "valueResolver": {
+            "typeName": "gw.api.modules.rest.framework.v1.updater.resolver.CurrencyAmountValueResolver"
+          }
+        },
+        "category": {
+          "path": "ServiceRequestStatementLineItem.Category",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "description": {
+          "path": "ServiceRequestStatementLineItem.Description"
+        }
+      }
+    },
+    "SpecialistService": {
+      "schemaDefinition": "SpecialistService",
+      "root": "entity.SpecialistService",
+      "properties": {
+        "active": {
+          "path": "SpecialistService.Active"
+        },
+        "code": {
+          "path": "SpecialistService.Code"
+        },
+        "description": {
+          "path": "SpecialistService.Description"
+        },
+        "name": {
+          "path": "SpecialistService.Name"
+        },
+        "parent": {
+          "path": "SpecialistService.Parent",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.v1.servicerequests.specialists.SpecialistServiceJsonValueResolver"
+          }
+        }
+      }
+    },
+    "Transaction": {
+      "schemaDefinition": "Transaction",
+      "root": "entity.Transaction",
+      "properties": {
+        "comments": {
+          "path": "Transaction.Comments"
+        },
+        "costCategory": {
+          "path": "Transaction.CostCategory",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "costType": {
+          "path": "Transaction.CostType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "currency": {
+          "path": "Transaction.Currency",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "eroding": {
+          "path": "(Transaction as Payment).ErodesReserves"
+        },
+        "lineItems": {
+          "path": "Transaction.LineItems",
+          "items": {
+            "add": "Transaction.addToLineItems(value)",
+            "create": "new TransactionLineItem(Transaction)",
+            "validateCreate": "Transaction.RestV1.validateNewLineItemJson(jsonValue)",
+            "remove": "Transaction.removeFromLineItems(value)",
+            "jsonKey": "jsonValue.get('id')",
+            "valueKey": "value.RestId",
+            "updaterRef": "#/updaters/TransactionLineItem"
+          }
+        },
+        "paymentType": {
+          "path": "(Transaction as Payment).PaymentType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "reservingCurrency": {
+          "path": "Transaction.ReservingCurrency",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "TransactionLineItem": {
+      "schemaDefinition": "TransactionLineItem",
+      "root": "entity.TransactionLineItem",
+      "properties": {
+        "comments": {
+          "path": "TransactionLineItem.Comments"
+        },
+        "lineCategory": {
+          "path": "TransactionLineItem.LineCategory",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "transactionAmount": {
+          "path": "TransactionLineItem.TransactionAmount",
+          "setter": "TransactionLineItem.setTransactionAmountAndUpdate(value)",
+          "valueResolver": {
+            "typeName": "gw.api.modules.rest.framework.v1.updater.resolver.CurrencyAmountValueResolver"
+          }
+        }
+      }
+    },
+    "VehicleIncident": {
+      "schemaDefinition": "VehicleIncident",
+      "root": "entity.VehicleIncident",
+      "properties": {
+        "damageDescription": {
+          "path": "VehicleIncident.Description"
+        },
+        "lossParty": {
+          "path": "VehicleIncident.LossParty",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "severity": {
+          "path": "VehicleIncident.Severity",
+          "postUpdateValidators": [
+            {
+              "typeName": "ExplicitlyFilteredTypekeyPostUpdateValidator",
+              "categories": "new gw.entity.TypeKey[]{VehicleIncident.Subtype}"
+            }
+          ],
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "vehicle": {
+          "path": "VehicleIncident.RestV1.VehicleWrapper",
+          "create": "new gw.rest.core.cc.claim.v1.claims.vehicles.ClaimVehicle(new Vehicle(VehicleIncident))",
+          "handler": "PolicyObjectSemiSharedPropertyUpdateHandler",
+          "valueResolver": {
+            "typeName": "gw.rest.core.cc.claim.v1.claims.vehicleincidents.VehicleJsonValueResolver"
+          },
+          "shouldCreate": "currentValue == null || currentValue.PolicyVehicle",
+          "touchParent": "currentValue.Vehicle.Changed",
+          "updaterRef": "#/updaters/ClaimVehicle"
+        }
+      }
+    }
+  }
+}

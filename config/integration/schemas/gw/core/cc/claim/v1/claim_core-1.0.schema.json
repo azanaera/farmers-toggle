@@ -1,0 +1,2456 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "gw.core.cc.common.v1.common_core-1.0"
+  ],
+  "definitions": {
+    "AdditionalInfo": {
+      "type": "object",
+      "properties": {
+        "propertyName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "value": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "Check": {
+      "type": "object",
+      "properties": {
+        "checkNumber": {
+          "type": "string"
+        },
+        "checkType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "CheckType"
+          }
+        },
+        "claimContact": {
+          "$ref": "#/definitions/SimpleReference"
+        },
+        "deductionType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "DeductionType"
+          }
+        },
+        "deliveryMethod": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "DeliveryMethod"
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "mailTo": {
+          "type": "string"
+        },
+        "mailingAddress": {
+          "$ref": "#/definitions/Address"
+        },
+        "memo": {
+          "type": "string"
+        },
+        "payTo": {
+          "type": "string"
+        },
+        "payees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Payee"
+          },
+          "minItems": 1
+        },
+        "paymentMethod": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "PaymentMethod"
+          }
+        },
+        "portion": {
+          "$ref": "#/definitions/CheckPortion"
+        },
+        "reportability": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ReportabilityType"
+          }
+        },
+        "reportableAmount": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "readOnly": true
+        },
+        "status": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "TransactionStatus"
+          }
+        }
+      }
+    },
+    "CheckOccurrence": {
+      "type": "object",
+      "properties": {
+        "checkBatching": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "CheckBatching"
+          }
+        },
+        "checkInstructions": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "CheckHandlingInstructions"
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Check"
+          }
+        },
+        "comments": {
+          "type": "string"
+        },
+        "dateOfService": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "enteredTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "invoiceNumber": {
+          "type": "string"
+        },
+        "issueDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "payments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          },
+          "minItems": 1
+        },
+        "scheduledSendDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "servicePdEnd": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "servicePdStart": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "CheckPortion": {
+      "type": "object",
+      "properties": {
+        "fixedAmount": {
+          "type": "string",
+          "format": "gw-bigdecimal"
+        },
+        "id": {
+          "type": "string"
+        },
+        "percentage": {
+          "type": "string",
+          "format": "gw-bigdecimal"
+        }
+      }
+    },
+    "CheckSet": {
+      "type": "object",
+      "properties": {
+        "approvalDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "approvalStatus": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ApprovalStatus"
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "occurrences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CheckOccurrence"
+          }
+        },
+        "recurrenceInfo": {
+          "$ref": "#/definitions/RecurrenceInfo"
+        },
+        "requestingUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        }
+      }
+    },
+    "Claim": {
+      "type": "object",
+      "properties": {
+        "assignedByUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedGroup": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedQueue": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "assignmentStatus": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "AssignmentStatus"
+          }
+        },
+        "claimNumber": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "closeDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "closedOutcome": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ClaimClosedOutcomeType"
+          }
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "faultRating": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "FaultRating"
+          }
+        },
+        "filterPropertyRiskUnits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-gw-extensions": {
+            "createOnly": true
+          }
+        },
+        "filterVehicleRiskUnits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-gw-extensions": {
+            "createOnly": true
+          }
+        },
+        "flagged": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "FlaggedType"
+          }
+        },
+        "howReported": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "HowReportedType"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "incidentOnly": {
+          "type": "boolean"
+        },
+        "jurisdiction": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "Jurisdiction"
+          }
+        },
+        "lobCode": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "createOnly": true,
+            "typelist": "LOBCode"
+          }
+        },
+        "lossCause": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LossCause"
+          }
+        },
+        "lossDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-extensions": {
+            "before": "now",
+            "createOnly": true,
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "lossLocation": {
+          "$ref": "#/definitions/ClaimAddress",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "lossType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "LossType"
+          }
+        },
+        "policyAddresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClaimAddress"
+          },
+          "readOnly": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "policyNumber": {
+          "type": "string",
+          "x-gw-extensions": {
+            "createOnly": true
+          }
+        },
+        "reportedByType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "PersonRelationType"
+          }
+        },
+        "reportedDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "before": "now"
+          }
+        },
+        "segment": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ClaimSegment"
+          }
+        },
+        "state": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "filterable": true,
+            "typelist": "ClaimState"
+          }
+        },
+        "strategy": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ClaimStrategy"
+          }
+        },
+        "validationLevel": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ValidationLevel"
+          }
+        }
+      }
+    },
+    "ClaimAddress": {
+      // "allOf": [{"$ref": "#/definitions/Address"}]
+      "type": "object",
+      "x-gw-extensions": {
+        "discriminatorProperty": "country"
+      },
+      "properties": {
+        "addressLine1": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "addressLine2": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "addressLine3": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        // Hong Kong - Kowloon or New Territories
+        "area": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "city": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "country": {
+          "type": "string",
+          "x-gw-type": "typekey.Country",
+          "x-gw-nullable": true
+        },
+        "county": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true
+          }
+        },
+        // Columbia and Nicaragua
+        "department": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        // United Arab Emirates
+        "emirate": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "island": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        // Russia
+        "oblast": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        // Jamaica and Barbados
+        "parish": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        // claim-specific
+        "policyAddress": {
+          "type": "boolean"
+        },
+        "policyLabel": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true
+          }
+        },
+        // Japan
+        "prefecture": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "province": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        },
+        "state": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "countryRestricted": true,
+            "typelist": "State"
+          }
+        }
+      }
+    },
+    "ClaimContact": {
+      "type": "object",
+      "x-gw-extensions": {
+        "discriminatorProperty": "contactSubtype"
+      },
+      "properties": {
+        "addressBookUID": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "cellPhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "companyName": {
+          "type": "string",
+          "x-gw-extensions": {
+            "entitySubtype": "Company"
+          }
+        },
+        "contactSubtype": {
+          "type": "string",
+          "x-gw-type": "typekey.Contact",
+          "x-gw-extensions": {
+            "createOnly": true,
+            "requiredForCreate": true
+          }
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "before": "now",
+            "entitySubtype": "Person"
+          }
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-nullable": true
+        },
+        "editableRoles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContactRole"
+          }
+        },
+        "emailAddress1": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "emailAddress2": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "firstName": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "homePhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lastName": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person"
+          }
+        },
+        "policySystemId": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-nullable": true
+        },
+        "primaryAddress": {
+          "$ref": "#/definitions/Address",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "primaryLanguage": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LanguageType"
+          }
+        },
+        "primaryLocale": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LocaleType"
+          }
+        },
+        "primaryPhone": {
+          "type": "string",
+          "readOnly": true
+        },
+        "primaryPhoneType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "Person",
+            "typelist": "PrimaryPhoneType"
+          }
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ContactRole"
+          },
+          "readOnly": true
+        },
+        "taxId": {
+          "type": "string"
+        },
+        "workPhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true
+        }
+      }
+    },
+    "ClaimReference": {
+      "type": "object",
+      "properties": {
+        "claimNumber": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        }
+      }
+    },
+    "ClaimSearchRequestAttributes": {
+      "type": "object",
+      "properties": {
+        "claimNumber": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "nameSearchType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ClaimSearchNameSearchType"
+          }
+        },
+        "policyNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "ClaimSearchResult": {
+      "type": "object",
+      "properties": {
+        "adjusterName": {
+          "type": "string"
+        },
+        "claimId": {
+          "type": "string"
+        },
+        "claimNumber": {
+          "type": "string"
+        },
+        "claimants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "insuredName": {
+          "type": "string"
+        },
+        "lossDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "policyNumber": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ClaimState"
+          }
+        }
+      }
+    },
+    "ContactRoleConstraint": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "schemaConstraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RoleSchemaConstraint"
+          }
+        },
+        "subtype": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "filterable": true
+          }
+        }
+      }
+    },
+    "CovTerm": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "ClassificationCovTerm"
+          }
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "financialAmount": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "FinancialCovTerm"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "numericValue": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "entitySubtype": "NumericCovTerm"
+          }
+        },
+        "units": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "CovTermModelVal"
+          }
+        }
+      }
+    },
+    "Coverage": {
+      "type": "object",
+      "properties": {
+        "claimAggLimit": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "x-gw-nullable": true
+        },
+        "covTerms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CovTerm"
+          }
+        },
+        "coverageType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true,
+            "typelist": "CoverageType"
+          }
+        },
+        "currency": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "Currency"
+          }
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "expirationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "exposureLimit": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "x-gw-nullable": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "incidentLimit": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "x-gw-nullable": true
+        },
+        "limitsIndicator": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LimitsIndicator"
+          }
+        },
+        "nonmedAggLimit": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "x-gw-nullable": true
+        },
+        "notes": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "personAggLimit": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "x-gw-nullable": true
+        },
+        "replaceAggLimit": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "x-gw-nullable": true
+        },
+        "state": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "State"
+          }
+        }
+      }
+    },
+    "Endorsement": {
+      "type": "object",
+      "properties": {
+        "comments": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "expirationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "formNumber": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "Exposure": {
+      "type": "object",
+      "properties": {
+        "assignedByUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedGroup": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedQueue": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignmentStatus": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "AssignmentStatus"
+          }
+        },
+        "claimOrder": {
+          "type": "integer",
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "claimantType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "ClaimantType"
+          }
+        },
+        "closeDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "closedOutcome": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ExposureClosedOutcomeType"
+          }
+        },
+        "contactPermitted": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "coverage": {
+          "$ref": "#/definitions/SimpleReference",
+          "x-gw-nullable": true
+        },
+        "coverageSubtype": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "createOnly": true,
+            "sortable": true,
+            "typelist": "CoverageSubtype"
+          }
+        },
+        "createdVia": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "CreatedVia"
+          }
+        },
+        "fixedPropertyIncident": {
+          "$ref": "#/definitions/SimpleReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "resourceType": "FixedPropertyIncident"
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "injuryIncident": {
+          "$ref": "#/definitions/SimpleReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "resourceType": "InjuryIncident"
+          }
+        },
+        "jurisdiction": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "Jurisdiction"
+          }
+        },
+        "lossCategory": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LossCategory"
+          }
+        },
+        "lossParty": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "LossPartyType"
+          }
+        },
+        "otherCoverage": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "primaryCoverage": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "createOnly": true,
+            "sortable": true,
+            "typelist": "CoverageType"
+          }
+        },
+        "progress": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "ExposureProgressType"
+          }
+        },
+        "reopenDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "reopenedReason": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ExposureReopenedReason"
+          }
+        },
+        "securityLevel": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "createOnly": true,
+            "typelist": "ExposureSecurityType"
+          }
+        },
+        "segment": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ClaimSegment"
+          }
+        },
+        "state": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ExposureState"
+          }
+        },
+        "strategy": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ClaimStrategy"
+          }
+        },
+        "tier": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "ExposureTier"
+          }
+        },
+        "type": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true,
+            "typelist": "ExposureType"
+          }
+        },
+        "validationLevel": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ValidationLevel"
+          }
+        },
+        "vehicleIncident": {
+          "$ref": "#/definitions/SimpleReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "resourceType": "VehicleIncident"
+          }
+        }
+      }
+    },
+    "FixedPropertyIncident": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ],
+            "sortable": true
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/definitions/PolicyLocation",
+          "x-gw-nullable": true
+        },
+        "lossParty": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LossPartyType"
+          }
+        },
+        "occupancyType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "sortable": true,
+            "typelist": "OccupancyType"
+          }
+        },
+        "severity": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "SeverityType"
+          }
+        }
+      }
+    },
+    "InjuryBodyPart": {
+      "type": "object",
+      "properties": {
+        "detailedBodyPart": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "DetailedBodyPartType"
+          }
+        },
+        "detailedBodyPartDesc": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "DetailedBodyPartDesc"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "impairmentPercentage": {
+          "type": "integer",
+          "x-gw-nullable": true,
+          "minimum": 0,
+          "maximum": 100
+        },
+        "ordering": {
+          "type": "integer"
+        },
+        "primaryBodyPart": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "BodyPartType"
+          }
+        },
+        "sideOfBody": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "SideOfBody"
+          }
+        }
+      }
+    },
+    "InjuryIncident": {
+      "type": "object",
+      "properties": {
+        "ambulanceUsed": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "bodyParts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InjuryBodyPart"
+          },
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "description": {
+          "type": "string",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ],
+            "sortable": true
+          }
+        },
+        "detailedInjuryType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "DetailedInjuryType"
+          }
+        },
+        "disabledDueToAccident": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "DisabledDueToAccident"
+          }
+        },
+        "generalInjuryType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "InjuryType"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "lossParty": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "LossPartyType"
+          }
+        },
+        "lostWages": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "severity": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "SeverityType"
+          }
+        },
+        "treatmentType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "MedicalTreatmentType"
+          }
+        }
+      }
+    },
+    "Payee": {
+      "type": "object",
+      "properties": {
+        "contact": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference"
+        },
+        "id": {
+          "type": "string"
+        },
+        "payeeType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ContactRole"
+          }
+        }
+      }
+    },
+    "Policy": {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "type": "string",
+          "readOnly": true
+        },
+        "assignedRisk": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "cancellationDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "currency": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "Currency"
+          }
+        },
+        "effectiveDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expirationDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "financialInterests": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "foreignCoverage": {
+          "type": "boolean",
+          "x-gw-nullable": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "originalEffectiveDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-nullable": true
+        },
+        "policyLocations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PolicyObjectReference"
+          },
+          "readOnly": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "policyNumber": {
+          "type": "string",
+          "readOnly": true
+        },
+        "policyType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "PolicyType"
+          }
+        },
+        "producerCode": {
+          "type": "string"
+        },
+        "serviceTier": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "CustomerServiceTier"
+          }
+        },
+        "status": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "PolicyStatus"
+          }
+        },
+        "underwritingCo": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "UnderwritingCompanyType"
+          }
+        },
+        "underwritingGroup": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "UnderwritingGroupType"
+          }
+        },
+        "verifiedPolicy": {
+          "type": "boolean"
+        }
+      }
+    },
+    "PolicyLocation": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/ClaimAddress"
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "locationNumber": {
+          "type": "string",
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        },
+        "notes": {
+          "type": "string"
+        },
+        "policySystemId": {
+          "type": "string"
+        },
+        "primaryLocation": {
+          "type": "boolean",
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true
+          }
+        }
+      }
+    },
+    "PolicyObjectReference": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "policyLabel": {
+          "type": "string",
+          "readOnly": true
+        },
+        "policySystemId": {
+          "type": "string"
+        }
+      }
+    },
+    "RecurrenceInfo": {
+      "type": "object",
+      "properties": {
+        "firstDueDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "string"
+        },
+        "issuanceDateOffset": {
+          "type": "integer"
+        },
+        "numChecks": {
+          "type": "integer"
+        },
+        "recurrenceDay": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "RecurrenceDay"
+          }
+        }
+      }
+    },
+    "ReserveSet": {
+      "type": "object",
+      "properties": {
+        "approvalDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "approvalStatus": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ApprovalStatus"
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "requestingUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "reserves": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Transaction"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "RoleSchemaConstraint": {
+      "type": "object",
+      "properties": {
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchemaConstraint"
+          },
+          "readOnly": true
+        },
+        "exceptionSubtypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        },
+        "schema": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "SchemaConstraint": {
+      "type": "object",
+      "properties": {
+        "additionalInfoList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AdditionalInfo"
+          }
+        },
+        "constraintType": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "ServiceRequest": {
+      "type": "object",
+      "properties": {
+        "assignedGroup": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignedUser": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "assignmentDate": {
+          "type": "string",
+          "format": "date",
+          "readOnly": true
+        },
+        "canceledReason": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "claim": {
+          "$ref": "#/definitions/ClaimReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "resourceType": "Claim"
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "customer": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference",
+          "x-gw-extensions": {
+            "resourceType": "ClaimContact"
+          }
+        },
+        "expectedQuoteCompletionDate": {
+          "type": "string",
+          "format": "date",
+          "readOnly": true
+        },
+        "expectedServiceCompletionDate": {
+          "type": "string",
+          "format": "date",
+          "readOnly": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "initialAssignment": {
+          "$ref": "#/definitions/Assignee",
+          "x-gw-extensions": {
+            "createOnly": true
+          }
+        },
+        "initialServices": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-gw-extensions": {
+            "createOnly": true
+          }
+        },
+        "initialSpecialist": {
+          "$ref": "#/definitions/SimpleReference",
+          "x-gw-extensions": {
+            "createOnly": true,
+            "requiredForCreate": true,
+            "resourceType": "ClaimContact"
+          }
+        },
+        "instruction": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "kind": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "createOnly": true,
+            "sortable": true,
+            "typelist": "ServiceRequestKind"
+          }
+        },
+        "nextStep": {
+          "$ref": "#/definitions/ServiceRequestAction",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "overdue": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "progress": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "filterable": true,
+            "sortable": true,
+            "typelist": "ServiceRequestProgress"
+          }
+        },
+        "quoteStatus": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ServiceRequestQuoteStatus"
+          }
+        },
+        "referenceNumber": {
+          "type": "string"
+        },
+        "relatedTo": {
+          "$ref": "#/definitions/GenericRelation",
+          "x-gw-extensions": {
+            "createOnly": true
+          }
+        },
+        "requestedQuoteCompletionDate": {
+          "type": "string",
+          "format": "date",
+          "x-gw-extensions": {
+            "after": "now"
+          }
+        },
+        "requestedServiceCompletionDate": {
+          "type": "string",
+          "format": "date",
+          "x-gw-extensions": {
+            "after": "now"
+          }
+        },
+        "serviceRequestNumber": {
+          "type": "string",
+          "readOnly": true
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SpecialistService"
+          },
+          "readOnly": true
+        },
+        "specialist": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "resourceType": "ClaimContact"
+          }
+        },
+        "specialistCommMethod": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "SpecialistCommMethod"
+          }
+        },
+        "tier": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "sortable": true,
+            "typelist": "ServiceRequestTier"
+          }
+        }
+      }
+    },
+    "ServiceRequestAction": {
+      "type": "object",
+      "properties": {
+        "defaultOperation": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TypeKeyReference"
+          }
+        }
+      }
+    },
+    "ServiceRequestChange": {
+      "type": "object",
+      "properties": {
+        "changeType": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "newInstruction": {
+          "$ref": "#/definitions/SimpleReference"
+        },
+        // get changed field(s)
+        "newProgress": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ServiceRequestProgress"
+          }
+        },
+        "newQuoteExpectedCompletionDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "newQuoteStatus": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ServiceRequestQuoteStatus"
+          }
+        },
+        "newServiceExpectedCompletionDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "operation": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ServiceRequestOperation"
+          }
+        },
+        "sequence": {
+          "type": "integer"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ServiceRequestInstruction": {
+      "type": "object",
+      "properties": {
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "customer": {
+          "$ref": "#/definitions/UpdatablePolicyObjectReference"
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "instructionText": {
+          "type": "string",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SpecialistService"
+          }
+        }
+      }
+    },
+    "ServiceRequestMessage": {
+      "type": "object",
+      "required": [
+        "messageType"
+      ],
+      "properties": {
+        "body": {
+          "type": "string",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "messageType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ServiceRequestMessageType"
+          }
+        },
+        "sendDate": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "serviceRequest": {
+          "$ref": "#/definitions/ServiceRequestReference",
+          "readOnly": true
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceRequestReference": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "referenceNumber": {
+          "type": "string"
+        },
+        "serviceRequestNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceRequestStatement": {
+      "type": "object",
+      // "required": ["description"]
+      "properties": {
+        "approvalDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "approvedBy": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "creationTime": {
+          "type": "string",
+          "format": "date-time",
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "declinedReason": {
+          "type": "string",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "description": {
+          "type": "string",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "expectedDaysToPerformService": {
+          "type": "integer",
+          "x-gw-extensions": {
+            "entitySubtype": "ServiceRequestQuote"
+          }
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lineItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceRequestStatementLineItem"
+          }
+        },
+        "paymentDate": {
+          "type": "string",
+          "format": "date",
+          "x-gw-extensions": {
+            "entitySubtype": "ServiceRequestInvoice"
+          }
+        },
+        "referenceNumber": {
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "StatementSource"
+          }
+        },
+        "status": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "entitySubtype": "ServiceRequestInvoice",
+            "typelist": "ServiceRequestInvoiceStatus"
+          }
+        },
+        "subtype": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "ServiceRequestStatement"
+          }
+        },
+        "total": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "readOnly": true
+        }
+      }
+    },
+    "ServiceRequestStatementLineItem": {
+      "type": "object",
+      "required": [
+        "amount"
+      ],
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/MonetaryAmount"
+        },
+        "category": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ServiceRequestStatementLineItemCategory"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "SpecialistService": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "code": {
+          "type": "string",
+          "x-gw-extensions": {
+            "createOnly": true
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "parent": {
+          "$ref": "#/definitions/SimpleReference"
+        }
+      }
+    },
+    "Transaction": {
+      "type": "object",
+      "properties": {
+        "bookingDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "comments": {
+          "type": "string",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "costCategory": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "CostCategory"
+          }
+        },
+        "costType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "CostType"
+          }
+        },
+        "coverage": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "CoverageType"
+          }
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "sortable": true
+          }
+        },
+        "createdVia": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "CreatedVia"
+          }
+        },
+        "currency": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "Currency"
+          }
+        },
+        "eroding": {
+          "type": "boolean",
+          "x-gw-extensions": {
+            "entitySubtype": "Payment"
+          }
+        },
+        "exchangeDescription": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "exchangeRate": {
+          "type": "string",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "exchangeRateEffDate": {
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "exposure": {
+          "$ref": "#/definitions/SimpleReference"
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lineItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TransactionLineItem"
+          }
+        },
+        "overrideTransToReservingExchangeRate": {
+          "type": "boolean",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "paymentType": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "entitySubtype": "Payment",
+            "typelist": "PaymentType"
+          }
+        },
+        "reserveLine": {
+          "$ref": "#/definitions/SimpleReference",
+          "readOnly": true
+        },
+        "reservingAmount": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "readOnly": true
+        },
+        "reservingCurrency": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "Currency"
+          }
+        },
+        "status": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "typelist": "TransactionStatus"
+          }
+        },
+        "transactionAmount": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "readOnly": true
+        },
+        "type": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "readOnly": true,
+          "x-gw-extensions": {
+            "filterable": true,
+            "typelist": "Transaction"
+          }
+        }
+      }
+    },
+    "TransactionLineItem": {
+      "type": "object",
+      "properties": {
+        "comments": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "lineCategory": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "LineCategory"
+          }
+        },
+        "reservingAmount": {
+          "$ref": "#/definitions/MonetaryAmount",
+          "readOnly": true
+        },
+        "transactionAmount": {
+          "$ref": "#/definitions/MonetaryAmount"
+        }
+      }
+    },
+    "UpdatablePolicyObjectReference": {
+      "type": "object",
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "policySystemId": {
+          "type": "string"
+        },
+        "refid": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        }
+      }
+    },
+    "ValidationIssue": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ValidationIssueType"
+          }
+        },
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "validationLevel": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ValidationLevel"
+          }
+        }
+      }
+    },
+    "ValidationResult": {
+      "properties": {
+        "hasErrors": {
+          "type": "boolean"
+        },
+        "validationIssues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ValidationIssue"
+          }
+        },
+        "validationLevelReached": {
+          "description": "Updated ValidationLevel of the root bean that is being validated",
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "ValidationLevel"
+          }
+        }
+      }
+    },
+    "Vehicle": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "id": {
+          "type": "string"
+        },
+        "licensePlate": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "make": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "manufacturer": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "VehicleManufacturer"
+          }
+        },
+        "model": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "policyLabel": {
+          "type": "string",
+          "readOnly": true
+        },
+        // policySystemId will be ignored in updater
+        "policySystemId": {
+          "type": "string"
+        },
+        "policyVehicle": {
+          "type": "boolean",
+          "readOnly": true
+        },
+        "state": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "Jurisdiction"
+          }
+        },
+        "style": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "VehicleStyle"
+          }
+        },
+        "vin": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "year": {
+          "type": "integer",
+          "x-gw-nullable": true
+        }
+      }
+    },
+    "VehicleIncident": {
+      "type": "object",
+      "properties": {
+        "damageDescription": {
+          "type": "string",
+          "x-gw-extensions": {
+            "defaultViews": [
+              "detail"
+            ]
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "lossParty": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "LossPartyType"
+          }
+        },
+        "severity": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "SeverityType"
+          }
+        },
+        "vehicle": {
+          "$ref": "#/definitions/Vehicle"
+        }
+      }
+    }
+  }
+}

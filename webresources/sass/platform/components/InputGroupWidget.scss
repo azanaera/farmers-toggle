@@ -1,0 +1,69 @@
+.gw-InputGroupWidget {
+  vertical-align: top;
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 1;
+  @include gw-wrapNever();
+
+  @include gw-borderRadius();
+  overflow: hidden;
+
+  @include gw-ie11Only {
+      overflow: visible !important;
+  }
+
+  display: block;
+
+  @include gw-panelOuterSpacing();
+  @include gw-widgetStyles($gw-app--InputGroup--bg);
+
+  .gw-InputGroup--header {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    font-weight: $gw-app--InputGroup--header-font-weight;
+    min-height: $gw-app--InputGroup--min-height-em;
+    @include gw-borderRadius();
+
+    // Internal padding
+    padding-top: $gw-app--InputGroup-title-bar--spacing-inner-top-rem;
+    padding-left: $gw-app--InputGroup-title-bar--spacing-inner-left-rem;
+    padding-right: $gw-app--InputGroup-title-bar--spacing-inner-right-rem;
+    padding-bottom: $gw-app--InputGroup-title-bar--spacing-inner-bottom-rem;
+
+    @include gw-ie11Only {
+      padding-top: gw-emFixed(1);
+      padding-bottom: gw-emFixed(1);
+    }
+
+    .gw-InputGroupCheckboxValueWidget:not(.gw-placeholder) {
+      margin-right: $gw-app--InputGroup-title-bar--internal-spacing-rem;
+    }
+
+    .gw-icon {
+      margin-right: $gw-app--InputGroup-title-bar--internal-spacing-rem;
+    }
+  }
+
+  .gw-InputGroup--body {
+    &:empty {
+      display: none;
+    }
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+    // Internal padding
+    @include gw-panelInnerSpacing();
+  }
+
+  .gw-InputGroup--footer {
+    display: none;
+  }
+
+  &.gw-InputGroup--collapsed {
+    .gw-InputGroup--body {
+      display: none !important;
+    }
+  }
+}

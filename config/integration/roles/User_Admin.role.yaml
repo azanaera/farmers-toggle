@@ -1,0 +1,20 @@
+endpoints:
+  - endpoint: "/admin/v1/**"
+    methods:
+      - "*"
+  - endpoint: "/admin/v1/**"
+    methods:
+      - "*"
+  - endpoint: "/claim/v1/**"
+    methods:
+      - "*"
+  - endpoint: "/common/v1/**"
+    methods:
+      - "*"
+accessibleFields:
+  "*":
+    view:
+      - "*"
+    edit:
+      - "*"
+name: "User Admin"

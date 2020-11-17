@@ -1,0 +1,25 @@
+.gw-TemplateInputWidget {
+  & > .gw-value {
+    @include gw-ie11Only {
+      display: inline-flex !important;
+    }
+    & > .gw-TemplateValueWidget {
+      @include gw-ie11Only {
+        flex-grow: 1 !important;
+      }
+      & > .gw-ExpressionRangeValueWidget {
+        @include gw-ie11Only {
+          flex-grow: 1 !important;
+        }
+      }
+    }
+  }
+
+  .gw-TemplateValueWidget {
+    select {
+      @include gw-ie11Only {
+       max-width: 10px !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<database-config xmlns="http://guidewire.com/database-config">
+  
+  <!-- H2 (meant for demo/quickstart use only!) -->
+  <database dbtype="h2" env="local" name="ClaimCenterDatabase">
+    <dbcp-connection-pool jdbc-url="jdbc:h2:file:/tmp/guidewire/cc"/>
+    <upgrade defer-create-nonessential-indexes="false"/>
+  </database>
+  
+  <database dbtype="h2" name="ClaimCenterDatabase">
+    <dbcp-connection-pool jdbc-url="jdbc:h2:mem:/tmp/guidewire/cc"/>
+    <upgrade defer-create-nonessential-indexes="false"/>
+  </database>
+  
+  <database autoupgrade="full" dbtype="postgresql" env="cloud-dev" name="ClaimCenterDatabase">
+    <dbcp-connection-pool jdbc-url="${DATABASE_JDBC_URL}">
+      <reset-tool-params system-password="gw"/>
+    </dbcp-connection-pool>
+  </database>
+</database-config>

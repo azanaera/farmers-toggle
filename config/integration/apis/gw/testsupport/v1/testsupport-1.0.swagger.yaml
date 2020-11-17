@@ -1,0 +1,331 @@
+swagger: '2.0'
+info:
+  description: "APIs for controlling aspects of ClaimCenter as necessary for testing purposes. Not intended for production use."
+  version: '1.0.0'
+  title: "Testsupport API"
+basePath: /testsupport/v1
+x-gw-combine:
+  - gw.core.pl.framework.v1.framework_pl-1.0
+x-gw-apihandlers:
+  - gw.rest.testsupport.v1.TestSupportApiHandler
+x-gw-schema-import:
+  testsupport: gw.testsupport.v1.testsupport-1.0
+x-gw-cors-policy: testsupport
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /contacts:
+    post:
+      summary: "Create a new contact for tests"
+      description: "For test environments that aren't hooked up to a policy administration system or contact management system."
+      operationId: createContact
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: Contacts
+        childResourceType: Contact
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ContactRequest"
+      responses:
+        '201':
+          description: "Successful creation"
+          schema:
+            $ref: "#/definitions/ContactResponse"
+  /documents:
+    delete:
+      summary: "Delete all documents for tests"
+      operationId: deleteAllDocuments
+      x-gw-extensions:
+        operationType: custom-action
+      responses:
+        '204':
+          description: "Successful deletion"
+  /policies:
+    post:
+      summary: "Create a new policy for tests"
+      description: "For test environments that aren't hooked up to a policy administration system."
+      operationId: createPolicy
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: TestSupportPolicies
+        childResourceType: TestSupportPolicy
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/TestSupportPolicyRequest"
+      responses:
+        '201':
+          description: "Successful creation"
+          schema:
+            $ref: "#/definitions/TestSupportPolicyResponse"
+  /roles:
+    post:
+      summary: "Create a new role for tests"
+      description: "Create a new role for tests"
+      operationId: createRole
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: TestSupportRoles
+        childResourceType: TestSupportRole
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/TestSupportRoleRequest"
+      responses:
+        '201':
+          description: "Successful creation"
+          schema:
+            $ref: "#/definitions/TestSupportRoleResponse"
+  /roles/{roleId}:
+    parameters:
+      - $ref: "#/parameters/roleId"
+    get:
+      summary: "Get role details"
+      description: "Get role details"
+      operationId: getRole
+      x-gw-extensions:
+        operationType: get-element
+        resourceType: TestSupportRole
+      x-gw-parameter-sets:
+        - get-element
+      responses:
+        '200':
+          description: "Success"
+          schema:
+            $ref: "#/definitions/TestSupportRoleResponse"
+  /search/contacts:
+    post:
+      summary: "Searches for contacts that match the specified criteria"
+      description: "Searches for contacts that match the specified criteria"
+      operationId: searchContacts
+      x-gw-extensions:
+        operationType: search-collection
+        resourceType: ContactSearch
+        childResourceType: Contact
+      x-gw-parameter-sets:
+        - search-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/ContactSearchRequest"
+      responses:
+        '200':
+          description: "Returns a list of contacts that match the search criteria"
+          schema:
+            $ref: "#/definitions/ContactList"
+  /search/policies:
+    post:
+      summary: "Searches for policies that match the specified criteria"
+      description: "Searches for policies that match the specified criteria"
+      operationId: searchPolicies
+      x-gw-extensions:
+        operationType: search-collection
+        resourceType: PolicySearch
+        childResourceType: PolicySearchResult
+      x-gw-parameter-sets:
+        - search-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/PolicySearchRequest"
+      responses:
+        '200':
+          description: "Returns a list of policies that match the search criteria"
+          schema:
+            $ref: "#/definitions/PolicySearchResultList"
+  /users:
+    post:
+      summary: "Create a new user for tests"
+      description: "Create a new user for tests"
+      operationId: createUser
+      x-gw-extensions:
+        operationType: post-collection
+        resourceType: TestSupportUsers
+        childResourceType: TestSupportUser
+      x-gw-parameter-sets:
+        - post-collection
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/TestSupportUserRequest"
+      responses:
+        '201':
+          description: "Successful creation"
+          schema:
+            $ref: "#/definitions/TestSupportUserResponse"
+parameters:
+  roleId:
+    name: roleId
+    in: path
+    type: string
+    required: true
+    description: "The identifier for the role"
+x-gw-cors-policies:
+  testsupport:
+    enabled: ${cors.testsupport.enabled:true}
+    allowOrigins: ${cors.testsupport.allowOrigins:any}
+    allowMethods: ${cors.testsupport.allowMethods:null}
+    allowHeaders: ${cors.testsupport.allowHeaders:null}
+    allowCredentials: ${cors.testsupport.allowCredentials:true}
+    exposeHeaders: ${cors.testsupport.exposeHeaders:null}
+    maxAge: ${cors.testsupport.maxAge:1200}
+definitions:
+  ContactList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/TestSupportContactData"
+  ContactRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/TestSupportContactData"
+  ContactResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/TestSupportContactData"
+  ContactSearchRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/ContactSearchRequestData"
+  ContactSearchRequestData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "testsupport#/definitions/ContactSearchCriteria"
+  PolicyRequestInclusions:
+    type: object
+    properties:
+      Contact:
+        type: array
+        items:
+          "$ref": "#/definitions/TestSupportContactData"
+  PolicySearchRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        $ref: "#/definitions/PolicySearchRequestData"
+  PolicySearchRequestData:
+    type: object
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "testsupport#/definitions/PolicySearchRequestAttributes"
+  PolicySearchResultData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        $ref: "testsupport#/definitions/PolicySearchResult"
+  PolicySearchResultList:
+    type: object
+    x-gw-extend:
+      - "#/definitions/DataListEnvelope"
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/PolicySearchResultData"
+  TestSupportPolicyData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    properties:
+      attributes:
+        "$ref": "testsupport#/definitions/TestSupportPolicy"
+  TestSupportPolicyRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/TestSupportPolicyData"
+      included:
+        "$ref": "#/definitions/PolicyRequestInclusions"
+  TestSupportPolicyResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/TestSupportPolicyData"
+  TestSupportRoleData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    properties:
+      attributes:
+        "$ref": "testsupport#/definitions/TestSupportRole"
+  TestSupportRoleRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/TestSupportRoleData"
+  TestSupportRoleResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/TestSupportRoleData"
+  TestSupportUserData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    properties:
+      attributes:
+        "$ref": "testsupport#/definitions/TestSupportUser"
+  TestSupportUserRequest:
+    type: object
+    required:
+      - data
+    properties:
+      data:
+        "$ref": "#/definitions/TestSupportUserData"
+  TestSupportUserResponse:
+    type: object
+    properties:
+      data:
+        "$ref": "#/definitions/TestSupportUserData"
+  TestSupportContactData:
+    x-gw-extend:
+      - "#/definitions/DataEnvelope"
+    required:
+      - attributes
+    properties:
+      attributes:
+        "$ref": "testsupport#/definitions/TestSupportContact"

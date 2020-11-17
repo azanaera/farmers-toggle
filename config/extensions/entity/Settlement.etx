@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<extension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="Settlement">
+  <column
+    name="DelayedDate_Ext"
+    nullok="true"
+    type="dateonly"/>
+</extension>

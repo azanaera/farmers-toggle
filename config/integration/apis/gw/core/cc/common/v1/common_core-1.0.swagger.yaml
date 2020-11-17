@@ -1,0 +1,12 @@
+swagger: '2.0'
+info:
+  description: "APIs for common InsuranceSuite platform objects like activities and notes"
+  version: '1.0.0'
+  title: "Common API"
+x-gw-combine:
+  - gw.core.pl.common.v1.common_pl-1.0
+  - gw.core.cc.framework.v1.framework_core-1.0
+x-gw-schema-import:
+  common: gw.core.cc.common.v1.common_core-1.0
+x-gw-cors-policy: common
+paths: {}

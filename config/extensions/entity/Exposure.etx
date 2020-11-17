@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<extension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="Exposure">
+  <array
+    arrayentity="ServiceRequest"
+    desc="Service requests associated with this exposure."
+    name="ServiceRequests"/>
+  <typekey
+    default="Direct"
+    desc="Representation Level"
+    name="RepresentationLevel_Ext"
+    nullok="true"
+    typelist="RepresentationLevel_Ext"/>
+  <typekey
+    desc="Escalation Level"
+    name="EscalationLevel_Ext"
+    nullok="true"
+    typelist="EscalationLevel_Ext"/>
+  <column
+    desc="ORM"
+    name="ORM_Ext"
+    nullok="true"
+    type="bit"/>
+  <column
+    desc="ORM Term Date"
+    name="ORMTermDate_Ext"
+    nullok="true"
+    type="dateonly"/>
+  <column
+    desc="Exhaust Date"
+    name="ExhaustDate_Ext"
+    nullok="true"
+    type="dateonly"/>
+  <column
+    desc="No Fault Limit"
+    name="NoFaultLimit_Ext"
+    nullok="true"
+    type="positivecurrencyamount"/>
+  <column
+    desc="Does claimant have representation?"
+    name="ClaimantRepresentation_Ext"
+    nullok="true"
+    type="bit"/>
+</extension>

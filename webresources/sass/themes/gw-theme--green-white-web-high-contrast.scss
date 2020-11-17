@@ -1,0 +1,70 @@
+@import "./partials/platform_colors_base";
+@import "./partials/web-green-white-spacious/_green_white_web_colors_base";
+@import "./partials/web-green-white-spacious/_green_white_web_spacing";
+
+
+/**
+  Setup colors for Green White Web Theme Import to consume
+ */
+// Contrast Colors
+$gw-theme-green-white-high-contrast-palette--darker-blue: #14759B;
+$gw-theme-green-white-high-contrast-palette--darker-green: #547D35;
+$gw-theme-green-white-high-contrast-palette--darker-red: #D93D2B;
+$gw-theme-green-white-high-contrast-palette--darker-silver: #767676;
+$gw-theme-green-white-high-contrast-palette--darker-gray: #696969;
+
+$gw-theme-green-white-high-contrast-palette--bg-blue-for-dark-text: #62799D;
+
+$gw-theme-green-white-palette--link: $gw-theme-green-white-high-contrast-palette--darker-blue;
+$gw-app--palette--blue: $gw-theme-green-white-high-contrast-palette--darker-blue;
+
+$gw-theme-green-white-palette--buttons-bg: $gw-theme-green-white-high-contrast-palette--darker-green;
+$gw-app--palette--green: $gw-theme-green-white-high-contrast-palette--darker-green;
+
+//TODO: open question on yellow/gold to dark orange for badges //#A56A00
+
+$gw-app--palette--red: $gw-theme-green-white-high-contrast-palette--darker-red;
+
+//TODO: open question on badge silver to dark grey
+
+$gw-theme-green-white-palette--buttons-disabled-col: $gw-theme-green-white-high-contrast-palette--darker-gray;
+
+$gw-app--disabled-uses-grayout-filter-as-default: false;
+
+/**
+  Import all of the core of green white web theme
+ */
+@import "./partials/web-green-white-spacious/_green_white_web_core";
+
+// Badges
+$gw-app--BadgeWidget--large-font-weight: 500; // semi-bold
+$gw-app--BadgeWidget--large-font-size-px: gw-pxFixed(12);
+$gw-app--BadgeWidget--default-col: $gw-app--palette--black;
+$gw-app--BadgeWidget--default-bg: $gw-theme-green-white-high-contrast-palette--bg-blue-for-dark-text;
+
+// Font Sizes
+$gw-app--font-size--smaller-px: $gw-app--base-font-size--in-px;
+$gw-app--font-size--tiny-px: $gw-app--base-font-size--in-px;
+
+// Highlight and Active Changes
+$gw-app--NorthPanel--active-tab-has-bottom-bar: true;
+$gw-app--links--underline-always: true;
+
+// Progress bar
+$gw-app--progress-bar--in-bar-label-col: $gw-app--palette--black;
+$gw-app--progress-bar--outside-bar-label-col: $gw-app--palette--black;
+
+$gw-app--progress-bar--bar-color-default: $gw-theme-green-white-high-contrast-palette--bg-blue-for-dark-text;
+$gw-app--progress-bar--bar-color-low: #84B64D;
+$gw-app--progress-bar--bar-color-medium: #FCA202;
+$gw-app--progress-bar--bar-color-high: #DC5345;
+
+/*
+// Uncomment to give North Panel active and hover the same styling as west panel
+$gw-app--NorthPanel--button--hover--col: $gw-app--palette--blue-active;
+$gw-app--NorthPanel--button--hover--bg: $gw-app--palette--left-nav--bg-highlight;
+$gw-app--NorthPanel--button--active--col: $gw-app--palette--blue-active;
+$gw-app--NorthPanel--button--active--bg: $gw-app--palette--left-nav--bg;
+*/
+
+

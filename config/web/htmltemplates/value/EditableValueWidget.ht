@@ -1,0 +1,9 @@
+<input aria-describedby="${describedBy}"
+       type="text"
+       name="${renderId}"
+       class="${noTrack ? 'gw-noTrack'}"
+       disabled="${disabled}"
+       value="${currentValue}"
+       maxlength="${maxlength}"
+       readonly="${readonly}"
+       placeholder="${placeholder}"/>

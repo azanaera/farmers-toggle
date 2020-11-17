@@ -1,0 +1,12 @@
+swagger: '2.0'
+x-gw-combine:
+  - gw.content.cc.claim.v1.claim_content-1.0
+x-gw-apihandlers:
+  - gw.rest.ext.cc.claim.v1.ClaimApiExtHandler
+x-gw-schema-import:
+  claims: ext.claim.v1.claim_ext-1.0
+produces:
+  - application/json
+consumes:
+  - application/json
+paths: {}

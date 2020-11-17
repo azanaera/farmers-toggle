@@ -1,0 +1,5 @@
+<div id="${renderId}">
+  <div id="gw-west-panel--children" role="list" aria-orientation="vertical">
+    ${:children}
+  </div>
+</div>

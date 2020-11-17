@@ -1,0 +1,144 @@
+combine:
+  - gw.core.cc.shared.v1.shared_core-1.0
+resources:
+  Activities:
+    resource: gw.rest.ext.cc.common.v1.activities.ActivitiesExtResource
+  Activity:
+    resource: gw.rest.ext.cc.common.v1.activities.ActivityExtResource
+  ActivityAssignees:
+    resource: gw.rest.ext.cc.common.v1.activities.ActivityAssigneesExtResource
+  ActivityNotes:
+    resource: gw.rest.ext.cc.common.v1.activities.ActivityNotesExtResource
+  ActivityPattern:
+    resource: gw.rest.ext.cc.common.v1.activitypatterns.ActivityPatternExtResource
+  AdminOpenApiSchema:
+    resource: gw.api.modules.rest.framework.v1.openapi.v3.OpenApiJsonPlatformResource
+  ActivityPatterns:
+    resource: gw.rest.ext.cc.common.v1.activitypatterns.ActivityPatternsExtResource
+  Assignee:
+    resource: gw.rest.ext.cc.common.v1.assignment.AssigneeExtResource
+  Claim:
+    resource: gw.rest.ext.cc.claim.v1.claims.ClaimExtResource
+  ClaimActivities:
+    resource: gw.rest.ext.cc.claim.v1.claims.activities.ClaimActivitiesExtResource
+  ClaimActivityAssignees:
+    resource: gw.rest.ext.cc.claim.v1.claims.activityassignees.ClaimActivityAssigneesExtResource
+  ClaimActivityPatterns:
+    resource: gw.rest.ext.cc.claim.v1.claims.activitypatterns.ClaimActivityPatternsExtResource
+  ClaimApiOpenApiSchema:
+    resource: gw.api.modules.rest.framework.v1.openapi.v3.OpenApiJsonPlatformResource
+  ClaimContact:
+    resource: gw.rest.ext.cc.claim.v1.claims.contacts.ClaimContactExtResource
+  ClaimContacts:
+    resource: gw.rest.ext.cc.claim.v1.claims.contacts.ClaimContactsExtResource
+  ClaimContactRoleOwners:
+    resource: gw.rest.ext.cc.claim.v1.claims.contacts.ClaimContactRoleOwnersExtResource
+  ClaimDocuments:
+    resource: gw.rest.ext.cc.claim.v1.claims.documents.ClaimDocumentsExtResource
+  ClaimDwellingIncidents:
+    resource: gw.rest.ext.cc.claim.property.v1.claims.dwellingincidents.ClaimDwellingIncidentsExtResource
+  ClaimExposures:
+    resource: gw.rest.ext.cc.claim.v1.claims.exposures.ClaimExposuresExtResource
+  ClaimFixedPropertyIncidents:
+    resource: gw.rest.ext.cc.claim.v1.claims.fixedpropertyincidents.ClaimFixedPropertyIncidentsExtResource
+  ClaimInjuryIncidents:
+    resource: gw.rest.ext.cc.claim.v1.claims.injuryincidents.ClaimInjuryIncidentsExtResource
+  ClaimLivingExpensesIncidents:
+    resource: gw.rest.ext.cc.claim.property.v1.claims.livingexpensesincidents.ClaimLivingExpensesIncidentsExtResource
+  ClaimNotes:
+    resource: gw.rest.ext.cc.claim.v1.claims.notes.ClaimNotesExtResource
+  ClaimRelatedObjects:
+    resource: gw.rest.ext.cc.claim.v1.claims.relatedobjects.ClaimRelatedObjectsExtResource
+  Claims:
+    resource: gw.rest.ext.cc.claim.v1.claims.ClaimsExtResource
+  ClaimSearch:
+    resource: gw.rest.ext.cc.claim.v1.search.claims.ClaimSearchExtResource
+  ClaimSearchResult:
+    resource: gw.rest.ext.cc.claim.v1.search.claims.ClaimSearchResultExtResource
+  ClaimVehicle:
+    resource: gw.rest.ext.cc.claim.v1.claims.vehicles.ClaimVehicleExtResource
+  ClaimVehicleIncidents:
+    resource: gw.rest.ext.cc.claim.v1.claims.vehicleincidents.ClaimVehicleIncidentsExtResource
+  CommonOpenApiSchema:
+    resource: gw.api.modules.rest.framework.v1.openapi.v3.OpenApiJsonPlatformResource
+  ContactRoleConstraints:
+    resource: gw.rest.ext.cc.claim.v1.roleconstraints.ContactRoleConstraintsExtResource
+  ContactRoleConstraint:
+    resource: gw.rest.ext.cc.claim.v1.roleconstraints.ContactRoleConstraintExtResource
+  Document:
+    resource: gw.rest.ext.cc.common.v1.documents.DocumentExtResource
+  DocumentContent:
+    resource: gw.rest.ext.cc.common.v1.documents.DocumentContentExtResource
+  DwellingIncident:
+    resource: gw.rest.ext.cc.claim.property.v1.claims.dwellingincidents.DwellingIncidentExtResource
+  Endorsement:
+    resource: gw.rest.ext.cc.claim.v1.claims.policy.endorsements.EndorsementExtResource
+  Exposure:
+    resource: gw.rest.ext.cc.claim.v1.claims.exposures.ExposureExtResource
+  FixedPropertyIncident:
+    resource: gw.rest.ext.cc.claim.v1.claims.fixedpropertyincidents.FixedPropertyIncidentExtResource
+  GenericRelation:
+    resource: gw.rest.ext.cc.claim.v1.claims.relatedobjects.GenericRelationExtResource
+  InjuryIncident:
+    resource: gw.rest.ext.cc.claim.v1.claims.injuryincidents.InjuryIncidentExtResource
+  LivingExpensesIncident:
+    resource: gw.rest.ext.cc.claim.property.v1.claims.livingexpensesincidents.LivingExpensesIncidentExtResource
+  LocationBasedRiskUnit:
+    resource: gw.rest.ext.cc.claim.property.v1.claims.policy.locationbasedriskunits.LocationBasedRiskUnitExtResource
+  LocationBasedRiskUnits:
+    resource: gw.rest.ext.cc.claim.property.v1.claims.policy.locationbasedriskunits.LocationBasedRiskUnitsExtResource
+  Note:
+    resource: gw.rest.ext.cc.common.v1.notes.NoteExtResource
+  Notes:
+    resource: gw.rest.ext.cc.common.v1.notes.NotesExtResource
+  Policy:
+    resource: gw.rest.ext.cc.claim.v1.claims.policy.PolicyExtResource
+  PolicyCoverage:
+    resource: gw.rest.ext.cc.claim.v1.claims.policy.coverages.PolicyCoverageExtResource
+  PolicyCoverages:
+    resource: gw.rest.ext.cc.claim.v1.claims.policy.coverages.PolicyCoveragesExtResource
+  PolicyEndorsements:
+    resource: gw.rest.ext.cc.claim.v1.claims.policy.endorsements.PolicyEndorsementsExtResource
+  PolicyLocation:
+    resource: gw.rest.ext.cc.claim.v1.claims.policy.locations.PolicyLocationExtResource
+  PolicyLocations:
+    resource: gw.rest.ext.cc.claim.v1.claims.policy.locations.PolicyLocationsExtResource
+  TypeLists:
+    resource: gw.rest.ext.cc.common.v1.metadata.TypelistsExtResource
+  TypeList:
+    resource: gw.rest.ext.cc.common.v1.metadata.TypelistExtResource
+  User:
+    resource: gw.rest.ext.cc.admin.v1.user.UserExtResource
+  Users:
+    resource: gw.rest.ext.cc.admin.v1.user.UsersExtResource
+  VehicleRiskUnit:
+    resource: gw.rest.ext.cc.claim.auto.v1.claims.policy.vehicleriskunits.VehicleRiskUnitExtResource
+  VehicleRiskUnits:
+    resource: gw.rest.ext.cc.claim.auto.v1.claims.policy.vehicleriskunits.VehicleRiskUnitsExtResource
+  VehicleIncident:
+    resource: gw.rest.ext.cc.claim.v1.claims.vehicleincidents.VehicleIncidentExtResource
+updaterFiles:
+  - ext.admin.v1.admin_ext-1.0
+  - ext.claim.v1.claim_combined_ext-1.0
+  - ext.common.v1.common_ext-1.0
+  - gw.core.pl.common.v1.common_pl-1.0
+mappingFiles:
+  - ext.admin.v1.admin_ext-1.0
+  - ext.claim.v1.claim_combined_ext-1.0
+  - ext.common.v1.common_ext-1.0
+rootCollections:
+  Claim: Claims
+  User: Users
+resourceAccess:
+  gwabuid:
+    yaml: ext.shared.v1.gwabuid_ext-1.0
+  internal:
+    yaml: ext.shared.v1.internal_ext-1.0
+  default:
+    yaml: ext.shared.v1.default_ext-1.0
+  policyNumbers:
+    yaml: ext.shared.v1.policyNumbers_ext-1.0
+  service:
+    yaml: ext.shared.v1.serviceUser_ext-1.0
+  unauthenticated:
+    yaml: ext.shared.v1.unauthenticatedUser_ext-1.0

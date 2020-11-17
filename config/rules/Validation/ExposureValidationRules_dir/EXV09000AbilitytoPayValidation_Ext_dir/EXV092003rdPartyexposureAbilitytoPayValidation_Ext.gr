@@ -1,0 +1,32 @@
+package rules.Validation.ExposureValidationRules_dir.EXV09000AbilitytoPayValidation_Ext_dir
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("EXV09200 - 3rd Party exposure Ability to Pay Validation_Ext")
+internal class EXV092003rdPartyexposureAbilitytoPayValidation_Ext {
+  static function doCondition(exposure     :     entity.Exposure) : boolean {
+/*start00rule*/
+return
+        exposure.LossParty == LossPartyType.TC_THIRD_PARTY and
+            ext.config.claim.LossDetailsHelper_Ext.CollisionLossCauses(exposure.Claim)
+/*end00rule*/
+}
+
+  static function doAction(exposure     :     entity.Exposure, actions : gw.rules.Action) {
+/*start00rule*/
+    var clm = exposure.Claim
+    var vehIncident = clm.getIncidentsOfType(VehicleIncident).where(\vi -> vi.LossParty ==
+        LossPartyType.TC_INSURED ).first() as VehicleIncident
+    if ((vehIncident != null and !vehIncident.VehicleParked and (vehIncident.driver == null or (vehIncident.driver != null and
+        vehIncident.driver.DateOfBirth == null)))
+        or (clm.FaultRating == null)
+        or (clm.Fault == null)
+        ){
+            exposure.reject(ValidationLevel.TC_PAYMENT,
+              DisplayKey.get("Toggle.Rules.Validation.Exposure.3rdPartyExpAbilityToPay_Ext")
+              , null, null)
+
+    }
+
+/*end00rule*/
+  }
+}

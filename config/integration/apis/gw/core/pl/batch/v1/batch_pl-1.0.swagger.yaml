@@ -1,0 +1,50 @@
+swagger: '2.0'
+produces:
+  - application/json
+consumes:
+  - application/json
+x-gw-schema-import:
+  # Imported so that it will end up in the swagger.json we produce for end users, but not actually linked in to
+  # the request or response schema
+  batch: gw.core.pl.batch.v1.batch_pl-1.0
+paths:
+  /batch:
+    post:
+      summary: Issue multiple requests at once as a non-transactional batch
+      description: >
+        Post a list of sub-requests to make against this endpoint.  Sub-requests will be executed serially, in the order
+        they are specified in the "requests" property of the input.  Responses to each sub-request will then be batched
+        up and returned all together.  Sub-requests inherit the headers from the main request, with the exception of
+        the GW-Checksum header, but headers can be specified on the sub-request and will override any headers from the
+        main request.
+      operationId: batchRequest
+      x-gw-apihandler: gw.rest.core.pl.batch.v1.BatchRequestApiHandler
+      parameters:
+        - name: includeResponseHeaders
+          in: query
+          required: false
+          description: >
+            Controls what response headers, if any, are included for sub-responses.  If unspecified, or set to the value
+            "*all", all headers for sub-responses will be returned.  If set to the value "*none", no headers for sub-responses
+            will be returned.  Otherwise, this parameter can consist of a comma-separated list of the names of headers that
+            should be included on sub-responses.
+          type: array
+          items:
+            type: string
+        - name: body
+          in: body
+          required: true
+          description: >
+            The body of the batch request.  See the BatchRequest schema definition for details of the request format.
+          schema:
+            # Currently the IS REST framework cannot specify a schema where the "body" property is an arbitrary JSON object
+            # with no pre-defined schema, so we have to specify the type as just "string" here and then explicitly validate
+            # the request ourselves
+            type: string
+      responses:
+        '200':
+          description:  >
+            The batch request itself was well-formed; individual sub-requests may have succeeded or failed.
+            See the BatchResponse schema definition for details of the response format.
+          # Similarly, we cannot specify the response schema, because the response will contain arbitrary JSON objects
+          # for the "body" property, and our framework doesn't know how to handle that

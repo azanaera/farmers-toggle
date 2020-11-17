@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typecodemapping>
+  <namespacelist>
+    <namespace name="tog:PAS"/>
+    <namespace name="tog:PAS:PA"/>
+  </namespacelist>
+
+  <typelist name="PolicyStatus">
+    <mapping alias="inforce" namespace="tog:PAS" typecode="inforce" />
+    <mapping alias="lapsed_payment" namespace="tog:PAS" typecode="pending_cancellation" />
+    <mapping alias="renewed" namespace="tog:PAS" typecode="inforce" />
+    <mapping alias="canceled_non_payment" namespace="tog:PAS" typecode="canceled" />
+    <mapping alias="canceled" namespace="tog:PAS" typecode="canceled" />
+    <mapping alias="out_of_force" namespace="tog:PAS" typecode="expired" />
+  </typelist>
+
+  <typelist name="CoverageType">
+    <mapping typecode="COM_PA_EXT" namespace="tog:PAS:PA" alias="comprehensive_deductible"/>
+    <mapping typecode="COL_PA_EXT" namespace="tog:PAS:PA" alias="collision_deductible"/>
+    <mapping typecode="MED_COV_PA_EXT" namespace="tog:PAS:PA" alias="medical_limit"/>
+    <mapping typecode="TOW_AND_ROA_SER_PA_EXT" namespace="tog:PAS:PA" alias="towing_road_services"/>
+    <mapping typecode="NEW_CAR_REP_PA_EXT" namespace="tog:PAS:PA" alias="new_car_replacement"/>
+    <mapping typecode="BOD_INJ_PA_EXT" namespace="tog:PAS:PA" alias="bodily_injury_limit"/>
+    <mapping typecode="PRO_DAM_PA_EXT" namespace="tog:PAS:PA" alias="property_damage_limit"/>
+    <mapping typecode="ORI_EQU_MAN_PA_EXT" namespace="tog:PAS:PA" alias="oem_parts"/>
+    <mapping typecode="UNI_MOT_PD_PA_EXT" namespace="tog:PAS:PA" alias="uninsured_motorist_property_damage_limit"/>
+    <mapping typecode="UNI_MOT_PA_EXT" namespace="tog:PAS:PA" alias="uninsured_motorist_bodily_injury_limit"/>
+    <mapping typecode="UND_MOT_PA_EXT" namespace="tog:PAS:PA" alias="underinsured_motorist_bodily_injury_limit"/>
+    <mapping typecode="SD_HUS_BUS_INC_PA_EXT" namespace="tog:PAS:PA" alias="ridesharing"/>
+    <mapping typecode="TMP_RID_COV_PA_EXT" namespace="tog:PAS:PA" alias="loss_of_use"/>
+    <mapping typecode="GAP_COV_PA_EXT" namespace="tog:PAS:PA" alias="loan_lease_payoff"/>
+    <mapping typecode="UIM_PA_PD_EXT" namespace="tog:PAS:PA" alias="underinsured_motorist_property_damage_limit"/>
+  </typelist>
+
+  <typelist name="CoveredPartyType">
+    <mapping typecode="primary_name_insured" namespace="tog:PAS:PA" alias="pni"/>
+    <mapping typecode="non_driver_ext" namespace="tog:PAS:PA" alias="non_driver"/>
+    <mapping typecode="driver_ext" namespace="tog:PAS:PA" alias="driver"/>
+    driver_ext
+  </typelist>
+
+  <typelist name="CovTermPattern">
+    <mapping typecode="PACollDeductible" namespace="tog:PAS:PA" alias="collision_deductible"/>
+    <mapping typecode="PACompDeductible" namespace="tog:PAS:PA" alias="comprehensive_deductible"/>
+    <!--This is a pending update from Policy System for new States yet to be added-->
+    <!--<mapping typecode="PAUnInsMotDeductible_Ext" namespace="tog:PAS:PA" alias=""/>-->
+    <mapping typecode="PASideHustBusInc_Ext" namespace="tog:PAS:PA" alias="ridesharing"/>
+    <mapping typecode="PATmpRideCov_Ext" namespace="tog:PAS:PA" alias="loss_of_use"/>
+  </typelist>
+
+</typecodemapping>

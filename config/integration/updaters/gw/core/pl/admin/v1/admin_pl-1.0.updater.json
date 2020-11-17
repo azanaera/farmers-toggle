@@ -1,0 +1,57 @@
+{
+  "schemaName": "gw.core.pl.admin.v1.admin_pl-1.0",
+  "combine": [
+    "gw.core.pl.framework.v1.framework_pl-1.0"
+  ],
+  "typeUses": [
+    "gw.rest.core.pl.common.v1.phone.PhoneNumberResolver"
+  ],
+  "updaters": {
+    "User": {
+      "schemaDefinition": "User",
+      "root": "entity.User",
+      "properties": {
+        "active": {
+          "path": "User.Credential.Active"
+        },
+        "employeeNumber": {
+          "path": "User.Contact.EmployeeNumber"
+        },
+        "externalUser": {
+          "path": "User.ExternalUser"
+        },
+        "firstName": {
+          "path": "User.Contact.FirstName"
+        },
+        "id": {
+          "path": "User.RestId"
+        },
+        "lastName": {
+          "path": "User.Contact.LastName"
+        },
+        "suffix": {
+          "path": "User.Contact.Suffix",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "username": {
+          "path": "User.Credential.UserName"
+        },
+        "vacationStatus": {
+          "path": "User.VacationStatus",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "workPhone": {
+          "path": "User.Contact.RestV1_WorkPhone",
+          "setter": "User.Contact.RestV1_setPhoneNumber(Contact#WorkPhone, value)",
+          "valueResolver": {
+            "typeName": "PhoneNumberResolver"
+          }
+        }
+      }
+    }
+  }
+}

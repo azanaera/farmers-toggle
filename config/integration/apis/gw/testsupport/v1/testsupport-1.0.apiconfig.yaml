@@ -1,0 +1,45 @@
+combine:
+  - "ext.shared.v1.shared_ext-1.0"
+resources:
+  Contact:
+    mapper: TestSupportContact
+    updater: TestSupportContact
+    resource: gw.rest.testsupport.v1.contacts.ContactResource
+  Contacts:
+    resource: gw.rest.testsupport.v1.contacts.ContactsResource
+  ContactSearch:
+    resource: gw.rest.testsupport.v1.contacts.ContactSearchResource
+  PolicySearch:
+    defaultSort:
+      - "policyNumber"
+    resource: gw.rest.testsupport.v1.search.policies.PolicySearchResource
+  PolicySearchResult:
+    resource: gw.rest.testsupport.v1.search.policies.PolicySearchResultResource
+  TestSupportPolicies:
+    resource: gw.rest.testsupport.v1.policies.PoliciesResource
+  TestSupportPolicy:
+    resource: gw.rest.testsupport.v1.policies.PolicyResource
+  TestSupportRoles:
+    resource: gw.rest.testsupport.v1.roles.RolesResource
+  TestSupportRole:
+    resource: gw.rest.testsupport.v1.roles.RoleResource
+  TestSupportUsers:
+    resource: gw.rest.testsupport.v1.users.UsersResource
+  TestSupportUser:
+    resource: gw.rest.testsupport.v1.users.UserResource
+basePaths:
+  testsupport: /testsupport/v1
+updaterFiles:
+  - gw.testsupport.v1.testsupport-1.0
+  - ext.claim.v1.claim_combined_ext-1.0
+  - ext.common.v1.common_ext-1.0
+  - gw.core.pl.common.v1.common_pl-1.0
+mappingFiles:
+  - gw.testsupport.v1.testsupport-1.0
+  - ext.claim.v1.claim_combined_ext-1.0
+  - ext.common.v1.common_ext-1.0
+resourceAccess:
+  internal:
+    yaml: gw.testsupport.v1.internal_test-1.0
+rootCollections:
+  Contact: Contacts

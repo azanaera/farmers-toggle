@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<plugin
+  name="AuthenticationServicePlugin">
+  <plugin-gosu
+    env="cloud-dev"
+    gosuclass="gw.auth.AuthServicePlugin"/>
+  <plugin-java
+    javaclass="com.guidewire.pl.system.security.impl.DefaultAuthenticationServicePlugin"
+    plugindir="authenticationservice"/>
+</plugin>

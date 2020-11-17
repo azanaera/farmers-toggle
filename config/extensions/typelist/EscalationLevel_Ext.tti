@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<typelist xmlns="http://guidewire.com/typelists" name="EscalationLevel_Ext" desc="">
+  <typecode
+    code="0"
+    desc="0"
+    name="0"
+    priority="10"/>
+  <typecode
+    code="1"
+    desc="1"
+    name="1"
+    priority="20"/>
+  <typecode
+    code="2"
+    desc="2"
+    name="2"
+    priority="30"/>
+  <typecode
+    code="3"
+    desc="3"
+    name="3"
+    priority="40"/>
+  <typecode
+    code="4"
+    desc="4"
+    name="4"
+    priority="50"/>
+  <typecode
+    code="5"
+    desc="5"
+    name="5"
+    priority="60"/>
+</typelist>

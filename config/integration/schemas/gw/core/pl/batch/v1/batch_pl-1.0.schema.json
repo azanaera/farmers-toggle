@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "BatchRequest": {
+      "description": "Defines the structure of a batch request, which consists of an array of sub-requests",
+      "required": [
+        "requests"
+      ],
+      "properties": {
+        "requests": {
+          "description": "The array of sub-requests",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BatchSubRequest"
+          }
+        }
+      }
+    },
+    "BatchResponse": {
+      "description": "Defines the structure of the response to a batch request.  The 'responses' array will have one element for every entry in the 'requests' array, and responses will appear in the same order.",
+      "properties": {
+        "responses": {
+          "description": "The array of sub-responses, appearing in the same order as the elements in the 'requests' array of the request",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BatchSubResponse"
+          }
+        }
+      }
+    },
+    "BatchSubRequest": {
+      "description": "Defines the structure of an individual sub-request of the batch request.  Sub-requests can also have a 'body' property, which must be a JSON object, that will be used as the body of the sub-request.",
+      "required": [
+        "method",
+        "path"
+      ],
+      "properties": {
+        "headers": {
+          "description": "Defines headers that will be included as part of the sub-request.  Any headers defined using this property will override header values inherited from the main request.  Any headers present on the main request that are not defined in this array will be inherited when the sub-request is made, with the exception of the 'GW-Checksum' header.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Header"
+          }
+        },
+        "method": {
+          "description": "The HTTP method for the sub-request",
+          "type": "string",
+          "enum": [
+            "delete",
+            "head",
+            "get",
+            "options",
+            "patch",
+            "post",
+            "put"
+          ]
+        },
+        "onFail": {
+          "description": "Controls whether or not subsequent sub-requests are processed if this sub-request fails.  The default behavior, if unspecified, is to continue processing sub-request.  The 'abort' option specifies that all subsequent sub-requests will be skipped.",
+          "type": "string",
+          "enum": [
+            "abort",
+            "continue"
+          ]
+        },
+        "path": {
+          "description": "Specifies the path for the sub-request.  This path is relative to the root of the API hosting the batch endpoint.  For example, if the batch endpoint is <servlet>/rest/common/v1/batch, then a path of '/activities' will mean a request against <servlet>/rest/common/v1/activities.  The path must start with '/' and cannot contain whitespace.",
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^/[\\S]*$"
+        },
+        "query": {
+          "description": "The query string to use for the sub-request, if any",
+          "type": "string"
+        }
+      }
+    },
+    "BatchSubResponse": {
+      "description": "Defines the format of the sub-response.  In addition to the properties listed here, the 'body' property will include the body of the response as a JSON object.",
+      "properties": {
+        "code": {
+          "description": "The HTTP status code for the sub-response",
+          "type": "integer"
+        },
+        "headers": {
+          "description": "The headers returned for the sub-response",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Header"
+          }
+        },
+        "skipped": {
+          "description": "This property will be set to 'true' if the corresponding sub-request was not processed due to a prior failed request that specified the \"onFail\": \"abort\" option",
+          "type": "boolean"
+        }
+      }
+    },
+    "Header": {
+      "description": "An HTTP request or response header",
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "description": "The header name",
+          "type": "string"
+        },
+        "value": {
+          "description": "The header value",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

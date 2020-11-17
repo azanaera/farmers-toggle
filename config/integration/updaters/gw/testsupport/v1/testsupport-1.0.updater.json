@@ -1,0 +1,537 @@
+{
+  "schemaName": "gw.testsupport.v1.testsupport-1.0",
+  "combine": [
+    "ext.claim.v1.claim_combined_ext-1.0"
+  ],
+  "updaters": {
+    "ContactSearch": {
+      "schemaDefinition": "ContactSearchCriteria",
+      "root": "entity.ContactSearchCriteria",
+      "properties": {
+        "address": {
+          "path": "ContactSearchCriteria.Address",
+          "create": "new Address(ContactSearchCriteria)",
+          "updaterRef": "#/updaters/Address"
+        },
+        "companyName": {
+          "path": "ContactSearchCriteria.Keyword"
+        },
+        "contactSubtype": {
+          "path": "ContactSearchCriteria.ContactSubtype"
+        },
+        "employerName": {
+          "path": "ContactSearchCriteria.OrganizationName"
+        },
+        "firstName": {
+          "path": "ContactSearchCriteria.FirstName"
+        },
+        "lastName": {
+          "path": "ContactSearchCriteria.Keyword"
+        },
+        "officialId": {
+          "path": "ContactSearchCriteria.OfficialId"
+        }
+      }
+    },
+    "Coverage": {
+      "schemaDefinition": "Coverage",
+      "root": "entity.Coverage",
+      "properties": {
+        "covTerms": {
+          "path": "Coverage.CovTerms",
+          "items": {
+            "add": "Coverage.addToCovTerms(value)",
+            "create": "new FinancialCovTerm(Coverage)",
+            "updaterRef": "#/updaters/FinancialCovTerm"
+          }
+        },
+        "coverageType": {
+          "path": "Coverage.Type",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "exposureLimit": {
+          "path": "Coverage.ExposureLimit",
+          "valueResolver": {
+            "typeName": "gw.api.modules.rest.framework.v1.updater.resolver.CurrencyAmountValueResolver"
+          }
+        },
+        "incidentLimit": {
+          "path": "Coverage.IncidentLimit",
+          "valueResolver": {
+            "typeName": "gw.api.modules.rest.framework.v1.updater.resolver.CurrencyAmountValueResolver"
+          }
+        }
+      }
+    },
+    "Endorsement": {
+      "schemaDefinition": "Endorsement",
+      "root": "entity.Endorsement",
+      "properties": {
+        "description": {
+          "path": "Endorsement.Description"
+        },
+        "formNumber": {
+          "path": "Endorsement.FormNumber"
+        }
+      }
+    },
+    "FinancialCovTerm": {
+      "schemaDefinition": "CovTerm",
+      "root": "entity.FinancialCovTerm",
+      "properties": {
+        "covTermOrder": {
+          "path": "FinancialCovTerm.CovTermOrder"
+        },
+        "covTermPattern": {
+          "path": "FinancialCovTerm.CovTermPattern",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "financialAmount": {
+          "path": "FinancialCovTerm.FinancialAmount",
+          "valueResolver": {
+            "typeName": "gw.api.modules.rest.framework.v1.updater.resolver.CurrencyAmountValueResolver"
+          }
+        },
+        "modelAggregation": {
+          "path": "FinancialCovTerm.ModelAggregation",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "modelRestriction": {
+          "path": "FinancialCovTerm.ModelRestriction",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        }
+      }
+    },
+    "PolicyLocation": {
+      "schemaDefinition": "TestSupportPolicyLocation",
+      "root": "entity.PolicyLocation",
+      "properties": {
+        "address": {
+          "path": "PolicyLocation.Address",
+          "create": "new Address(PolicyLocation)",
+          "updaterRef": "#/updaters/Address"
+        },
+        "locationBasedRiskUnits": {
+          "path": "PolicyLocation.LocationBasedRisks",
+          "items": {
+            "add": "PolicyLocation.addToLocationBasedRisks(value)",
+            "create": "new gw.rest.testsupport.v1.policies.PolicyLocationRestV1SupportMethods(PolicyLocation).createLocationBasedRU(jsonValue)",
+            "updaterRef": "#/updaters/TestSupportLocationBasedRiskUnit"
+          }
+        },
+        "locationNumber": {
+          "path": "PolicyLocation.LocationNumber"
+        },
+        "notes": {
+          "path": "PolicyLocation.Notes"
+        },
+        "policySystemId": {
+          "path": "PolicyLocation.PolicySystemId"
+        },
+        "primaryLocation": {
+          "path": "PolicyLocation.PrimaryLocation"
+        }
+      }
+    },
+    "PolicySearch": {
+      "schemaDefinition": "PolicySearchRequestAttributes",
+      "root": "entity.PolicySearchCriteria",
+      "properties": {
+        "city": {
+          "path": "PolicySearchCriteria.InsuredAddress.City"
+        },
+        "companyName": {
+          "path": "PolicySearchCriteria.CompanyName"
+        },
+        "country": {
+          "path": "PolicySearchCriteria.InsuredAddress.Country",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "firstName": {
+          "path": "PolicySearchCriteria.FirstName"
+        },
+        "lastName": {
+          "path": "PolicySearchCriteria.LastName"
+        },
+        "lossDate": {
+          "path": "PolicySearchCriteria.LossDate"
+        },
+        "lossType": {
+          "path": "PolicySearchCriteria.LossType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "policyNumber": {
+          "path": "PolicySearchCriteria.PolicyNumber"
+        },
+        "policyType": {
+          "path": "PolicySearchCriteria.PolicyType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "postalCode": {
+          "path": "PolicySearchCriteria.InsuredAddress.PostalCode"
+        },
+        "state": {
+          "path": "PolicySearchCriteria.InsuredAddress.State",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "taxId": {
+          "path": "PolicySearchCriteria.TaxIdString"
+        },
+        "vin": {
+          "path": "PolicySearchCriteria.Vin"
+        }
+      }
+    },
+    "TestSupportBuilding": {
+      "schemaDefinition": "TestSupportBuilding",
+      "root": "entity.Building",
+      "properties": {
+        "buildingNumber": {
+          "path": "Building.BuildingNumber"
+        },
+        "notes": {
+          "path": "Building.Notes"
+        },
+        "policySystemId": {
+          "path": "Building.PolicySystemId"
+        }
+      }
+    },
+    "TestSupportContact": {
+      "schemaDefinition": "TestSupportContact",
+      "root": "entity.Contact",
+      "properties": {
+        "addressBookUID": {
+          "path": "Contact.AddressBookUID"
+        },
+        "cellPhone": {
+          "path": "(Contact as Person).RestV1_CellPhone",
+          "setter": "Contact.RestV1_setPhoneNumber(Person#CellPhone, value)",
+          "valueResolver": {
+            "typeName": "PhoneNumberResolver"
+          }
+        },
+        "companyName": {
+          "path": "Contact.Name"
+        },
+        "dateOfBirth": {
+          "path": "(Contact as Person).RestV1_DateOfBirth"
+        },
+        "emailAddress1": {
+          "path": "Contact.EmailAddress1"
+        },
+        "emailAddress2": {
+          "path": "Contact.EmailAddress2"
+        },
+        "firstName": {
+          "path": "(Contact as Person).FirstName"
+        },
+        "homePhone": {
+          "path": "Contact.RestV1_HomePhone",
+          "setter": "Contact.RestV1_setPhoneNumber(Contact#HomePhone, value)",
+          "valueResolver": {
+            "typeName": "PhoneNumberResolver"
+          }
+        },
+        "lastName": {
+          "path": "(Contact as Person).LastName"
+        },
+        "licenseNumber": {
+          "path": "(Contact as Person).LicenseNumber"
+        },
+        "licenseState": {
+          "path": "(Contact as Person).LicenseState",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "policySystemId": {
+          "path": "Contact.PolicySystemId"
+        },
+        "primaryAddress": {
+          "path": "Contact.PrimaryAddress",
+          "create": "new Address(Contact)",
+          "touchParent": "currentValue.Changed",
+          "updaterRef": "#/updaters/Address"
+        },
+        "primaryLanguage": {
+          "path": "Contact.PrimaryLanguage",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "primaryLocale": {
+          "path": "Contact.PrimaryLocale",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "primaryPhoneType": {
+          "path": "Contact.PrimaryPhone",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "subtype": {
+          // This field is ignored, but is present in order to trigger createOnly validation of the field
+          "ignore": "true"
+        },
+        "taxId": {
+          "path": "Contact.TaxID"
+        },
+        "workPhone": {
+          "path": "Contact.RestV1_WorkPhone",
+          "setter": "Contact.RestV1_setPhoneNumber(Contact#WorkPhone, value)",
+          "valueResolver": {
+            "typeName": "PhoneNumberResolver"
+          }
+        }
+      }
+    },
+    "TestSupportLocationBasedRiskUnit": {
+      "schemaDefinition": "TestSupportLocationBasedRiskUnit",
+      "root": "entity.LocationBasedRU",
+      "properties": {
+        "RUNumber": {
+          "path": "LocationBasedRU.RUNumber"
+        },
+        "building": {
+          "path": "LocationBasedRU.Building",
+          "create": "new gw.rest.testsupport.v1.policies.PolicyLocationRestV1SupportMethods(LocationBasedRU.PolicyLocation).createBuilding()",
+          "updaterRef": "#/updaters/TestSupportBuilding"
+        },
+        "coverages": {
+          "path": "LocationBasedRU.Coverages",
+          "items": {
+            "add": "LocationBasedRU.addToCoverages(value)",
+            "create": "new PropertyCoverage(LocationBasedRU)",
+            "updaterRef": "#/updaters/Coverage"
+          }
+        },
+        "description": {
+          "path": "LocationBasedRU.Description"
+        },
+        "otherRiskType": {
+          "path": "(LocationBasedRU as LocationMiscRU).OtherRiskType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "policySystemId": {
+          "path": "LocationBasedRU.PolicySystemId"
+        }
+      }
+    },
+    "TestSupportPolicy": {
+      "schemaDefinition": "TestSupportPolicy",
+      "root": "entity.Policy",
+      "properties": {
+        "accountNumber": {
+          "path": "Policy.AccountNumber"
+        },
+        "cancellationDate": {
+          "path": "Policy.CancellationDate"
+        },
+        "currency": {
+          "path": "Policy.Currency",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "effectiveDate": {
+          "path": "Policy.EffectiveDate"
+        },
+        "endorsements": {
+          "path": "Policy.Endorsements",
+          "items": {
+            "add": "Policy.addToEndorsements(value)",
+            "create": "new Endorsement(Policy)",
+            "updaterRef": "#/updaters/Endorsement"
+          }
+        },
+        "expirationDate": {
+          "path": "Policy.ExpirationDate"
+        },
+        "originalEffectiveDate": {
+          "path": "Policy.OrigEffectiveDate"
+        },
+        "policyContacts": {
+          // This is just a dummy property to satisfy the element type requirement,
+          // the actual adding of a contact to Policy happens in TestSupportPolicyContact::addRole
+          "path": "new gw.rest.testsupport.v1.policies.PolicyRestV1SupportMethods(Policy).TestSupportPolicyContacts",
+          "items": {
+            "create": "new gw.rest.testsupport.v1.contacts.TestSupportPolicyContact(Policy)",
+            "updaterRef": "#/updaters/TestSupportPolicyContact"
+          }
+        },
+        "policyCoverages": {
+          "path": "Policy.Coverages",
+          "items": {
+            "add": "Policy.addCoverage(value)",
+            "create": "new PolicyCoverage(Policy)",
+            "updaterRef": "#/updaters/Coverage"
+          }
+        },
+        "policyLocations": {
+          "path": "Policy.PolicyLocations",
+          "items": {
+            "add": "Policy.addToPolicyLocations(value)",
+            "create": "new PolicyLocation(Policy)",
+            "updaterRef": "#/updaters/PolicyLocation"
+          }
+        },
+        "policyNumber": {
+          "path": "Policy.PolicyNumber"
+        },
+        "policyType": {
+          "path": "Policy.PolicyType",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "producerCode": {
+          "path": "Policy.ProducerCode"
+        },
+        "status": {
+          "path": "Policy.Status",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "underwritingCo": {
+          "path": "Policy.UnderwritingCo",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "underwritingGroup": {
+          "path": "Policy.UnderwritingGroup",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "vehicleRiskUnits": {
+          "path": "Policy.RiskUnits",
+          "items": {
+            "add": "Policy.addToRiskUnits(value)",
+            "create": "new VehicleRU(Policy)",
+            "updaterRef": "#/updaters/TestSupportVehicleRiskUnit"
+          }
+        },
+        "verifiedPolicy": {
+          "path": "Policy.Verified"
+        }
+      }
+    },
+    "TestSupportPolicyContact": {
+      "schemaDefinition": "TestSupportPolicyContact",
+      "root": "gw.rest.testsupport.v1.contacts.TestSupportPolicyContact",
+      "properties": {
+        "contact": {
+          "path": "TestSupportPolicyContact.Contact",
+          "valueResolver": {
+            "typeName": "gw.rest.testsupport.v1.contacts.ContactJsonValueResolver"
+          }
+        },
+        "roles": {
+          "path": "TestSupportPolicyContact.Roles",
+          "items": {
+            "add": "TestSupportPolicyContact.addRole(value)",
+            "valueResolver": {
+              "typeName": "TypeKeyValueResolver"
+            }
+          }
+        }
+      }
+    },
+    "TestSupportRole": {
+      "schemaDefinition": "TestSupportRole",
+      "root": "entity.Role",
+      "properties": {
+        "name": {
+          "path": "Role.Name"
+        }
+      }
+    },
+    "TestSupportUser": {
+      "schemaDefinition": "TestSupportUser",
+      "root": "entity.User",
+      "properties": {
+        "username": {
+          "path": "User.Credential.UserName"
+        }
+      }
+    },
+    "TestSupportVehicleRiskUnit": {
+      "schemaDefinition": "TestSupportVehicleRiskUnit",
+      "root": "entity.VehicleRU",
+      "properties": {
+        "RUNumber": {
+          "path": "VehicleRU.RUNumber"
+        },
+        "coverages": {
+          "path": "VehicleRU.Coverages",
+          "items": {
+            "add": "VehicleRU.addToCoverages(value)",
+            "create": "new VehicleCoverage(VehicleRU)",
+            "updaterRef": "#/updaters/Coverage"
+          }
+        },
+        "policySystemId": {
+          "path": "VehicleRU.PolicySystemId"
+        },
+        "vehicle": {
+          "path": "VehicleRU.Vehicle",
+          "create": "new Vehicle(VehicleRU)",
+          "updaterRef": "#/updaters/Vehicle"
+        }
+      }
+    },
+    "Vehicle": {
+      "schemaDefinition": "Vehicle",
+      "root": "entity.Vehicle",
+      "properties": {
+        "licensePlate": {
+          "path": "Vehicle.LicensePlate"
+        },
+        "make": {
+          "path": "Vehicle.Make"
+        },
+        "model": {
+          "path": "Vehicle.Model"
+        },
+        "policySystemId": {
+          "path": "Vehicle.PolicySystemId"
+        },
+        "state": {
+          "path": "Vehicle.State",
+          "valueResolver": {
+            "typeName": "TypeKeyValueResolver"
+          }
+        },
+        "vin": {
+          "path": "Vehicle.Vin"
+        },
+        "year": {
+          "path": "Vehicle.Year"
+        }
+      }
+    }
+  }
+}

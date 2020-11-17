@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "x-gw-combine": [
+    "gw.core.pl.framework.v1.framework_pl-1.0"
+  ],
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "active": {
+          "type": "boolean"
+        },
+        "displayName": {
+          "type": "string",
+          "readOnly": true
+        },
+        "employeeNumber": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "externalUser": {
+          "type": "boolean"
+        },
+        "firstName": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "lastName": {
+          "type": "string",
+          "x-gw-nullable": true
+        },
+        "suffix": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-nullable": true,
+          "x-gw-extensions": {
+            "typelist": "NameSuffix"
+          }
+        },
+        "username": {
+          "type": "string",
+          "x-gw-extensions": {
+            "requiredForCreate": true
+          }
+        },
+        "vacationStatus": {
+          "$ref": "#/definitions/TypeKeyReference",
+          "x-gw-extensions": {
+            "typelist": "VacationStatusType"
+          }
+        },
+        "workPhone": {
+          "$ref": "#/definitions/PhoneNumber",
+          "x-gw-nullable": true
+        }
+      }
+    }
+  }
+}

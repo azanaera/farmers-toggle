@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<typelist xmlns="http://guidewire.com/typelists" name="SideHustlePhase_Ext" desc="">
+  <typecode
+    code="en_route_for_pickup"
+    desc="En route for pickup"
+    name="En route for pickup"
+    priority="10"/>
+  <typecode
+    code="logged_in_but_no_assignment"
+    desc="Logged in but no assignment"
+    name="Logged in but no assignment"
+    priority="20"/>
+  <typecode
+    code="passenger_food_on_board"
+    desc="Passenger/Food on board"
+    name="Passenger/Food on board"
+    priority="30"/>
+  <typecode
+    code="tnc_not_in_service"
+    desc="TNC not in service"
+    name="TNC not in service"
+    priority="40"/>
+</typelist>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<PCF
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="../../../../../../../pcf.xsd">
+  <Worksheet
+    canEdit="false"
+    id="CheckLevyWarn_ExtWorksheet"
+    tabLabel="DisplayKey.get(&quot;Toggle.Wizard.NewCheckWizard.LevyWithholdingTab_Ext&quot;)"
+    title="DisplayKey.get(&quot;Toggle.Wizard.NewCheckWizard.LevyWithholding_Ext.Title&quot;)">
+    <LocationEntryPoint
+      signature="CheckLevyWarn_ExtWorksheet()"/>
+    <Scope
+      location="*"/>
+    <Screen
+      id="Levywar_ExtScreen">
+      <Toolbar>
+        <ToolbarButton
+          action="CurrentLocation.cancel()"
+          id="CheckDuplicatesWorksheet_CloseButton"
+          label="DisplayKey.get(&quot;Button.Close&quot;)"
+          shortcut="E"/>
+      </Toolbar>
+      <Verbatim
+        label="DisplayKey.get(&quot;Toggle.Wizard.NewCheckWizard.LevyWithholding_Ext&quot;)"
+        warning="true"/>
+    </Screen>
+  </Worksheet>
+</PCF>

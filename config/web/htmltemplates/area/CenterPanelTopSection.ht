@@ -1,0 +1,3 @@
+<div id="${renderId}" class="gw-styleTag--CenterPanelTop">
+  ${:children}
+</div>

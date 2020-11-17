@@ -1,0 +1,10 @@
+swagger: '2.0'
+x-gw-combine:
+  - gw.core.cc.claim.v1.claim_core-1.0
+x-gw-schema-import:
+  claims: gw.content.cc.claim.v1.claim_content-1.0
+produces:
+  - application/json
+consumes:
+  - application/json
+paths: {}

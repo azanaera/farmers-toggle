@@ -1,0 +1,33 @@
+package rules.Preupdate.PolicyPreupdate_dir
+
+uses gw.api.locale.DisplayKey
+
+@gw.rules.RuleName("PPU02000 - Policy Changed")
+internal class PPU02000PolicyChanged {
+  static function doCondition(policy : entity.Policy) : boolean {
+/*start00rule*/
+return !policy.New
+/*end00rule*/
+}
+
+  static function doAction(policy : entity.Policy, actions : gw.rules.Action) {
+/*start00rule*/
+    var createdCoverages = policy.Bundle.InsertedBeans.whereTypeIs(VehicleCoverage)
+    for(newCoverage in createdCoverages){
+      policy.Claim.createCustomHistoryEvent(CustomHistoryType.TC_COVERAGE_CREATED_EXT,
+          DisplayKey.get("Toggle.Rules.PreUpdate.Policy.NewCoverageCreated_Ext",newCoverage.Type,newCoverage))
+    }
+
+    var modifiedCoverages = policy.Bundle.AllModifiedBeans.whereTypeIs(VehicleCoverage)
+    for(modifiedCoverage in modifiedCoverages){
+      if((!modifiedCoverage.New) and
+          modifiedCoverage.ChangedFields.hasMatch(\elt1 -> elt1 == VehicleCoverage#ExposureLimit.PropertyInfo.toString()
+          or elt1 == VehicleCoverage#IncidentLimit.PropertyInfo.toString()
+          or elt1 == VehicleCoverage#CovTerms.PropertyInfo.toString())){
+        policy.Claim.createCustomHistoryEvent(CustomHistoryType.TC_COVERAGE_CHANGED_EXT,
+            DisplayKey.get("Toggle.Rules.PreUpdate.Policy.CoverageEdited_Ext", modifiedCoverage.Type, modifiedCoverage))
+      }
+    }
+/*end00rule*/
+  }
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<typelist xmlns="http://guidewire.com/typelists" name="NonDriverReason_Ext" desc="Reason why a covered party is not considered a Driver">
+  <typecode
+    code="out_of_country"
+    desc="Out Of Country"
+    name="Out Of Country"/>
+  <typecode
+    code="learners_permit_only"
+    desc="Learners Permit Only"
+    name="Learners Permit Only"/>
+  <typecode
+    code="never_licensed"
+    desc="Never Licensed"
+    name="Never Licensed"/>
+</typelist>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<extension
+  xmlns="http://guidewire.com/datamodel"
+  entityName="CompanyVendor">
+  <column
+    desc="Location ID"
+    name="ShopLocationCode_Ext"
+    nullok="true"
+    type="varchar">
+    <columnParam
+      name="size"
+      value="10"/>
+  </column>
+</extension>

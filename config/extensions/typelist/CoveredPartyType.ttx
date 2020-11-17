@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<typelistextension
+  xmlns="http://guidewire.com/typelists"
+  desc=""
+  name="CoveredPartyType">
+  <typecode
+    code="addinsured"
+    desc="Additional insured"
+    name="Additional insured"
+    priority="1"/>
+  <typecode
+    code="addnamedinsured"
+    desc="Additional named insured"
+    name="Additional named insured"
+    priority="2"></typecode>
+  <typecode
+    code="driver_ext"
+    desc="Driver"
+    name="Driver"
+    priority="3"/>
+  <typecode
+    code="non_driver_ext"
+    desc="Non-Driver"
+    name="Non-Driver"
+    priority="4"/>
+  <typecode
+    code="primary_name_insured"
+    desc="Primary Name Insured"
+    name="Primary Name Insured"
+    priority="5"/>
+</typelistextension>
