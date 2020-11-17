@@ -87,4 +87,6 @@ interface ActivityContext {
    * Verify all activities on the claim are completed
    */
   function verifyAllActivitiesCompleted()
+
+  function approveActivity(action : String) : void
 }

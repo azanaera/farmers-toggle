@@ -14,6 +14,7 @@ uses gw.cucumber.util.common.PCFReflectUtil
 uses gw.cucumber.util.common.RelatedToHelper
 uses gw.cucumber.util.common.UIHelper
 uses pcftest.ActivityDetailWorksheet
+uses pcftest.ApprovalDetailWorksheet
 uses pcftest.ClaimSummary
 uses pcftest.ClaimWorkplan
 
@@ -186,5 +187,21 @@ class ActivityContextImpl extends CucumberStepBase implements ActivityContext {
     for (entry in entries) {
       assertThat(entry.Status.Text.contains(ActivityStatus.TC_COMPLETE.DisplayName))
     }
+  }
+
+  override function approveActivity(action : String) {
+    var activitySubject = DisplayKey.get("AdminData.ActivityPattern.Subject.Approve_Reserve_Change")
+    var DK_APPROVE = DisplayKey.get("Web.DesktopActivities.Approve")
+    var workplan = new Navigation<ClaimWorkplan>(_proxy).ensureOnPage(\tabBar ->
+        tabBar.goToClaim(_claimWrapper.get()).goToWorkplan(), CurrentUser)
+
+    var activity =
+        workplan.ClaimWorkplanScreen.WorkplanLV._Entries.
+            firstWhere(\act ->
+              act.Subject.Text == activitySubject and
+              act.Status.Text == ActivityStatus.TC_OPEN.DisplayName
+        )
+    activity._Checkbox.click()
+    workplan.ClaimWorkplanScreen.ClaimWorkplan_ApproveButton.click()
   }
 }

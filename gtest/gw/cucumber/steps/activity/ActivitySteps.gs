@@ -2,6 +2,7 @@ package gw.cucumber.steps.activity
 
 uses com.google.inject.Inject
 uses cucumber.api.DataTable
+uses cucumber.api.java.en.And
 uses cucumber.api.java.en.Given
 uses cucumber.api.java.en.When
 uses cucumber.api.java.en.Then
@@ -62,5 +63,10 @@ class ActivitySteps {
   @Then("^the following activities should be on the claim:$")
   public function activityOnTheClaimFromTable(table : DataTable) {
     _contextFactory.getActivityContext().verifyActivity(table)
+  }
+
+  @And("^I \"([^\"]*)\" the activity$")
+  function iApproveTheActivity( action : String) : void {
+    _contextFactory.getActivityContext().approveActivity(action)
   }
 }
